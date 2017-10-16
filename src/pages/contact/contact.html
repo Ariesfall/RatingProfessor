@@ -1,17 +1,20 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Contact
+      Setting
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-list-header>Follow us on Twitter</ion-list-header>
-    <ion-item>
-      <ion-icon name="ionic" item-start></ion-icon>
-      @ionicframework
-    </ion-item>
+    <ion-list-header>Setting</ion-list-header>
+      <a ion-item (click)="openModal({charNum: 0})">
+        Register
+      </a>
+      <a ion-item (click)="openModal({charNum: 1})">
+        Login
+      </a>
+    
   </ion-list>
 </ion-content>
