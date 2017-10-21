@@ -1,18 +1,40 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { HttpModule } from '@angular/http';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map'; 
+
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-
+  posts: any;
   //public items : any = [];
-  constructor(public navCtrl: NavController, /*public http: Http*/) {
-
+  constructor(public navCtrl: NavController, public http: Http) {
+    this.http.get('http://34.201.241.97/ratingstudy/json.php').map(res => res.json()).subscribe(
+      data => {
+          this.posts = data.data.children;
+      },
+      err => {
+          console.log("Oops!");
+      }
+  );
+  console.log(this.posts);
+    
   }
+
+  /*getData(){
+    this.http.get('assets/data/mydata.json')
+    .map((res) => res.json())
+    .subscribe(data => {
+    this.data = data;
+    }, (rej) => {console.error("Could not load local data",rej)});
+  }*/
+
+
+  
 
   /*ionViewWillEnter()
    {
