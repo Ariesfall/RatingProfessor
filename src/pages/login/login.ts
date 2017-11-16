@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
+import { Http } from '@angular/http';
+import { AuthService } from '../../providers/auth-service/auth-service';
+import { RegisterPage } from '../../pages/register/register';
+import { TabsPage } from '../../pages/tabs/tabs';
+import 'rxjs/add/operator/map';
 
 /**
  * Generated class for the LoginPage page.
@@ -8,18 +13,59 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
 })
 export class LoginPage {
+  
+  loading: Loading;
+  registerCredentials = { email: '', password: '' };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController) { }
+  
+   public createAccount() {
+     this.nav.push(RegisterPage);
+   }
+
+  public login() {
+    this.showLoading()
+    this.auth.login(this.registerCredentials).subscribe(allowed => {
+      if (allowed) {        
+        this.nav.setRoot(TabsPage);
+      } else {
+        this.showError("Access Denied");
+      }
+    },
+      error => {
+        this.showError(error);
+      });
   }
 
-  ionViewDidLoad() {
+  showLoading() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...',
+      dismissOnPageChange: true
+    });
+    this.loading.present();
+  }
+
+  showError(text) {
+    this.loading.dismiss();
+ 
+    let alert = this.alertCtrl.create({
+      title: 'Fail',
+      subTitle: text,
+      buttons: ['OK']
+    });
+    alert.present(prompt);
+  }
+  
+  /*constructor(public navCtrl: NavController, public navParams: NavParams) {
+  }
+
+  /*ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
-  }
+  }*/
 
 }

@@ -9,12 +9,19 @@
 <ion-content>
   <ion-list>
     <ion-list-header>Setting</ion-list-header>
-      <a ion-item (click)="openModal({charNum: 0})">
+      <button ion-item *ngFor="let a_post of posts" (click)="itemSelected(post)">
+        {{ a_post.email }}
+      </button> 
+      <!--<button ion-item (click)="openPage(RegisterPage)">
         Register
-      </a>
-      <a ion-item (click)="openModal({charNum: 1})">
+      </button>
+      <button ion-item (click)="openPage(LoginPage)">
         Login
-      </a>
+      </button>-->
+      <button ion-item (click)="logout()">
+          <!--<ion-icon name="log-out"></ion-icon>-->
+          Logout
+      </button>
     
   </ion-list>
 </ion-content>
