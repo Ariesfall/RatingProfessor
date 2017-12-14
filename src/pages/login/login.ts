@@ -22,7 +22,7 @@ export class LoginPage {
   loading: Loading;
   registerCredentials = { email: '', password: '' };
 
-  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController) { }
+  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController, public http: Http) { }
   
    public createAccount() {
      this.nav.push(RegisterPage);
@@ -31,7 +31,7 @@ export class LoginPage {
   public login() {
     this.showLoading()
     this.auth.login(this.registerCredentials).subscribe(allowed => {
-      if (allowed) {        
+      if (allowed) {
         this.nav.setRoot(TabsPage);
       } else {
         this.showError("Access Denied");
@@ -58,6 +58,7 @@ export class LoginPage {
       subTitle: text,
       buttons: ['OK']
     });
+    
     alert.present(prompt);
   }
   

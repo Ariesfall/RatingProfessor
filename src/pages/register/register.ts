@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, AlertController, NavController, NavParams } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service/auth-service';
+import { Http } from '@angular/http';
 /**
  * Generated class for the RegisterPage page.
  *
@@ -15,9 +16,9 @@ import { AuthService } from '../../providers/auth-service/auth-service';
 export class RegisterPage {
 
   createSuccess = false;
-  registerCredentials = { email: '', password: '' };
+  registerCredentials = { email: '', password: '',school:'',year:'' };
  
-  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController) { }
+  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, public http: Http) { }
  
   public register() {
     this.auth.register(this.registerCredentials).subscribe(success => {

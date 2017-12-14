@@ -25,6 +25,23 @@
               <ion-item>
                 <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>
               </ion-item>
+
+              <ion-item>
+                  <ion-label>University</ion-label>
+                  <ion-select [(ngModel)]="registerCredentials.school" name="shool" required>
+                    <ion-option value="ouhk">OUHK</ion-option>
+                  </ion-select>
+              </ion-item>
+
+              <ion-item>
+                  <ion-label>Year</ion-label>
+                  <ion-select [(ngModel)]="registerCredentials.year" name="year" required>
+                    <ion-option value="1">Year 1</ion-option>
+                    <ion-option value="2">Year 2</ion-option>
+                    <ion-option value="3">Year 3</ion-option>
+                    <ion-option value="4">Year 4</ion-option>
+                  </ion-select>
+              </ion-item>
               
             </ion-list>
           </ion-col>

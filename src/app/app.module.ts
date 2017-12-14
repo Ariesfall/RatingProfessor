@@ -13,7 +13,6 @@ import { RegisterPage } from '../pages/register/register';
 import { LoginPage } from '../pages/login/login';
 import { RatingPage } from '../pages/rating/rating';
 
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthService } from '../providers/auth-service/auth-service';
@@ -46,8 +45,6 @@ import { AuthService } from '../providers/auth-service/auth-service';
     LoginPage,
     RegisterPage,
     RatingPage
-    
-    
   ],
   providers: [
     StatusBar,
