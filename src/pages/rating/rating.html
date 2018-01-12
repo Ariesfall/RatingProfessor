@@ -14,5 +14,11 @@
 
 
 <ion-content padding>
-
+  <ion-item *ngFor="let a_acourse of acourse">
+    <h2>{{a_acourse.ccode}}</h2>
+    <h2>{{a_acourse.cname}}</h2>
+    <br>
+    <p>{{a_acourse.cdesp}}</p>
+    <p>School: {{a_acourse.cschool}}</p>
+  </ion-item>
 </ion-content>

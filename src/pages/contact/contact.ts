@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { ModalController, Platform, NavParams, ViewController } from 'ionic-angular';
+import { ModalController, Platform, NavParams, ViewController, NavController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { Http } from '@angular/http';
 import { LoginPage } from '../../pages/login/login';
@@ -32,5 +31,6 @@ export class ContactPage {
     this.auth.logout().subscribe(succ => {
       this.nav.setRoot(LoginPage)
     });
+    //this.navCtrl.pop(LoginPage);
   }
 }

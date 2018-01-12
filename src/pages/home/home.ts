@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController,NavParams, AlertController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map'; 
-
+import { RatingPage } from '../../pages/rating/rating';
 
 @Component({
   selector: 'page-home',
@@ -17,8 +17,9 @@ export class HomePage{
   //public items : any = [];
   username = '';
   email = '';
+  courses: any;
 
-  constructor(public navCtrl: NavController, public http: Http, private nav: NavController, private auth: AuthService) {
+  constructor(public navCtrl: NavController, public http: Http, private alertCtrl: AlertController, private nav: NavController, private auth: AuthService) {
     let info = this.auth.getUserInfo();
     this.username = info['name'];
     this.email = info['email'];
@@ -61,9 +62,19 @@ export class HomePage{
       console.log(q, this.courseList.length);
     
     }*/
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json').map(res => res.json()).subscribe(
+      data => {
+          this.courses = data.data;
+      },
+      err => {
+          console.log("Oops!");
+      });
   }
-  
-  
-  
+
+  ratepage(ccode){
+    this.navCtrl.push(RatingPage,{
+      ccode : ccode
+    });
+  }
 
 }
