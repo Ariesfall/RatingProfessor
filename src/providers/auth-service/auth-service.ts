@@ -12,10 +12,10 @@ import 'rxjs/add/operator/map';
 */
 
 export class User {
-  name: string;
+  userid: string;
   email: string;
-  constructor(name: string, email: string) {
-    this.name = name;
+  constructor(userid: string, email: string) {
+    this.userid = userid;
     this.email = email;
   }
 }

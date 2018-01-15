@@ -15,13 +15,13 @@ export class HomePage{
   public courseRef;
   
   //public items : any = [];
-  username = '';
+  userid = '';
   email = '';
   courses: any;
 
   constructor(public navCtrl: NavController, public http: Http, private alertCtrl: AlertController, private nav: NavController, private auth: AuthService) {
     let info = this.auth.getUserInfo();
-    this.username = info['name'];
+    this.userid = info['userid'];
     this.email = info['email'];
 
     /*this.courseRef.on('value', courseList => {//db
@@ -71,10 +71,14 @@ export class HomePage{
       });
   }
 
-  ratepage(ccode){
+  tocoursepage(ccode){
     this.navCtrl.push(RatingPage,{
       ccode : ccode
     });
+  }
+
+  favorite(){
+
   }
 
 }

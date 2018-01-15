@@ -4,6 +4,7 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
+
 <ion-header>
 
   <ion-navbar>
@@ -14,11 +15,33 @@
 
 
 <ion-content padding>
-  <ion-item *ngFor="let a_acourse of acourse">
-    <h2>{{a_acourse.ccode}}</h2>
-    <h2>{{a_acourse.cname}}</h2>
-    <br>
-    <p>{{a_acourse.cdesp}}</p>
-    <p>School: {{a_acourse.cschool}}</p>
-  </ion-item>
+  <div *ngFor="let a_acourse of acourse">
+    <h4>{{a_acourse.ccode}}</h4>
+    <h5>{{a_acourse.cname}}</h5>
+  </div>
+
+  <h4>Lecturer</h4>
+  <ion-list>
+    <button ion-item *ngFor="let a_lecture of lectures" (click)="toprofessorpage(a_lecture.pid)">
+      <ion-icon name="person"></ion-icon>
+      {{a_lecture.pname}}
+    </button>
+  </ion-list>
+
+  <h4>Rate</h4>
+  <h4>Current Rate: {{courserate}}</h4>
+  <div>
+    <ion-label color="{{ratecourse>3 ? 'secondary' : 'danger'}}">Score: {{ratecourse}}</ion-label>
+    <ion-range min="1" max="5" step="1" pin="true" snaps="true" color="{{ratecourse>3 ? 'secondary' : 'danger'}}" [(ngModel)]="ratecourse">
+        <ion-icon range-left color="danger" name="thumbs-down"></ion-icon>
+        <ion-icon range-right color="secondary" name="thumbs-up"></ion-icon>
+    </ion-range>
+    <button ion-button color="light" round (click)=submitratecourse()>Submit</button>
+  </div>
+  <div *ngFor="let a_acourse of acourse">
+  <h4>Description:</h4>
+  <p>{{a_acourse.cdesp}}</p>
+  <p>University: {{a_acourse.cschool}}</p>
+  </div>
+  
 </ion-content>
