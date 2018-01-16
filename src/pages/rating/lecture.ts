@@ -6,14 +6,14 @@ import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'page-rating',
-  templateUrl: 'rating.html',
+  templateUrl: 'lecture.html',
 })
-export class RatingPage {
+export class LecturePage {
   acourse:any;
   ccode:any;
   lectures:any;
   ratingcourse:number = 4;
-  courserate:any = 'No rate';
+  courserate:any;
   userid = '';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, private nav: NavController, private auth: AuthService) {

@@ -12,6 +12,8 @@ import { AccountPage } from '../pages/account/account';
 import { RegisterPage } from '../pages/register/register';
 import { LoginPage } from '../pages/login/login';
 import { RatingPage } from '../pages/rating/rating';
+import { LecturePage } from '../pages/rating/lecture';
+import { CoursePage } from '../pages/rating/course';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -27,7 +29,9 @@ import { AuthService } from '../providers/auth-service/auth-service';
     AccountPage,
     LoginPage,
     RegisterPage,
-    RatingPage
+    RatingPage,
+    CoursePage,
+    LecturePage
   ],
   imports: [
     BrowserModule,
@@ -44,7 +48,9 @@ import { AuthService } from '../providers/auth-service/auth-service';
     AccountPage,
     LoginPage,
     RegisterPage,
-    RatingPage
+    RatingPage,
+    CoursePage,
+    LecturePage
   ],
   providers: [
     StatusBar,

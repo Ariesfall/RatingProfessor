@@ -71,12 +71,14 @@ export class AuthService {
        return Observable.create(observer => {
           var access;
          // At this point store the credentials to your backend!
-          this.auth = this.url+"register.php/.json?username='"+credentials.email+"'&password='"+credentials.password+"'&school='"+credentials.school+"'&year="+credentials.year;
+          this.auth = this.url+"register.php/.json?username="+credentials.email+"&password="+credentials.password+"&school="+credentials.school+"&year="+credentials.year;
+          console.log(this.auth);
           this.http.get(this.auth).map(res => res.json()).subscribe(
             data => {
               this.posts = data;
               if(data.success==false){
                 access=false;
+                console.log("Oops! email is created");
               }
               else{
                 access=true;
@@ -85,7 +87,7 @@ export class AuthService {
               observer.complete();
             },
             err => {
-              console.log("Oops! error");
+              console.log("Oops! error to db");
               observer.next(false);
               observer.complete();
           });

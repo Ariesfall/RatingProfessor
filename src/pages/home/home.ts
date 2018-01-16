@@ -3,7 +3,7 @@ import { NavController,NavParams, AlertController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map'; 
-import { RatingPage } from '../../pages/rating/rating';
+import { CoursePage } from '../../pages/rating/course';
 
 @Component({
   selector: 'page-home',
@@ -72,7 +72,7 @@ export class HomePage{
   }
 
   tocoursepage(ccode){
-    this.navCtrl.push(RatingPage,{
+    this.navCtrl.push(CoursePage,{
       ccode : ccode
     });
   }
