@@ -40,11 +40,27 @@
   </ion-card>
 
   <ion-card>
+    
     <ion-card-header><h4>Rate</h4></ion-card-header>
-    <ion-card-content>
+    <div padding>
+      <ion-segment [(ngModel)]="courserate">
+        <ion-segment-button value="open_rate">
+          Open
+        </ion-segment-button>
+        <ion-segment-button value="current_rate">
+          Current Student
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+    <div [ngSwitch]="courserate">
+    <ion-card-content *ngSwitchCase="'open_rate'">
     <h4>Current Rate: {{courserate}}</h4>
       <canvas #barCanvas></canvas>
     </ion-card-content>
+
+    <ion-card-content *ngSwitchCase="'current_rate'">
+    </ion-card-content>
+    </div>
   </ion-card>
 
   <ion-card>

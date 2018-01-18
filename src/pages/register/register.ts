@@ -18,7 +18,9 @@ export class RegisterPage {
   createSuccess = false;
   registerCredentials = { email: '', password: '',school:'',year:'' };
  
-  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, public http: Http) { }
+  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, public http: Http) { 
+    
+  }
  
   public register() {
     this.auth.register(this.registerCredentials).subscribe(success => {

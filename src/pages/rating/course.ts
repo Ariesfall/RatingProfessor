@@ -33,6 +33,23 @@ export class CoursePage {
     let info = this.auth.getUserInfo();
     this.userid = info['userid'];
     console.log(this.ccode);
+  }
+
+  submitratecourse(){
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?cid='+this.acourse[0].cid+'&crate='+this.ratingcourse+'&lrate='+this.ratinglearn+'&erate='+this.ratingexam+'&krate='+this.ratingknowlage+'&aid='+this.userid).map(res => res.json()).subscribe(
+      data => {
+        this.courserate = data.data;
+       },
+      err => {
+        console.log("Oops!");
+      });
+  }
+
+  toprofessorpage(pid){
+
+  }
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad RatingPage');
     this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?ccode="'+this.ccode+'"').map(res => res.json()).subscribe(
       data => {
           this.acourse = data.data;
@@ -73,23 +90,6 @@ export class CoursePage {
       });
     //get lectures
     
-  }
-
-  submitratecourse(){
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?cid='+this.acourse[0].cid+'&crate='+this.ratingcourse+'&lrate='+this.ratinglearn+'&erate='+this.ratingexam+'&krate='+this.ratingknowlage+'&aid='+this.userid).map(res => res.json()).subscribe(
-      data => {
-        this.courserate = data.data;
-       },
-      err => {
-        console.log("Oops!");
-      });
-  }
-
-  toprofessorpage(pid){
-
-  }
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad RatingPage');
     this.barChart = new Chart(this.barCanvas.nativeElement, {
  
       type: 'bar',

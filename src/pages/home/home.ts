@@ -62,6 +62,10 @@ export class HomePage{
       console.log(q, this.courseList.length);
     
     }*/
+    
+  }
+
+  ionViewDidLoad(){
     this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json').map(res => res.json()).subscribe(
       data => {
           this.courses = data.data;
@@ -77,8 +81,42 @@ export class HomePage{
     });
   }
 
-  favorite(){
-
+  enroll(ccode){
+    let alert = this.alertCtrl.create({
+      title: 'Enroll'+ccode,
+      inputs: [
+        {
+          name: 'username',
+          placeholder: 'Username'
+        },
+        {
+          name: 'password',
+          placeholder: 'Password',
+          type: 'password'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Login',
+          handler: data => {
+            if (User.isValid(data.username, data.password)) {
+              // logged in!
+            } else {
+              // invalid login
+              return false;
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
 }

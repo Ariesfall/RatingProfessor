@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map'; 
 
+
 @Component({
   selector: 'page-rating',
   templateUrl: 'lecture.html',

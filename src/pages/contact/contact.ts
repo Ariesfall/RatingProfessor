@@ -17,7 +17,9 @@ export class ContactPage {
     let info = this.auth.getUserInfo();
     this.username = info['name'];
     this.email = info['email'];
+  }
 
+  ionViewDidLoad() {
     this.http.get('http://ratingstudy.ddns.net/ratingstudy/json.php/.json').map(res => res.json()).subscribe(
     data => {
         this.posts = data.data;

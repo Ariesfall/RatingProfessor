@@ -22,8 +22,14 @@ export class LoginPage {
   loading: Loading;
   registerCredentials = { email: '', password: '' };
 
-  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController, public http: Http) { }
+  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController, public http: Http) {
+
+   }
   
+  ionViewDidLoad(){
+
+  }
+
    public createAccount() {
      this.nav.push(RegisterPage);
    }
