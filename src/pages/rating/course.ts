@@ -36,7 +36,7 @@ export class CoursePage {
   }
 
   submitratecourse(){
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?cid='+this.acourse[0].cid+'&crate='+this.ratingcourse+'&lrate='+this.ratinglearn+'&erate='+this.ratingexam+'&krate='+this.ratingknowlage+'&aid='+this.userid).map(res => res.json()).subscribe(
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?ccode='+this.ccode+'&crate='+this.ratingcourse+'&lrate='+this.ratinglearn+'&erate='+this.ratingexam+'&krate='+this.ratingknowlage+'&aid='+this.userid).map(res => res.json()).subscribe(
       data => {
         this.courserate = data.data;
        },
@@ -54,21 +54,20 @@ export class CoursePage {
       data => {
           this.acourse = data.data;
 
-          this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?cid="'+this.acourse[0].cid+'"').map(res => res.json()).subscribe(
+          this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode="'+this.acourse[0].ccode+'"').map(res => res.json()).subscribe(
           data => {
             if(data.data[0]==null){
               this.lectures = [{pname:'error'}];
             }else{
               this.lectures = data.data;
             }
-            
               
           },
           err => {
               console.log("Oops!");
           });
 
-          this.http.get('http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?cid='+this.acourse[0].cid).map(res => res.json()).subscribe(
+          this.http.get('http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?ccode='+this.acourse[0].ccode).map(res => res.json()).subscribe(
           data => {
             if(data.data[0].crate==0){
               this.courserate = 'No rate';
@@ -94,7 +93,7 @@ export class CoursePage {
  
       type: 'bar',
       data: {
-          labels: ["Red", "Blue", "Green"],
+          labels: ["Learning", "Exam", "Knowlage"],
           datasets: [{
               label: '# of Votes',
               data: [3.5, 4, 3],

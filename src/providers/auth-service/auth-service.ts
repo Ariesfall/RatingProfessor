@@ -16,7 +16,7 @@ export class User {
   email: string;
   constructor(userid: string, email: string) {
     this.userid = userid;
-    this.email = email;
+    this.email = email
   }
 }
 
