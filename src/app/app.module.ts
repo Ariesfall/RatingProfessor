@@ -5,7 +5,9 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { AboutPage } from '../pages/about/about';
+import { SearchPage } from '../pages/search/search';
 import { ContactPage } from '../pages/contact/contact';
+import { UserPage } from '../pages/user/user';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { AccountPage } from '../pages/account/account';
@@ -23,7 +25,9 @@ import { AuthService } from '../providers/auth-service/auth-service';
   declarations: [
     MyApp,
     AboutPage,
+    SearchPage,
     ContactPage,
+    UserPage,
     HomePage,
     TabsPage,
     AccountPage,
@@ -42,7 +46,9 @@ import { AuthService } from '../providers/auth-service/auth-service';
   entryComponents: [
     MyApp,
     AboutPage,
+    SearchPage,
     ContactPage,
+    UserPage,
     HomePage,
     TabsPage,
     AccountPage,

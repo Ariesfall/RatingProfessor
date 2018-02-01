@@ -73,20 +73,20 @@
 
         <ion-label color="{{ratinglearn>3 ? 'secondary' : 'danger'}}">Learning Score: {{ratinglearn}}</ion-label>
         <ion-range min="1" max="5" step="1" pin="true" snaps="true" color="{{ratinglearn>3 ? 'secondary' : 'danger'}}" [(ngModel)]="ratinglearn">
-            <ion-icon range-left color="danger" name="thumbs-down">Easy</ion-icon>
-            <ion-icon range-right color="secondary" name="thumbs-up">Hard</ion-icon>
+            <ion-icon range-left color="danger" name="sad">Easy</ion-icon>
+            <ion-icon range-right color="secondary" name="happy">Hard</ion-icon>
         </ion-range>
 
         <ion-label color="{{ratingexam>3 ? 'secondary' : 'danger'}}">Exam Score: {{ratingexam}}</ion-label>
         <ion-range min="1" max="5" step="1" pin="true" snaps="true" color="{{ratingexam>3 ? 'secondary' : 'danger'}}" [(ngModel)]="ratingexam">
-            <ion-icon range-left color="danger" name="thumbs-down">Easy</ion-icon>
-            <ion-icon range-right color="secondary" name="thumbs-up">Hard</ion-icon>
+            <ion-icon range-left color="danger" name="sad">Easy</ion-icon>
+            <ion-icon range-right color="secondary" name="happy">Hard</ion-icon>
         </ion-range>
 
         <ion-label color="{{ratingknowlage>3 ? 'secondary' : 'danger'}}">Knowlage Score: {{ratingknowlage}}</ion-label>
         <ion-range min="1" max="5" step="1" pin="true" snaps="true" color="{{ratingknowlage>3 ? 'secondary' : 'danger'}}" [(ngModel)]="ratingknowlage">
-            <ion-icon range-left color="danger" name="thumbs-down">Little</ion-icon>
-            <ion-icon range-right color="secondary" name="thumbs-up">Many</ion-icon>
+            <ion-icon range-left small name="book"></ion-icon>
+            <ion-icon range-right name="book"></ion-icon>
         </ion-range>
     </ion-card-content>
   </ion-card>

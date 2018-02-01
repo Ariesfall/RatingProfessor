@@ -54,7 +54,7 @@ export class CoursePage {
       data => {
           this.acourse = data.data;
 
-          this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode="'+this.acourse[0].ccode+'"').map(res => res.json()).subscribe(
+          this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode="'+this.ccode+'"').map(res => res.json()).subscribe(
           data => {
             if(data.data[0]==null){
               this.lectures = [{pname:'error'}];
@@ -64,10 +64,10 @@ export class CoursePage {
               
           },
           err => {
-              console.log("Oops!");
+              console.log("Oops! Get lecture.php error");
           });
 
-          this.http.get('http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?ccode='+this.acourse[0].ccode).map(res => res.json()).subscribe(
+          this.http.get('http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
           data => {
             if(data.data[0].crate==0){
               this.courserate = 'No rate';
@@ -80,12 +80,12 @@ export class CoursePage {
             this.knowlagerate = data.data[0].krate;
           },
           err => {
-            console.log("Oops!");
+            console.log("Oops! Get ratecourse.php error");
           });
 
       },
       err => {
-          console.log("Oops!");
+          console.log("Oops! Get course.php error");
       });
     //get lectures
     
@@ -96,7 +96,7 @@ export class CoursePage {
           labels: ["Learning", "Exam", "Knowlage"],
           datasets: [{
               label: '# of Votes',
-              data: [3.5, 4, 3],
+              data: [this.learningrate, this.examrate, this.knowlagerate],
               backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
                   'rgba(54, 162, 235, 0.2)',

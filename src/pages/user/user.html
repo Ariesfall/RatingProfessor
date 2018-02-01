@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Setting
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>Setting</ion-list-header>
+      <button ion-item *ngFor="let a_post of posts" (click)="itemSelected(post)">
+        {{ a_post.email }}
+      </button> 
+      <!--<button ion-item (click)="openPage(RegisterPage)">
+        Register
+      </button>
+      <button ion-item (click)="openPage(LoginPage)">
+        Login
+      </button>-->
+      <button ion-item (click)="logout()">
+          <!--<ion-icon name="log-out"></ion-icon>-->
+          Logout
+      </button>
+    
+  </ion-list>
+</ion-content>

@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
   selector: 'page-rating',
   templateUrl: 'rating.html',
 })
+
 export class RatingPage {
   acourse:any;
   ccode:any;
@@ -24,7 +25,7 @@ export class RatingPage {
   }
 
   submitratecourse(){
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?cid='+this.acourse[0].cid+'&crate='+this.ratingcourse+'&aid='+this.userid).map(res => res.json()).subscribe(
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?cid='+this.acourse[0].ccode+'&crate='+this.ratingcourse+'&aid='+this.userid).map(res => res.json()).subscribe(
       data => {
         this.courserate = data.data;
        },
@@ -43,7 +44,7 @@ export class RatingPage {
       data => {
           this.acourse = data.data;
 
-          this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?cid="'+this.acourse[0].cid+'"').map(res => res.json()).subscribe(
+          this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?cid="'+this.acourse[0].ccode+'"').map(res => res.json()).subscribe(
           data => {
               this.lectures = data.data;
           },
@@ -51,7 +52,7 @@ export class RatingPage {
               console.log("Oops!");
           });
 
-          this.http.get('http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?cid="'+this.acourse[0].cid+'"').map(res => res.json()).subscribe(
+          this.http.get('http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?cid="'+this.acourse[0].ccode+'"').map(res => res.json()).subscribe(
           data => {
             this.courserate = data.data[0].rate;
           },
