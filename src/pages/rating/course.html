@@ -40,10 +40,9 @@
   </ion-card>
 
   <ion-card>
-    
-    <ion-card-header><h4>Rate</h4></ion-card-header>
-    <div padding>
-      <ion-segment [(ngModel)]="courserate">
+    <ion-card-header>
+      Rate
+      <ion-segment [(ngModel)]="defultrate">
         <ion-segment-button value="open_rate">
           Open
         </ion-segment-button>
@@ -51,47 +50,56 @@
           Current Student
         </ion-segment-button>
       </ion-segment>
-    </div>
-    <div [ngSwitch]="courserate">
+    </ion-card-header>
+
+    
+    <div [ngSwitch]="defultrate">
     <ion-card-content *ngSwitchCase="'open_rate'">
-    <h4>Current Rate: {{courserate}}</h4>
+      Current Rate: {{courserate}}
       <canvas #barCanvas></canvas>
     </ion-card-content>
 
     <ion-card-content *ngSwitchCase="'current_rate'">
+      Nothing!
     </ion-card-content>
     </div>
   </ion-card>
 
   <ion-card>
+    <ion-card-header>Get your rate</ion-card-header>
     <ion-card-content>
-        <ion-label color="{{ratingcourse>3 ? 'secondary' : 'danger'}}">Overrall  Score: {{ratingcourse}}</ion-label>
+        <ion-label >Overrall</ion-label>
+        <ion-label>Score: {{ratingcourse}}</ion-label>
         <ion-range min="1" max="5" step="1" pin="true" snaps="true" color="{{ratingcourse>3 ? 'secondary' : 'danger'}}" [(ngModel)]="ratingcourse">
             <ion-icon range-left color="danger" name="thumbs-down"></ion-icon>
             <ion-icon range-right color="secondary" name="thumbs-up"></ion-icon>
         </ion-range>
 
-        <ion-label color="{{ratinglearn>3 ? 'secondary' : 'danger'}}">Learning Score: {{ratinglearn}}</ion-label>
+        <ion-label >Learning diffculty</ion-label>
+        <ion-label >Score: {{ratinglearn}}</ion-label>
         <ion-range min="1" max="5" step="1" pin="true" snaps="true" color="{{ratinglearn>3 ? 'secondary' : 'danger'}}" [(ngModel)]="ratinglearn">
-            <ion-icon range-left color="danger" name="sad">Easy</ion-icon>
-            <ion-icon range-right color="secondary" name="happy">Hard</ion-icon>
+            <ion-icon range-left  name="sad"></ion-icon>
+            <ion-icon range-right  name="happy"></ion-icon>
         </ion-range>
 
-        <ion-label color="{{ratingexam>3 ? 'secondary' : 'danger'}}">Exam Score: {{ratingexam}}</ion-label>
+        <ion-label >Exam diffculty</ion-label>
+        <ion-label >Score: {{ratingexam}}</ion-label>
         <ion-range min="1" max="5" step="1" pin="true" snaps="true" color="{{ratingexam>3 ? 'secondary' : 'danger'}}" [(ngModel)]="ratingexam">
-            <ion-icon range-left color="danger" name="sad">Easy</ion-icon>
-            <ion-icon range-right color="secondary" name="happy">Hard</ion-icon>
+            <ion-icon range-left  name="sad"></ion-icon>
+            <ion-icon range-right  name="happy"></ion-icon>
         </ion-range>
 
-        <ion-label color="{{ratingknowlage>3 ? 'secondary' : 'danger'}}">Knowlage Score: {{ratingknowlage}}</ion-label>
+        <ion-label >Knowlage </ion-label>
+        <ion-label>Score:{{ratingknowlage}}</ion-label>
         <ion-range min="1" max="5" step="1" pin="true" snaps="true" color="{{ratingknowlage>3 ? 'secondary' : 'danger'}}" [(ngModel)]="ratingknowlage">
             <ion-icon range-left small name="book"></ion-icon>
             <ion-icon range-right name="book"></ion-icon>
         </ion-range>
+        <button ion-button color="light" round (click)=submitratecourse()>Submit</button>
     </ion-card-content>
   </ion-card>
   
-  <button ion-button color="light" round (click)=submitratecourse()>Submit</button>
+  
   
   
 </ion-content>

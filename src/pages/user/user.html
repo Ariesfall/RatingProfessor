@@ -9,18 +9,36 @@
 <ion-content>
   <ion-list>
     <ion-list-header>Setting</ion-list-header>
-      <button ion-item *ngFor="let a_post of posts" (click)="itemSelected(post)">
+      <button ion-item (click)="personal()">
+        <ion-icon name="ios-contact"></ion-icon>
+        Personal Information
+      </button>
+      <button ion-item (click)="chpw()">
+        <ion-icon name="ios-keypad"></ion-icon>
+        Change Password
+      </button>
+
+      <!--<button ion-item *ngFor="let a_post of posts" (click)="itemSelected(post)">
         {{ a_post.email }}
       </button> 
-      <!--<button ion-item (click)="openPage(RegisterPage)">
+      <button ion-item (click)="openPage(RegisterPage)">
         Register
       </button>
       <button ion-item (click)="openPage(LoginPage)">
         Login
       </button>-->
+
+      <button ion-item (click)="contect_us()">
+          <ion-icon name="ios-bug"></ion-icon>
+          Contect Us
+      </button>
+      <button ion-item (click)="about()">
+        <ion-icon name="ios-help-circle"></ion-icon>
+        About
+      </button>
       <button ion-item (click)="logout()">
-          <!--<ion-icon name="log-out"></ion-icon>-->
-          Logout
+        <ion-icon name="ios-log-out"></ion-icon>
+        Logout
       </button>
     
   </ion-list>

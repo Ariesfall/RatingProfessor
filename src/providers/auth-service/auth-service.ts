@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { Md5 } from 'ts-md5/dist/md5'
 import 'rxjs/add/operator/map';
 
 
@@ -11,7 +12,7 @@ import 'rxjs/add/operator/map';
   and Angular DI.
 */
 
-export class User {
+export class User{
   userid: string;
   email: string;
   constructor(userid: string, email: string) {
@@ -27,6 +28,7 @@ export class AuthService {
   currentUser: User;
   posts: any;
   auth: string;
+  
   constructor(public http: Http){}
    public login(credentials) {
      if (credentials.email === null || credentials.password === null) {
@@ -35,7 +37,8 @@ export class AuthService {
        return Observable.create(observer => {
          var access;
          // At this point make a request to your backend to make a real check!
-         this.auth = this.url+"login.php/.json?username='"+credentials.email+"'&password='"+credentials.password+"'";
+         credentials.password = Md5.hashStr(credentials.password+credentials.email).toString();
+         this.auth = this.url+"login.php/.json?username="+credentials.email+"&password="+credentials.password;
          console.log(this.auth);
          this.http.get(this.auth).map(res => res.json()).subscribe(
           data => {
@@ -46,7 +49,7 @@ export class AuthService {
                 access=false;
             }
             else{
-              console.log("access OK!");
+              console.log("Login access OK!");
               console.log(this.posts.aid);
               access=true;
               this.currentUser = new User(this.posts.aid, credentials.email);
@@ -55,7 +58,7 @@ export class AuthService {
             observer.complete();
           },
           err => {
-              console.log("Oops! error");
+              console.log("Oops!login error");
               access=false;
               observer.next(access);
               observer.complete();
@@ -69,6 +72,7 @@ export class AuthService {
        return Observable.throw("Please insert credentials");
      } else {
        return Observable.create(observer => {
+          credentials.password = Md5.hashStr(credentials.password+credentials.email).toString();
           var access;
          // At this point store the credentials to your backend!
           this.auth = this.url+"register.php/.json?username="+credentials.email+"&password="+credentials.password+"&school="+credentials.school+"&year="+credentials.year;
@@ -78,7 +82,7 @@ export class AuthService {
               this.posts = data;
               if(data.success==false){
                 access=false;
-                console.log("Oops! email is created");
+                console.log("Oops! register.php error");
               }
               else{
                 access=true;

@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { AuthService } from '../../providers/auth-service/auth-service';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Platform, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { Chart } from 'chart.js';
 
@@ -28,10 +28,14 @@ export class CoursePage {
   numofvotes:number = 0;
   userid = '';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, private nav: NavController, private auth: AuthService) {
+  defultrate: string = 'open_rate';
+  isAndroid: boolean = false;
+
+  constructor(platform: Platform, public navCtrl: NavController, public navParams: NavParams, public http: Http, private nav: NavController, private auth: AuthService) {
     this.ccode = this.navParams.get('ccode');
     let info = this.auth.getUserInfo();
     this.userid = info['userid'];
+    this.isAndroid = platform.is('android');
     console.log(this.ccode);
   }
 
@@ -69,7 +73,7 @@ export class CoursePage {
 
           this.http.get('http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
           data => {
-            if(data.data[0].crate==0){
+            if(data.data[0].crate==0 || !data.data[0].crate || data.data[0].crate==null){
               this.courserate = 'No rate';
             }else{
               this.courserate = data.data[0].crate;
