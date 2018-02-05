@@ -66,12 +66,12 @@ export class HomePage{
   }
 
   ionViewDidLoad(){
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json').map(res => res.json()).subscribe(
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?limit=1').map(res => res.json()).subscribe(
       data => {
           this.courses = data.data;
       },
       err => {
-          console.log("Oops!");
+          console.log("Oops!get course error");
       });
   }
 

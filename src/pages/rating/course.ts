@@ -40,7 +40,9 @@ export class CoursePage {
   }
 
   submitratecourse(){
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?ccode='+this.ccode+'&crate='+this.ratingcourse+'&lrate='+this.ratinglearn+'&erate='+this.ratingexam+'&krate='+this.ratingknowlage+'&aid='+this.userid).map(res => res.json()).subscribe(
+    var link  = 'http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?ccode='+this.ccode+'&crate='+this.ratingcourse+'&lrate='+this.ratinglearn+'&erate='+this.ratingexam+'&krate='+this.ratingknowlage+'&aid='+this.userid;
+    //console.log(link);
+    this.http.get(link).map(res => res.json()).subscribe(
       data => {
         this.courserate = data.data;
        },
@@ -48,13 +50,14 @@ export class CoursePage {
         console.log("Oops!");
       });
   }
-
+ 
   toprofessorpage(pid){
 
   }
+  
   ionViewDidLoad() {
     console.log('ionViewDidLoad RatingPage');
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?ccode="'+this.ccode+'"').map(res => res.json()).subscribe(
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
       data => {
           this.acourse = data.data;
 
@@ -82,6 +85,38 @@ export class CoursePage {
             this.learningrate = data.data[0].lrate;
             this.examrate = data.data[0].erate;
             this.knowlagerate = data.data[0].krate;
+
+            this.barChart = new Chart(this.barCanvas.nativeElement, {
+              type: 'bar',
+              data: {
+                  labels: ["Learning", "Exam", "Knowlage"],
+                  datasets: [{
+                      label: '# of Votes',
+                      data: [this.learningrate, this.examrate, this.knowlagerate],
+                      backgroundColor: [
+                          'rgba(255, 99, 132, 0.2)',
+                          'rgba(54, 162, 235, 0.2)',
+                          'rgba(75, 192, 192, 0.2)'
+                          
+                      ],
+                      borderColor: [
+                          'rgba(255,99,132,1)',
+                          'rgba(54, 162, 235, 1)',
+                          'rgba(75, 192, 192, 1)'
+                      ],
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+                  scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true
+                          }
+                      }]
+                  }
+              }
+          });
           },
           err => {
             console.log("Oops! Get ratecourse.php error");
@@ -93,39 +128,9 @@ export class CoursePage {
       });
     //get lectures
     
-    this.barChart = new Chart(this.barCanvas.nativeElement, {
- 
-      type: 'bar',
-      data: {
-          labels: ["Learning", "Exam", "Knowlage"],
-          datasets: [{
-              label: '# of Votes',
-              data: [this.learningrate, this.examrate, this.knowlagerate],
-              backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(75, 192, 192, 0.2)'
-                  
-              ],
-              borderColor: [
-                  'rgba(255,99,132,1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(75, 192, 192, 1)'
-              ],
-              borderWidth: 1
-          }]
-      },
-      options: {
-          scales: {
-              yAxes: [{
-                  ticks: {
-                      beginAtZero:true
-                  }
-              }]
-          }
-      }
+      
 
-  });
+
   }
 
 }
