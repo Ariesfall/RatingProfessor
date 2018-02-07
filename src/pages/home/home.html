@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-searchbar
+  <!--<ion-searchbar
     [(ngModel)]="myInput"
     [showCancelButton]="shouldShowCancel"
     (ionInput)="onInput($event)"
@@ -16,7 +16,7 @@
         <h2> {{ course.name }} </h2>
         <h3> Code: <strong>{{ course.professor }}</strong> </h3>
       </ion-item>
-  </ion-list>
+  </ion-list>-->
   <h2>Hello</h2>
 
   <h3>Welcome user, {{email}}!</h3>
@@ -32,8 +32,8 @@
     <ion-row no-padding>
       <ion-col text-center>
         <button ion-button clear small color="danger" icon-start (click)="enroll(a_course.ccode)">
-          <ion-icon name='heart-outline'></ion-icon>
-          Enroll
+          <ion-icon name="{{subscribe ? 'heart' : 'heart-outline'}}"></ion-icon>
+          Subscribe
         </button>
       </ion-col>
       <ion-col text-right>

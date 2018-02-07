@@ -6,7 +6,7 @@ import { MyApp } from './app.component';
 
 import { AboutPage } from '../pages/about/about';
 import { SearchPage } from '../pages/search/search';
-import { ContactPage } from '../pages/contact/contact';
+import { NotePage } from '../pages/note/note';
 import { UserPage } from '../pages/user/user';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -26,7 +26,7 @@ import { AuthService } from '../providers/auth-service/auth-service';
     MyApp,
     AboutPage,
     SearchPage,
-    ContactPage,
+    NotePage,
     UserPage,
     HomePage,
     TabsPage,
@@ -47,7 +47,7 @@ import { AuthService } from '../providers/auth-service/auth-service';
     MyApp,
     AboutPage,
     SearchPage,
-    ContactPage,
+    NotePage,
     UserPage,
     HomePage,
     TabsPage,

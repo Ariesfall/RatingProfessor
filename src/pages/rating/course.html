@@ -15,35 +15,41 @@
 
 
 <ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
   <ion-card>
   <ion-card-header *ngFor="let a_acourse of acourse">
-    <h4>{{a_acourse.ccode}}</h4>
-    {{a_acourse.cname}}
-    <p>University: {{a_acourse.cschool}}</p>
+    {{a_acourse.ccode}}
   </ion-card-header>
-  
-  
   <ion-card-content>
   <div *ngFor="let a_acourse of acourse">
+      {{a_acourse.cname}}
+      <p>University: {{a_acourse.cschool}}</p>
       <h4>Description:</h4>
       <p>{{a_acourse.cdesp}}</p>
   </div>
-  <h4>Lecturer</h4>
-    <ion-list>
+  </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>Lecturer</ion-card-header>
+    <ion-card-content>
+      <ion-list>
       <button ion-item *ngFor="let a_lecture of lectures" (click)="toprofessorpage(a_lecture.pid)">
         <ion-icon name="person"></ion-icon>
         {{a_lecture.pname}}
       </button>
     </ion-list>
-  </ion-card-content>
+    </ion-card-content>
   </ion-card>
 
   <ion-card>
     <ion-card-header>
       Rate
       <ion-segment [(ngModel)]="defultrate">
-        <ion-segment-button value="open_rate">
+        <ion-segment-button value="open_rate" >
           Open
         </ion-segment-button>
         <ion-segment-button value="current_rate">
@@ -57,6 +63,7 @@
     <div *ngSwitchCase="'open_rate'">
       Current Rate: {{courserate}}
       <canvas #barCanvas></canvas>
+      <button ion-button (click)="toupdatecanvas()">reload</button>
     </div>
 
     <div *ngSwitchCase="'current_rate'">
@@ -69,37 +76,50 @@
   <ion-card>
     <ion-card-header>Get your rate</ion-card-header>
     <ion-card-content>
-        <ion-label >Overrall</ion-label>
-        <ion-label>Score: {{ratingcourse}}</ion-label>
+        <ion-label >Overall</ion-label>
+        <ion-note>Score: {{ratingcourse}}</ion-note>
         <ion-range min="1" max="5" step="1" pin="true" snaps="true" color="{{ratingcourse>3 ? 'secondary' : 'danger'}}" [(ngModel)]="ratingcourse">
             <ion-icon range-left color="danger" name="thumbs-down"></ion-icon>
             <ion-icon range-right color="secondary" name="thumbs-up"></ion-icon>
         </ion-range>
 
         <ion-label >Learning diffculty</ion-label>
-        <ion-label >Score: {{ratinglearn}}</ion-label>
+        <ion-note>Score: {{ratinglearn}}</ion-note>
         <ion-range min="1" max="5" step="1" pin="true" snaps="true" color="{{ratinglearn>3 ? 'secondary' : 'danger'}}" [(ngModel)]="ratinglearn">
             <ion-icon range-left  name="sad"></ion-icon>
             <ion-icon range-right  name="happy"></ion-icon>
         </ion-range>
 
         <ion-label >Exam diffculty</ion-label>
-        <ion-label >Score: {{ratingexam}}</ion-label>
+        <ion-note>Score: {{ratingexam}}</ion-note>
         <ion-range min="1" max="5" step="1" pin="true" snaps="true" color="{{ratingexam>3 ? 'secondary' : 'danger'}}" [(ngModel)]="ratingexam">
             <ion-icon range-left  name="sad"></ion-icon>
             <ion-icon range-right  name="happy"></ion-icon>
         </ion-range>
 
         <ion-label >Knowlage </ion-label>
-        <ion-label>Score:{{ratingknowlage}}</ion-label>
+        <ion-note>Score:{{ratingknowlage}}</ion-note>
         <ion-range min="1" max="5" step="1" pin="true" snaps="true" color="{{ratingknowlage>3 ? 'secondary' : 'danger'}}" [(ngModel)]="ratingknowlage">
             <ion-icon range-left small name="book"></ion-icon>
             <ion-icon range-right name="book"></ion-icon>
         </ion-range>
-        
+        <button ion-button color="light" round (click)="submitratecourse()">Submit</button>
     </ion-card-content>
   </ion-card>
-  <button ion-button color="light" round (click)="submitratecourse()">Submit</button>
+  
+  <ion-card>
+    <ion-card-header>Comment</ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let a_comment of comments">
+            <p>{{a_comment.cm}}</p>
+            <ion-note item-end>{{a_comment.date}}<br>#{{a_comment.comid}}</ion-note>
+        </ion-item>
+      </ion-list>
+      <ion-textarea placeholder="Enter a commit"  [(ngModel)]="commentcourse"></ion-textarea>
+      <button ion-button color="light" round (click)="submitratecomment()">Commit it</button>
+    </ion-card-content>    
+  </ion-card>
   
   
   

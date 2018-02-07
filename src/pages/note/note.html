@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Notification
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>2018-02-07</ion-list-header>
+    <button ion-item (click)="itemSelected(post)">
+      You have a new alart!
+      <ion-icon name="ios-mail-outline" item-end></ion-icon>
+    </button>
+    <button ion-item (click)="itemSelected(post)">
+      Please get a feedback to your lecturer.
+      <ion-icon name="ios-mail-open-outline" item-end></ion-icon>
+    </button>
+      <!--<button ion-item *ngFor="let a_post of posts" (click)="itemSelected(post)">
+        {{ a_post.email }}
+      </button>-->
+    
+  </ion-list>
+  <ion-list>
+    <ion-list-header>2018-02-06</ion-list-header>
+    <button ion-item (click)="itemSelected(post)">
+      Welcome to use our apps.
+      <ion-icon name="ios-mail-open-outline" item-end></ion-icon>
+    </button>
+  </ion-list>
+</ion-content>

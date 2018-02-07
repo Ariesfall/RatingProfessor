@@ -18,11 +18,13 @@ export class HomePage{
   userid = '';
   email = '';
   courses: any;
+  subscribe:boolean=false;
 
   constructor(public navCtrl: NavController, public http: Http, private alertCtrl: AlertController, private nav: NavController, private auth: AuthService) {
     let info = this.auth.getUserInfo();
     this.userid = info['userid'];
     this.email = info['email'];
+    
 
     /*this.courseRef.on('value', courseList => {//db
       let countries = [];
@@ -83,16 +85,16 @@ export class HomePage{
 
   enroll(ccode){
     let alert = this.alertCtrl.create({
-      title: 'Enroll'+ccode,
+      title: 'Subscribe '+ccode,
       inputs: [
         {
-          name: 'username',
-          placeholder: 'Username'
+          name: 'Lecturer',
+          placeholder: 'Lecturer name'
         },
         {
-          name: 'password',
-          placeholder: 'Password',
-          type: 'password'
+          name: 'exp date',
+          placeholder: '',
+          type: 'date'
         }
       ],
       buttons: [
@@ -104,13 +106,17 @@ export class HomePage{
           }
         },
         {
-          text: 'Login',
+          text: 'Subscribe',
           handler: data => {
+            this.subscribe=true;
           }
         }
       ]
     });
     alert.present();
+  }
+  deenroll(ccode){
+    this.subscribe=false;
   }
 
 }
