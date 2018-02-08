@@ -91,6 +91,7 @@ export class CoursePage {
   }
   
   toupdatecanvas() {
+    this.loadrating();
     this.barChart = new Chart(this.barCanvas.nativeElement, {
       type: 'bar',
       data: {
@@ -195,7 +196,7 @@ export class CoursePage {
 
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
-
+    this.ionViewDidLoad();
     setTimeout(() => {
       console.log('Async operation has ended');
       refresher.complete();

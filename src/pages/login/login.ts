@@ -40,7 +40,7 @@ export class LoginPage {
       if (allowed) {
         this.nav.setRoot(TabsPage);
       } else {
-        this.showError("Access Denied");
+        this.showError("Email or password incorrect");
       }
     },
       error => {
@@ -67,6 +67,8 @@ export class LoginPage {
     
     alert.present(prompt);
   }
+
+  
   
   /*constructor(public navCtrl: NavController, public navParams: NavParams) {
   }

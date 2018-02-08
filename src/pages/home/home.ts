@@ -68,6 +68,10 @@ export class HomePage{
   }
 
   ionViewDidLoad(){
+    this.togetcourse();
+  }
+
+  togetcourse(){
     this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?limit=1').map(res => res.json()).subscribe(
       data => {
           this.courses = data.data;
@@ -76,7 +80,6 @@ export class HomePage{
           console.log("Oops!get course error");
       });
   }
-
   tocoursepage(ccode){
     this.navCtrl.push(CoursePage,{
       ccode : ccode
@@ -115,8 +118,18 @@ export class HomePage{
     });
     alert.present();
   }
+
   deenroll(ccode){
     this.subscribe=false;
+  }
+
+  doRefresh(refresher) {
+    console.log('Begin async operation', refresher);
+    this.togetcourse();
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      refresher.complete();
+    }, 2000);
   }
 
 }
