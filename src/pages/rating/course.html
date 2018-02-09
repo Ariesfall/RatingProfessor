@@ -37,9 +37,10 @@
     <ion-card-header>Lecturer</ion-card-header>
     <ion-card-content>
       <ion-list>
-      <button ion-item *ngFor="let a_lecture of lectures" (click)="toprofessorpage(a_lecture.pid)">
+      <button ion-item *ngFor="let a_lecture of lectures" (click)="tolecturepage(a_lecture.pid)">
         <ion-icon name="person"></ion-icon>
         {{a_lecture.pname}}
+          <!--<ion-icon name='stats' item-end small (click)="toratelecturepage(a_lecture.pid)"></ion-icon>-->            
       </button>
     </ion-list>
     </ion-card-content>
@@ -49,7 +50,7 @@
     <ion-card-header>
       Rate
       <ion-segment [(ngModel)]="defultrate">
-        <ion-segment-button value="open_rate" >
+        <ion-segment-button value="open_rate" (click)="loadrating()">
           Open
         </ion-segment-button>
         <ion-segment-button value="current_rate">
@@ -63,7 +64,7 @@
     <div *ngSwitchCase="'open_rate'">
       Current Rate: {{courserate}}
       <canvas #barCanvas></canvas>
-      <button ion-button (click)="toupdatecanvas()">reload</button>
+      <button ion-button (click)="loadrating()">reload</button>
     </div>
 
     <div *ngSwitchCase="'current_rate'">

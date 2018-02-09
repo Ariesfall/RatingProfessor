@@ -80,6 +80,7 @@ export class HomePage{
           console.log("Oops!get course error");
       });
   }
+  
   tocoursepage(ccode){
     this.navCtrl.push(CoursePage,{
       ccode : ccode

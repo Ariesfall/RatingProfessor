@@ -3,6 +3,7 @@ import { AuthService } from '../../providers/auth-service/auth-service';
 import { ToastController, Platform, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { Chart } from 'chart.js';
+import { LecturePage } from '../../pages/rating/lecture';
 
 import 'rxjs/add/operator/map'; 
 
@@ -44,8 +45,35 @@ export class CoursePage {
     console.log(this.ccode);
     //get lectures
   }
-
   
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad CoursePage');
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
+      data => {
+          this.acourse = data.data;
+
+          this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
+          data => {
+            if(data.success==false){
+              this.lectures = [{pname:'No Presistance'}];
+            }else{
+              this.lectures = data.data;
+            }
+              
+          },
+          err => {
+              console.log("Oops! Get lecture.php error");
+          });
+
+          this.loadrating();
+
+      },
+      err => {
+          console.log("Oops! Get course.php error");
+      });
+      this.loadcomment();
+      
+  }
 
   submitratecourse(){
     var link  = 'http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?ccode='+this.ccode+'&crate='+this.ratingcourse+'&lrate='+this.ratinglearn+'&erate='+this.ratingexam+'&krate='+this.ratingknowlage+'&aid='+this.userid;
@@ -86,12 +114,15 @@ export class CoursePage {
 
   }
 
-  toprofessorpage(pid){
-
+  tolecturepage(pid){
+    console.log("tolecturepage pid "+pid);
+    this.navCtrl.push(LecturePage,{
+      pid : pid
+    });
   }
   
+  
   toupdatecanvas() {
-    this.loadrating();
     this.barChart = new Chart(this.barCanvas.nativeElement, {
       type: 'bar',
       data: {
@@ -127,34 +158,7 @@ export class CoursePage {
     });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad RatingPage');
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
-      data => {
-          this.acourse = data.data;
-
-          this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
-          data => {
-            if(data.data[0]==null){
-              this.lectures = [{pname:'No Presistance'}];
-            }else{
-              this.lectures = data.data;
-            }
-              
-          },
-          err => {
-              console.log("Oops! Get lecture.php error");
-          });
-
-          this.loadrating();
-
-      },
-      err => {
-          console.log("Oops! Get course.php error");
-      });
-      this.loadcomment();
-      
-  }
+  
 
   loadrating(){
     this.http.get('http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
@@ -184,6 +188,7 @@ export class CoursePage {
           console.log("Oops! Get commit.php error");
       });
   }
+
   showToast(position: string, Msg: string) {
     let toast = this.toastCtrl.create({
       message: Msg,
@@ -196,7 +201,7 @@ export class CoursePage {
 
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
-    this.ionViewDidLoad();
+    //this.ionViewDidLoad();
     setTimeout(() => {
       console.log('Async operation has ended');
       refresher.complete();

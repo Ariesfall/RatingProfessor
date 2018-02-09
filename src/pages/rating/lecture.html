@@ -6,43 +6,56 @@
 -->
 
 <ion-header>
-
   <ion-navbar>
-    <ion-title>Lecturer
-    </ion-title>
+    <ion-title>Lecture</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
-  <div *ngFor="let a_acourse of acourse">
-    <h4>{{a_acourse.ccode}}</h4>
-    <h5>{{a_acourse.cname}}</h5>
-  </div>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
-  <h4>Lecturer</h4>
-  <ion-list>
-    <button ion-item *ngFor="let a_lecture of lectures" (click)="toprofessorpage(a_lecture.pid)">
-      <ion-icon name="person"></ion-icon>
-      {{a_lecture.pname}}
-    </button>
-  </ion-list>
+  <ion-card>
+    <ion-card-header>Lecturer</ion-card-header>
+    <ion-card-content *ngFor="let a_lecture of lecturedata">
+      <H4>{{a_lecture.pname}}</H4>
+      <p>Associate Professor</p>
+      <p>PhD, MSc, BSc Hons</p>
+      <p>Email: {{a_lecture.email}} </p>
+      <p>University: {{a_lecture.school}} </p>
+      <p>Phone: (+852) 2768 0000</p>
+      <br>
+      Description:
+      <p>{{a_lecture.pdesp}}
+      Oliver received his BA, MSc and PhD from York University, University of Toronto and Loughborough University respectively. He worked for IBM and a few other large companies in Canada for 12 years before pursuing a teaching career in Hong Kong. His research interests include requirements engineering, software development processes and education. He enjoys music, sports, travelling and the nature.
+      </p>
+    </ion-card-content>
+  </ion-card>
 
-  <h4>Rate</h4>
-  <h4>Current Rate: {{courserate}}</h4>
-  <div>
-    <ion-label color="{{ratingcourse>3 ? 'secondary' : 'danger'}}">Score: {{ratecourse}}</ion-label>
-    <ion-range min="1" max="5" step="1" pin="true" snaps="true" color="{{ratingcourse>3 ? 'secondary' : 'danger'}}" [(ngModel)]="ratecourse">
-        <ion-icon range-left color="danger" name="thumbs-down"></ion-icon>
-        <ion-icon range-right color="secondary" name="thumbs-up"></ion-icon>
-    </ion-range>
-    <button ion-button color="light" round (click)=submitratecourse()>Submit</button>
-  </div>
-  <div *ngFor="let a_acourse of acourse">
-  <h4>Description:</h4>
-  <p>{{a_acourse.cdesp}}</p>
-  <p>University: {{a_acourse.cschool}}</p>
-  </div>
+  <ion-card >
+    <ion-card-header>Teaching Course</ion-card-header>
+    <ion-card-content>
+      <ion-list>
+      <button ion-item *ngFor="let a_course of coursedata" (click)="tocoursepage(a_course.ccode)" >
+        <p>{{a_course.ccode}}</p>
+      </button>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  
+  <!--<ion-card>
+    <ion-card-header>Comment</ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let a_comment of comments">
+            <p>{{a_comment.cm}}</p>
+            <ion-note item-end>{{a_comment.date}}<br>#{{a_comment.comid}}</ion-note>
+        </ion-item>
+      </ion-list>
+      <ion-textarea placeholder="Enter a commit"  [(ngModel)]="commentcourse"></ion-textarea>
+      <button ion-button color="light" round (click)="submitratecomment()">Commit it</button>
+    </ion-card-content>    
+  </ion-card>-->
   
 </ion-content>
