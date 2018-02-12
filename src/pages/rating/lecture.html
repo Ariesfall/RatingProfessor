@@ -17,7 +17,7 @@
   </ion-refresher>
 
   <ion-card>
-    <ion-card-header>Lecturer</ion-card-header>
+    <ion-card-header>Lecturer Information</ion-card-header>
     <ion-card-content *ngFor="let a_lecture of lecturedata">
       <H4>{{a_lecture.pname}}</H4>
       <p>Associate Professor</p>
@@ -39,6 +39,8 @@
       <ion-list>
       <button ion-item *ngFor="let a_course of coursedata" (click)="tocoursepage(a_course.ccode)" >
         <p>{{a_course.ccode}}</p>
+        <p>Course Rate: {{a_course.crate==null ? 'No Rate' : a_course.crate}}</p>
+        <p>Lecturer Rate: {{a_course.lscore==null ? 'No Rate' : a_course.lscore}}</p>
       </button>
       </ion-list>
     </ion-card-content>

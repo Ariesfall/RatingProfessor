@@ -37,11 +37,18 @@
     <ion-card-header>Lecturer</ion-card-header>
     <ion-card-content>
       <ion-list>
-      <button ion-item *ngFor="let a_lecture of lectures" (click)="tolecturepage(a_lecture.pid)">
-        <ion-icon name="person"></ion-icon>
-        {{a_lecture.pname}}
-          <!--<ion-icon name='stats' item-end small (click)="toratelecturepage(a_lecture.pid)"></ion-icon>-->            
-      </button>
+      <ion-item *ngFor="let a_lecture of lectures">
+          <button ion-item (click)="tolecturepage(a_lecture.pid)">
+              <ion-icon name="person"></ion-icon>
+              {{a_lecture.pname}}
+                <!--<ion-icon name='stats' item-end small (click)="toratelecturepage(a_lecture.pid)"></ion-icon>-->            
+          </button>
+          <button ion-item (click)="toratelecturepage(a_lecture.pid)">
+              Lecturer: {{a_lecture.lscore==null ? 'No Rate' : a_course.lscore}}
+              <ion-icon item-end small name="stats"></ion-icon>
+          </button>
+      </ion-item>
+      
     </ion-list>
     </ion-card-content>
   </ion-card>

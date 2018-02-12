@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AuthService } from '../../providers/auth-service/auth-service';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ToastController, Platform, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
+import { Chart } from 'chart.js';
+import { LecturePage } from '../../pages/rating/lecture';
 import 'rxjs/add/operator/map'; 
 
 @Component({
@@ -10,61 +12,125 @@ import 'rxjs/add/operator/map';
 })
 
 export class RatingPage {
-  acourse:any;
-  ccode:any;
-  lectures:any;
-  ratingcourse:number = 4;
-  courserate:any = 'No rate';
-  userid = '';
+  @ViewChild('barCanvas') barCanvas;
+  barChart: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, private nav: NavController, private auth: AuthService) {
+  ccode:string;
+  pid:string;
+  userid = '';
+  
+  lecturescore:any;
+  lecturecm:any;
+  lectures:any;
+
+  q1:any;
+  q2:any;
+  q3:any;
+  q4:any;
+  q5:any;
+  text:string;
+
+  constructor(public toastCtrl: ToastController,public navCtrl: NavController, public navParams: NavParams, public http: Http, private nav: NavController, private auth: AuthService) {
     this.ccode = this.navParams.get('ccode');
+    this.pid = this.navParams.get('pid');
     let info = this.auth.getUserInfo();
     this.userid = info['userid'];
-    console.log(this.ccode);
+    console.log(this.ccode,this.pid,this.userid);
   }
 
-  submitratecourse(){
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?cid='+this.acourse[0].ccode+'&crate='+this.ratingcourse+'&aid='+this.userid).map(res => res.json()).subscribe(
+  submitratelecture(){
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?cid='+this.ccode+'&pid='+this.pid+'&q1='+this.q1+'&aid='+this.userid).map(res => res.json()).subscribe(
       data => {
-        this.courserate = data.data;
+        this.lecturescore = data.data;
        },
       err => {
         console.log("Oops!");
       });
   }
 
-  toprofessorpage(pid){
-
+  tolecturepage(pid){
+    console.log("tolecturepage pid "+pid);
+    this.navCtrl.push(LecturePage,{
+      pid : pid
+    });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RatingPage');
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?ccode="'+this.ccode+'"').map(res => res.json()).subscribe(
+    //get lectures
+  }
+
+  loadrating(){
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode='+this.ccode+'&pid='+this.pid).map(res => res.json()).subscribe(
       data => {
-          this.acourse = data.data;
-
-          this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?cid="'+this.acourse[0].ccode+'"').map(res => res.json()).subscribe(
-          data => {
-              this.lectures = data.data;
-          },
-          err => {
-              console.log("Oops!");
-          });
-
-          this.http.get('http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?cid="'+this.acourse[0].ccode+'"').map(res => res.json()).subscribe(
-          data => {
-            this.courserate = data.data[0].rate;
-          },
-          err => {
-            console.log("Oops!");
-          });
-
+        if(data.data[0].crate==0 || !data.data[0].crate || data.data[0].crate==null){
+          this.lecturescore = 'No rate';
+        }else{
+          this.lecturescore = data.data;
+          this.lecturecm=data.data;
+        }
+        this.toupdatecanvas();
+        
       },
       err => {
-          console.log("Oops!");
+        console.log("Oops! Get lecture.php error");
       });
-    //get lectures
+  }
+  
+
+  toupdatecanvas() {
+    this.barChart = new Chart(this.barCanvas.nativeElement, {
+      type: 'bar',
+      data: {
+          labels: ["Overall","Learning", "Exam", "Knowlage"],
+          datasets: [{
+              label: ' ',
+              data: [0, 0, 0, 0],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)'
+                  
+              ],
+              borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+          }
+      }
+    });
+  }
+
+  showToast(position: string, Msg: string) {
+    let toast = this.toastCtrl.create({
+      message: Msg,
+      duration: 1000,
+      position: position
+    });
+
+    toast.present(toast);
+  }
+
+  doRefresh(refresher) {
+    console.log('Begin async operation', refresher);
+    //this.ionViewDidLoad();
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      refresher.complete();
+    }, 2000);
   }
 
 }

@@ -4,6 +4,7 @@ import { ToastController, Platform, IonicPage, NavController, NavParams } from '
 import { Http } from '@angular/http';
 import { Chart } from 'chart.js';
 import { LecturePage } from '../../pages/rating/lecture';
+import { RatingPage } from '../../pages/rating/rating';
 
 import 'rxjs/add/operator/map'; 
 
@@ -120,6 +121,14 @@ export class CoursePage {
       pid : pid
     });
   }
+
+  toratelecturepage(pid){
+    console.log("tolecturepage pid "+pid);
+    this.navCtrl.push(RatingPage,{
+      pid : pid,
+      ccode : this.ccode
+    });
+  }
   
   
   toupdatecanvas() {
@@ -158,8 +167,6 @@ export class CoursePage {
     });
   }
 
-  
-
   loadrating(){
     this.http.get('http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
       data => {
@@ -179,13 +186,14 @@ export class CoursePage {
         console.log("Oops! Get ratecourse.php error");
       });
   }
+  
   loadcomment(){
     this.http.get('http://ratingstudy.ddns.net/ratingstudy/comment.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
       data => {
           this.comments = data.data;
       },
       err => {
-          console.log("Oops! Get commit.php error");
+          console.log("Oops! Get comment.php error");
       });
   }
 
