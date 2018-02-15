@@ -15,23 +15,24 @@
 
 
 <ion-content padding>
-  <div *ngFor="let a_acourse of acourse">
-    <h4>{{a_acourse.ccode}}</h4>
-    <h5>{{a_acourse.cname}}</h5>
-    <p>University: {{a_acourse.cschool}}</p>
-    <p (click)="toprofessorpage(a_acourse.pid)">Lecture: {{a_acourse.lecture}}</p>
+  <div>
+    <h4>{{ccode}}</h4>
+    <h5>{{cname}}</h5>
+    <h5 (click)="tolecturepage(pid)">{{pname}}</h5>
+    <p>University: {{school}}</p>
   </div>
-
-  <ion-list>
-    <ion-item></ion-item>
-  </ion-list>
 
   <h4>Rate</h4>
   <h4>Current Rate: {{lecturerate}}</h4>
   <div>
-      <canvas #barCanvas></canvas>
-
-    <button ion-button color="light" round (click)=submitratecourse()>Submit</button>
+    <canvas #barCanvas></canvas>
+    <button ion-button (click)="loadrating()">reload</button>
   </div>
   
+  <ion-list>
+    <ion-item>
+
+      <button ion-button color="light" round (click)=submitratecourse()>Submit</button>
+    </ion-item>
+  </ion-list>
 </ion-content>

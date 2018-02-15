@@ -15,9 +15,15 @@ import 'rxjs/add/operator/map';
 export class User{
   userid: string;
   email: string;
-  constructor(userid: string, email: string) {
+  school:string;
+  year:number;
+  accesslv:string;
+  constructor(userid: string, email: string, school:string, year:number, accesslv:string) {
     this.userid = userid;
-    this.email = email
+    this.email = email;
+    this.school = school;
+    this.year = year;
+    this.accesslv = accesslv;
   }
 }
 
@@ -45,14 +51,14 @@ export class AuthService {
             console.log(data);
             this.posts = data.data[0];
             if(this.posts==null){
-                console.log("Uncorrect email or pw");
+                console.log("Uncorrect email or password");
                 access=false;
             }
             else{
               console.log("Login access OK!");
               console.log(this.posts.aid);
               access=true;
-              this.currentUser = new User(this.posts.aid, credentials.email);
+              this.currentUser = new User(this.posts.aid, credentials.email, this.posts.school, this.posts.year, this.posts.accesslv);
             }
             observer.next(access);
             observer.complete();

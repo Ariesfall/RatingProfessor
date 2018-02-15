@@ -38,7 +38,7 @@ export class CoursePage {
   defultrate: string = 'open_rate';
   isAndroid: boolean = false;
 
-  constructor( public toastCtrl: ToastController, platform: Platform, public navCtrl: NavController, public navParams: NavParams, public http: Http, private nav: NavController, private auth: AuthService) {
+  constructor( public toastCtrl: ToastController, platform: Platform, public navCtrl: NavController, public navParams: NavParams, public http: Http, private auth: AuthService) {
     this.ccode = this.navParams.get('ccode');
     let info = this.auth.getUserInfo();
     this.userid = info['userid'];
@@ -122,11 +122,15 @@ export class CoursePage {
     });
   }
 
-  toratelecturepage(pid){
+  toratingpage(pid, pname){
     console.log("tolecturepage pid "+pid);
     this.navCtrl.push(RatingPage,{
       pid : pid,
-      ccode : this.ccode
+      pname : pname,
+      ccode : this.ccode,
+      cname : this.acourse[0].cname,
+      cschool : this.acourse[0].cschool,
+      cdesp : this.acourse[0].cdesp
     });
   }
   

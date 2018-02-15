@@ -43,8 +43,8 @@
               {{a_lecture.pname}}
                 <!--<ion-icon name='stats' item-end small (click)="toratelecturepage(a_lecture.pid)"></ion-icon>-->            
           </button>
-          <button ion-item (click)="toratelecturepage(a_lecture.pid)">
-              Lecturer: {{a_lecture.lscore==null ? 'No Rate' : a_course.lscore}}
+          <button ion-item (click)="toratingpage(a_lecture.pid, a_lecture.pname)">
+              Score:  {{a_lecture.pscore==null ? 'No Rate' : a_lecture.pscore}}
               <ion-icon item-end small name="stats"></ion-icon>
           </button>
       </ion-item>

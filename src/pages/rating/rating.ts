@@ -13,11 +13,16 @@ import 'rxjs/add/operator/map';
 
 export class RatingPage {
   @ViewChild('barCanvas') barCanvas;
-  barChart: any;
+  barChart2: any;
+  isAndroid: boolean = false;
 
+  userid = '';
+  
   ccode:string;
   pid:string;
-  userid = '';
+  pname:string;
+  cname: string;
+  school: string;
   
   lecturescore:any;
   lecturecm:any;
@@ -30,11 +35,15 @@ export class RatingPage {
   q5:any;
   text:string;
 
-  constructor(public toastCtrl: ToastController,public navCtrl: NavController, public navParams: NavParams, public http: Http, private nav: NavController, private auth: AuthService) {
+  constructor(public toastCtrl: ToastController, platform: Platform, public navCtrl: NavController, public navParams: NavParams, public http: Http, private auth: AuthService) {
     this.ccode = this.navParams.get('ccode');
     this.pid = this.navParams.get('pid');
+    this.pname = this.navParams.get('pname');
+    this.cname = this.navParams.get('cname');
+    this.school = this.navParams.get('cschool');
     let info = this.auth.getUserInfo();
     this.userid = info['userid'];
+    this.isAndroid = platform.is('android');
     console.log(this.ccode,this.pid,this.userid);
   }
 
@@ -58,6 +67,7 @@ export class RatingPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad RatingPage');
     //get lectures
+    this.loadrating();
   }
 
   loadrating(){
@@ -67,7 +77,7 @@ export class RatingPage {
           this.lecturescore = 'No rate';
         }else{
           this.lecturescore = data.data;
-          this.lecturecm=data.data;
+          this.lecturecm = data.data2;
         }
         this.toupdatecanvas();
         
@@ -79,7 +89,7 @@ export class RatingPage {
   
 
   toupdatecanvas() {
-    this.barChart = new Chart(this.barCanvas.nativeElement, {
+    this.barChart2 = new Chart(this.barCanvas.nativeElement, {
       type: 'bar',
       data: {
           labels: ["Overall","Learning", "Exam", "Knowlage"],

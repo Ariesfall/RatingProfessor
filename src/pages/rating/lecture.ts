@@ -16,6 +16,7 @@ export class LecturePage {
   
   userid = '';
   pid: String;
+  
   lecturedata: any;
   coursedata:any;
 
