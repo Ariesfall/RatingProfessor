@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { AuthService } from '../../providers/auth-service/auth-service';
-import { ToastController, Platform, IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ViewController, ModalController, ToastController, Platform, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { Chart } from 'chart.js';
 import { LecturePage } from '../../pages/rating/lecture';
@@ -25,11 +25,12 @@ export class CoursePage {
   ratingexam:number = 4;
   ratingknowlage:number = 4;
 
+
   courserate:any;
   learningrate:number = 0;
   examrate:number = 0;
   knowlagerate:number = 0;
-  numofvotes:number = 0;
+  numofvotes;
   userid = '';
 
   comments:any;
@@ -38,7 +39,15 @@ export class CoursePage {
   defultrate: string = 'open_rate';
   isAndroid: boolean = false;
 
-  constructor( public toastCtrl: ToastController, platform: Platform, public navCtrl: NavController, public navParams: NavParams, public http: Http, private auth: AuthService) {
+  constructor( 
+    public modalCtrl: ModalController,
+    public toastCtrl: ToastController, 
+    platform: Platform, 
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public http: Http, 
+    private auth: AuthService
+  ) {
     this.ccode = this.navParams.get('ccode');
     let info = this.auth.getUserInfo();
     this.userid = info['userid'];
@@ -46,7 +55,13 @@ export class CoursePage {
     console.log(this.ccode);
     //get lectures
   }
-  
+
+  /*openModal() {
+
+    let modal = this.modalCtrl.create(CourseRatingPage,{ccode:"'+this.ccode+'"});
+    modal.present();
+  }*/
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad CoursePage');
     this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
@@ -81,17 +96,17 @@ export class CoursePage {
     //console.log(link);
     this.http.get(link).map(res => res.json()).subscribe(
       data => {
-        if (data.successfull==false){
+        if (data.success==false){
           this.showToast('middle', 'Rate fail, please try again ');
-          this.courserate = this.learningrate = this.examrate= this.knowlagerate = 4;
+          //this.ratingcourse = this.ratingexam = this.ratingknowlage= this.ratinglearn = 4;
         }else{
           this.showToast('middle', 'Rate Successfull'); 
-          this.courserate = this.learningrate = this.examrate= this.knowlagerate = 4;
+          this.ratingcourse = this.ratingexam = this.ratingknowlage= this.ratinglearn = 4;
           this.loadrating();
         }
        },
       err => {
-        console.log("Oops! ratecourse.php error");
+        console.log("Oops! submit ratecourse.php error");
       });
   }
  
@@ -100,7 +115,7 @@ export class CoursePage {
     //console.log(link);
     this.http.get(link).map(res => res.json()).subscribe(
       data => {
-        if (data.successfull==false){
+        if (data.success==false){
           this.showToast('middle', 'Comment fail, please try again ');
           this.commentcourse=null;
         }else{
@@ -110,7 +125,7 @@ export class CoursePage {
         }
        },
       err => {
-        console.log("Oops! comment.php error");
+        console.log("Oops! submit comment.php error");
       });
 
   }
@@ -139,9 +154,9 @@ export class CoursePage {
     this.barChart = new Chart(this.barCanvas.nativeElement, {
       type: 'bar',
       data: {
-          labels: ["Overall","Learning", "Exam", "Knowlage"],
+          labels: ["Overall","Learning", "Exam", "Content"],
           datasets: [{
-              label: ' ',
+              label: '# of Votes: '+this.numofvotes,
               data: [this.courserate, this.learningrate, this.examrate, this.knowlagerate],
               backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
@@ -183,7 +198,9 @@ export class CoursePage {
         this.learningrate = data.data[0].lrate;
         this.examrate = data.data[0].erate;
         this.knowlagerate = data.data[0].krate;
+        this.numofvotes=data.data[0].votenum;
         this.toupdatecanvas();
+        this.barChart.update();
         
       },
       err => {
@@ -220,5 +237,59 @@ export class CoursePage {
     }, 2000);
   }
 
-  
 }
+
+/*@Component({
+  template: 'courserating.html',
+})
+export class CourseRatingPage {
+  character;
+  ccode;
+  ratingcourse:number = 4;
+  ratinglearn:number = 4;
+  ratingexam:number = 4;
+  ratingknowlage:number = 4;
+
+  constructor(
+    public platform: Platform,
+    public params: NavParams,
+    public http: Http, 
+    public toastCtrl: ToastController, 
+    public viewCtrl: ViewController
+  ) {
+    this.ccode = this.params.get('ccode');
+    //this.character = this.params.get('charNum');
+  }
+
+  submitratecourse(){
+    var link  = 'http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?ccode='+this.ccode+'&crate='+this.ratingcourse+'&lrate='+this.ratinglearn+'&erate='+this.ratingexam+'&krate='+this.ratingknowlage+'&aid='+this.userid;
+    //console.log(link);
+    this.http.get(link).map(res => res.json()).subscribe(
+      data => {
+        if (data.success==false){
+          this.showToast('middle', 'Rate fail, please try again ');
+        }else{
+          this.showToast('middle', 'Rate Successfull'); 
+          this.ratingcourse = this.ratingexam = this.ratingknowlage= this.ratinglearn = 4;
+          
+        }
+       },
+      err => {
+        console.log("Oops! submit ratecourse.php error");
+      });
+  }
+
+  showToast(position: string, Msg: string) {
+    let toast = this.toastCtrl.create({
+      message: Msg,
+      duration: 1000,
+      position: position
+    });
+
+    toast.present(toast);
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
+  }
+}*/

@@ -15,7 +15,7 @@ import { RegisterPage } from '../pages/register/register';
 import { LoginPage } from '../pages/login/login';
 import { RatingPage } from '../pages/rating/rating';
 import { LecturePage } from '../pages/rating/lecture';
-import { CoursePage } from '../pages/rating/course';
+import { CoursePage,CourseRatingPage } from '../pages/rating/course';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -35,6 +35,7 @@ import { AuthService } from '../providers/auth-service/auth-service';
     RegisterPage,
     RatingPage,
     CoursePage,
+    CourseRatingPage,
     LecturePage
   ],
   imports: [
@@ -56,6 +57,7 @@ import { AuthService } from '../providers/auth-service/auth-service';
     RegisterPage,
     RatingPage,
     CoursePage,
+    CourseRatingPage,
     LecturePage
   ],
   providers: [

@@ -13,7 +13,11 @@ import 'rxjs/add/operator/map';
 
 export class RatingPage {
   @ViewChild('barCanvas') barCanvas;
+  @ViewChild('radarCanvas') radarCanvas;
+  @ViewChild('lineCanvas') lineCanvas;
   barChart2: any;
+  radarChart: any;
+  lineChart: any;
   isAndroid: boolean = false;
 
   userid = '';
@@ -23,10 +27,13 @@ export class RatingPage {
   pname:string;
   cname: string;
   school: string;
-  
-  lecturescore:any;
+
+  lecturescore1:any;
+  lecturescore2:any;
   lecturecm:any;
   lectures:any;
+
+  numofvot:any;
 
   q1:any;
   q2:any;
@@ -50,7 +57,7 @@ export class RatingPage {
   submitratelecture(){
     this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?cid='+this.ccode+'&pid='+this.pid+'&q1='+this.q1+'&aid='+this.userid).map(res => res.json()).subscribe(
       data => {
-        this.lecturescore = data.data;
+        this.lecturescore2 = data.data;
        },
       err => {
         console.log("Oops!");
@@ -67,18 +74,15 @@ export class RatingPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad RatingPage');
     //get lectures
-    this.loadrating();
+    this.loaddataing();
   }
 
-  loadrating(){
+  loaddataing(){
     this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode='+this.ccode+'&pid='+this.pid).map(res => res.json()).subscribe(
       data => {
-        if(data.data[0].crate==0 || !data.data[0].crate || data.data[0].crate==null){
-          this.lecturescore = 'No rate';
-        }else{
-          this.lecturescore = data.data;
-          this.lecturecm = data.data2;
-        }
+          this.lecturescore1 = data.data1;
+          this.lecturescore2 = data.data2;
+          this.lecturecm = data.data3;
         this.toupdatecanvas();
         
       },
@@ -89,13 +93,57 @@ export class RatingPage {
   
 
   toupdatecanvas() {
+    this.lineChart = new Chart(this.lineCanvas.nativeElement, {
+      type: 'line',
+      data: {
+        labels: ['Week1', 'Week2', 'Week3', 'Week4', 'Week5', 'Week6'],
+        datasets: [{
+            label: '# of Votes: ' + this.numofvot,
+            data: [2.9, 4.9, 4.1, 2.1, 4, 3.1],
+            backgroundColor: [
+                  'rgba(54, 162, 235, 0.2)'
+              ],
+            borderColor: [
+                  'rgba(54, 162, 235, 1)'
+              ],
+            borderWidth: 1
+          }]
+      }
+    });
+
+    this.radarChart = new Chart(this.radarCanvas.nativeElement, {
+      type: 'radar',
+      data: {
+        labels: ['Clear', 'Understand', 'Schedule', 'Material', 'Helpful'],
+        datasets: [{
+            label: '# of Votes: ' + this.numofvot,
+            data: [2.9, 4.9, 4.1, 2.1, 4],
+            backgroundColor: [
+                  'rgba(54, 162, 235, 0.2)'
+              ],
+            borderColor: [
+                  'rgba(54, 162, 235, 1)'
+              ],
+            pointBackgroundColor: 'rgba(54, 162, 235, 0.2)',
+            pointStyle: 'circle',
+            borderWidth: 1
+          }]
+      },
+      options: {
+        scale: {
+            // Hides the scale
+            display: true
+        }
+    }
+    });
+
     this.barChart2 = new Chart(this.barCanvas.nativeElement, {
       type: 'bar',
       data: {
-          labels: ["Overall","Learning", "Exam", "Knowlage"],
+          labels: ['Clear', 'Understand', 'Schedule', 'Material', 'Helpful'],
           datasets: [{
-              label: ' ',
-              data: [0, 0, 0, 0],
+              label: '# of Votes: ' + this.numofvot,
+              data: [2.9, 4.9, 4.1, 2.1, 4],
               backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
                   'rgba(54, 162, 235, 0.2)',
