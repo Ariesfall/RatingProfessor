@@ -239,7 +239,7 @@ export class CoursePage {
 
 }
 
-/*@Component({
+@Component({
   template: 'courserating.html',
 })
 export class CourseRatingPage {
@@ -261,7 +261,7 @@ export class CourseRatingPage {
     //this.character = this.params.get('charNum');
   }
 
-  submitratecourse(){
+  /*submitratecourse(){
     var link  = 'http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?ccode='+this.ccode+'&crate='+this.ratingcourse+'&lrate='+this.ratinglearn+'&erate='+this.ratingexam+'&krate='+this.ratingknowlage+'&aid='+this.userid;
     //console.log(link);
     this.http.get(link).map(res => res.json()).subscribe(
@@ -287,9 +287,9 @@ export class CourseRatingPage {
     });
 
     toast.present(toast);
-  }
+  }*/
 
   dismiss() {
     this.viewCtrl.dismiss();
   }
-}*/
+}

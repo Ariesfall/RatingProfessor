@@ -12,10 +12,10 @@ import 'rxjs/add/operator/map';
 })
 
 export class RatingPage {
-  @ViewChild('barCanvas') barCanvas;
+  //@ViewChild('barCanvas') barCanvas;
   @ViewChild('radarCanvas') radarCanvas;
   @ViewChild('lineCanvas') lineCanvas;
-  barChart2: any;
+  //barChart2: any;
   radarChart: any;
   lineChart: any;
   isAndroid: boolean = false;
@@ -35,7 +35,7 @@ export class RatingPage {
 
   numofvot:any;
 
-  q1:any;
+  q1:number;
   q2:any;
   q3:any;
   q4:any;
@@ -108,6 +108,20 @@ export class RatingPage {
               ],
             borderWidth: 1
           }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+              ticks: {
+                  beginAtZero: true,
+                  max : 5
+              }
+          }]
+      },
+        title: {
+          display: true,
+          text: 'Lecture Score per Week'
+        }
       }
     });
 
@@ -132,42 +146,17 @@ export class RatingPage {
       options: {
         scale: {
             // Hides the scale
-            display: true
-        }
-    }
-    });
-
-    this.barChart2 = new Chart(this.barCanvas.nativeElement, {
-      type: 'bar',
-      data: {
-          labels: ['Clear', 'Understand', 'Schedule', 'Material', 'Helpful'],
-          datasets: [{
-              label: '# of Votes: ' + this.numofvot,
-              data: [2.9, 4.9, 4.1, 2.1, 4],
-              backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)'
-                  
-              ],
-              borderColor: [
-                  'rgba(255,99,132,1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)'
-              ],
-              borderWidth: 1
-          }]
-      },
-      options: {
-          scales: {
-              yAxes: [{
-                  ticks: {
-                      beginAtZero:true
-                  }
-              }]
+            display: true,
+            ticks: {
+              // changes here
+              beginAtZero: true,
+              max : 5
           }
+        },
+        title: {
+          display: true,
+          text: 'Lecturer attribute tendency'
+        }
       }
     });
   }

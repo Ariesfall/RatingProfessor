@@ -25,23 +25,76 @@
   <h4>Rate</h4>
   <h4>Current Rate: {{lecturerate}}</h4>
   <div class='col'>
-      <canvas #lineCanvas></canvas>
+    <div><canvas #lineCanvas></canvas></div>
+    <div><canvas #radarCanvas></canvas></div>
   </div>
-  <div class='col'>
-      <canvas #radarCanvas></canvas>
-  </div>
-  <div>
-    <canvas #barCanvas></canvas>
-  </div>
-  <button ion-button (click)="loadrating()">reload</button>
   
   <ion-list>
-      <a ion-item>The lecturer give a clear explanations.</a>
-      <a ion-item>You can clearly understand the lecture this week.</a>
-      <a ion-item>The course schedule is suitable this week.</a>
-      <a ion-item>The study matirial(PPT,PDF,etc.) is helpful for your study.</a>
-      <a ion-item>(Optional) The feedback on your assignments/projects/tests could help you clarify things you did not understand.</a>
+      <ion-list-header>
+        Get your feedback here
+      </ion-list-header>
+
+      <ion-item>
+      <p>Q1: The lecturer give a clear explanations.</p>
+        <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q1">
+          <a (click)="q1=1">1</a>
+          <a (click)="q1=2">2</a>
+          <a (click)="q1=3">3</a>
+          <a (click)="q1=4">4</a>
+          <a (click)="q1=5">5</a>
+      </div>
+      </ion-item>
+
+      <ion-item>
+      <p>Q2: You can clearly understand the lecture this week.</p>
+      <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q2">
+          <button (click)="q2=1">1</button>
+          <button (click)="q2=2">2</button>
+          <button (click)="q2=3">3</button>
+          <button (click)="q2=4">4</button>
+          <button (click)="q2=5">5</button>
+      </div>
+      </ion-item>
+
+      <ion-item>
+      <p>Q3: The course schedule is suitable this week.</p>
+      <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q3">
+          <button (click)="q3=1">1</button>
+          <button (click)="q3=2">2</button>
+          <button (click)="q3=3">3</button>
+          <button (click)="q3=4">4</button>
+          <button (click)="q3=5">5</button>
+      </div>
+      </ion-item>
+
+      <ion-item>
+      <p>Q4: The study matirial(PPT,PDF,etc.) is helpful for your study.</p>
+      <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q4">
+          <button (click)="q4=1">1</button>
+          <button (click)="q4=2">2</button>
+          <button (click)="q4=3">3</button>
+          <button (click)="q4=4">4</button>
+          <button (click)="q4=5">5</button>
+      </div>
+      </ion-item>
+
+      <ion-item>
+      <p>Q5: (Optional) The feedback on your assignments/projects/tests could help you clarify things you did not understand.</p>
+      <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q5">
+          <button (click)="q5=1">1</button>
+          <button (click)="q5=2">2</button>
+          <button (click)="q5=3">3</button>
+          <button (click)="q5=4">4</button>
+          <button (click)="q5=5">5</button>
+      </div>
+      </ion-item>
+
+      <ion-item>
       <p>(Optional) Could you give some advice or drop down your ask here</p>
+      <textarea placeholder="Enter a comment"  [(ngModel)]="text"></textarea>
+      </ion-item>
+
       <button ion-button color="light" round (click)=submitratecourse()>Submit</button>
   </ion-list>
+
 </ion-content>
