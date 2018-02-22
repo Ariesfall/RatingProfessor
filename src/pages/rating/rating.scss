@@ -15,10 +15,11 @@ page-rating {
      
     }
     .col div{
-        border: 1px solid black;
+        border: 0px solid black;
     }
     .col div:not(:last-child) {
-        border-bottom: none; /* Prevent double borders */
+        border-bottom: 1px solid black; /* Prevent double borders */
+
     }
 
     .rangelable {
@@ -96,6 +97,16 @@ page-rating {
     .btn-group a:not(:last-child) {
         border-right: none; /* Prevent double borders */
     }
+
+    .btn-group .select{
+        background-color: #137de0;
+        border: 1px solid #137de0;
+        color: white;
+    }
+
+    .btn-group .noselect{
+        color: black;
+    }
     
     textarea {
         width: 100%;
@@ -106,6 +117,10 @@ page-rating {
         border-radius: 4px;
         background-color: #f8f8f8;
         resize: none;
+    }
+
+    ion-item {
+        white-space : normal;
     }
 
 }

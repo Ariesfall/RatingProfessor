@@ -96,28 +96,32 @@
         
         <p>Please take your rate from 1 (strongly disaggree) to 5 (strongly aggree).</p>
         <p>Learning diffculty: The aim of the course is easy to understand</p>
-        <ion-range min="1" max="5" step="1" pin="true" snaps="true" color="{{ratinglearn>3 ? 'secondary' : 'danger'}}" [(ngModel)]="ratinglearn">
+        <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="ratinglearn">
+            <a (click)="ratinglearn=item[1]" class="{{item[0]}}" *ngFor="let item of buttongroup(ratinglearn);">{{item[1]}}</a>
+        </div>
+        <br>
+        <!--<ion-range min="1" max="5" step="1" pin="true" snaps="true" color="{{ratinglearn>3 ? 'secondary' : 'danger'}}" [(ngModel)]="ratinglearn">
             <ion-icon range-left  name="sad"></ion-icon>
             <ion-icon range-right  name="happy"></ion-icon>
-        </ion-range>
+        </ion-range>-->
 
         <p>Exam diffculty: The pass of the course are easy to fulfilled</p>
-        <ion-range min="1" max="5" step="1" pin="true" snaps="true" color="{{ratingexam>3 ? 'secondary' : 'danger'}}" [(ngModel)]="ratingexam">
-            <ion-icon range-left  name="sad"></ion-icon>
-            <ion-icon range-right  name="happy"></ion-icon>
-        </ion-range>
+        <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="ratingexam">
+            <a (click)="ratingexam=item[1]" class="{{item[0]}}" *ngFor="let item of buttongroup(ratingexam);">{{item[1]}}</a>
+        </div>
+        <br>
 
         <p>Course contents: The course contents are relevant and useful</p>
-        <ion-range min="1" max="5" step="1" pin="true" snaps="true" color="{{ratingknowlage>3 ? 'secondary' : 'danger'}}" [(ngModel)]="ratingknowlage">
-            <ion-icon range-left small name="book"></ion-icon>
-            <ion-icon range-right name="book"></ion-icon>
-        </ion-range>
+        <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="ratingknow">
+            <a (click)="ratingknow=item[1]" class="{{item[0]}}" *ngFor="let item of buttongroup(ratingknow);">{{item[1]}}</a>
+        </div>
+        <br>
 
         <p>Overall, you are satisfied with the course</p>
-        <ion-range min="1" max="5" step="1" pin="true" snaps="true" color="{{ratingcourse>3 ? 'secondary' : 'danger'}}" [(ngModel)]="ratingcourse">
-            <ion-icon range-left color="danger" name="thumbs-down"></ion-icon>
-            <ion-icon range-right color="secondary" name="thumbs-up"></ion-icon>
-        </ion-range>
+        <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="ratingcourse">
+            <a (click)="ratingcourse=item[1]" class="{{item[0]}}" *ngFor="let item of buttongroup(ratingcourse);">{{item[1]}}</a>
+        </div>
+        <br>
         <button ion-button color="light" round (click)="submitratecourse()">Submit</button>
     </ion-card-content>
   </ion-card>
@@ -132,7 +136,8 @@
         </ion-item>
       </ion-list>
       <textarea placeholder="Enter a comment"  [(ngModel)]="commentcourse"></textarea>
-      <button ion-button color="light" round (click)="submitratecomment()">Commit it</button>
+      <button ion-button color="light" round (click)="submitratecomment()">Comment</button>
+      <button ion-button clear round (click)="commentcourse=null">reset</button>
     </ion-card-content>    
   </ion-card>
   

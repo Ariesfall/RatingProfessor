@@ -20,10 +20,10 @@ export class CoursePage {
   ccode:any;
   lectures:any;
 
-  ratingcourse:number = 4;
-  ratinglearn:number = 4;
-  ratingexam:number = 4;
-  ratingknowlage:number = 4;
+  ratingcourse:number;
+  ratinglearn:number;
+  ratingexam:number;
+  ratingknow:number;
 
 
   courserate:any;
@@ -92,22 +92,27 @@ export class CoursePage {
   }
 
   submitratecourse(){
-    var link  = 'http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?ccode='+this.ccode+'&crate='+this.ratingcourse+'&lrate='+this.ratinglearn+'&erate='+this.ratingexam+'&krate='+this.ratingknowlage+'&aid='+this.userid;
+    if(this.ratingcourse ==null || this.ratingexam ==null || this.ratingknow==null || this.ratinglearn){
+      this.showToast('middle', 'Please finish all questions');
+    }else{
+      var link  = 'http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?ccode='+this.ccode+'&crate='+this.ratingcourse+'&lrate='+this.ratinglearn+'&erate='+this.ratingexam+'&krate='+this.ratingknow+'&aid='+this.userid;
     //console.log(link);
     this.http.get(link).map(res => res.json()).subscribe(
       data => {
         if (data.success==false){
-          this.showToast('middle', 'Rate fail, please try again ');
-          //this.ratingcourse = this.ratingexam = this.ratingknowlage= this.ratinglearn = 4;
+          this.showToast('middle', 'Submit fail, please try again');
+          //this.ratingcourse = this.ratingexam = this.ratingknow= this.ratinglearn = 4;
         }else{
-          this.showToast('middle', 'Rate Successfull'); 
-          this.ratingcourse = this.ratingexam = this.ratingknowlage= this.ratinglearn = 4;
+          this.showToast('middle', 'Submit Successfull'); 
+          this.ratingcourse = this.ratingexam = this.ratingknow= this.ratinglearn = null;
           this.loadrating();
         }
        },
       err => {
         console.log("Oops! submit ratecourse.php error");
       });
+    }
+    
   }
  
   submitratecomment(){
@@ -156,7 +161,7 @@ export class CoursePage {
       data: {
           labels: ["Overall","Learning", "Exam", "Content"],
           datasets: [{
-              label: '# of Votes: '+this.numofvotes,
+              label: this.numofvotes+' average score',
               data: [this.courserate, this.learningrate, this.examrate, this.knowlagerate],
               backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
@@ -218,6 +223,18 @@ export class CoursePage {
       });
   }
 
+  buttongroup(selection){
+    var results=[];
+    for (var i=1; i<=5; i++){
+      if(i == selection){
+        results.push(["select",i]);
+      }else{
+        results.push(["noselect",i]);
+      }
+    }
+    return results;
+  }
+
   showToast(position: string, Msg: string) {
     let toast = this.toastCtrl.create({
       message: Msg,
@@ -248,7 +265,7 @@ export class CourseRatingPage {
   ratingcourse:number = 4;
   ratinglearn:number = 4;
   ratingexam:number = 4;
-  ratingknowlage:number = 4;
+  ratingknow:number = 4;
 
   constructor(
     public platform: Platform,
@@ -262,7 +279,7 @@ export class CourseRatingPage {
   }
 
   /*submitratecourse(){
-    var link  = 'http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?ccode='+this.ccode+'&crate='+this.ratingcourse+'&lrate='+this.ratinglearn+'&erate='+this.ratingexam+'&krate='+this.ratingknowlage+'&aid='+this.userid;
+    var link  = 'http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?ccode='+this.ccode+'&crate='+this.ratingcourse+'&lrate='+this.ratinglearn+'&erate='+this.ratingexam+'&krate='+this.ratingknow+'&aid='+this.userid;
     //console.log(link);
     this.http.get(link).map(res => res.json()).subscribe(
       data => {
@@ -270,7 +287,7 @@ export class CourseRatingPage {
           this.showToast('middle', 'Rate fail, please try again ');
         }else{
           this.showToast('middle', 'Rate Successfull'); 
-          this.ratingcourse = this.ratingexam = this.ratingknowlage= this.ratinglearn = 4;
+          this.ratingcourse = this.ratingexam = this.ratingknow= this.ratinglearn = 4;
           
         }
        },
@@ -288,6 +305,7 @@ export class CourseRatingPage {
 
     toast.present(toast);
   }*/
+
 
   dismiss() {
     this.viewCtrl.dismiss();

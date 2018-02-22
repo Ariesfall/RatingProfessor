@@ -28,7 +28,8 @@ export class RatingPage {
   cname: string;
   school: string;
 
-  lecturescore1:any;
+  lecturesweek:any;
+  lecturesweekscore:any;
   lecturescore2:any;
   lecturecm:any;
   lectures:any;
@@ -55,13 +56,27 @@ export class RatingPage {
   }
 
   submitratelecture(){
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?cid='+this.ccode+'&pid='+this.pid+'&q1='+this.q1+'&aid='+this.userid).map(res => res.json()).subscribe(
-      data => {
-        this.lecturescore2 = data.data;
-       },
-      err => {
-        console.log("Oops!");
-      });
+    if(this.q1==null || this.q2==null || this.q3==null || this.q4==null || this.q5==null){
+      this.showToast('middle', 'Please finish all questions');
+    }else{
+      var link  = 'http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode='+this.ccode+'&pid='+this.pid+'&q1='+this.q1+'&q2='+this.q2+'&q3='+this.q3+'&q4='+this.q4+'&q5='+this.q5+'&text='+this.text+'&aid='+this.userid;
+      console.log(link);
+      this.http.get(link).map(res => res.json()).subscribe(
+        data => {
+          if (data.success==false){
+            this.showToast('middle', 'Submit fail, please try again');
+            //this.ratingcourse = this.ratingexam = this.ratingknow= this.ratinglearn = 4;
+          }else{
+            this.showToast('middle', 'Submit Successfull'); 
+            this.q1 = this.q2 = this.q3= this.q4 = this.q5 = this.text = null;
+            this.loaddataing();
+          }
+         },
+        err => {
+          console.log("Oops! submit ratecourse.php error");
+        });
+    }
+    
   }
 
   tolecturepage(pid){
@@ -80,8 +95,14 @@ export class RatingPage {
   loaddataing(){
     this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode='+this.ccode+'&pid='+this.pid).map(res => res.json()).subscribe(
       data => {
-          this.lecturescore1 = data.data1;
-          this.lecturescore2 = data.data2;
+        this.lecturesweek=[];
+        this.lecturesweekscore=[];
+        for(var i in data.data){
+          this.lecturesweek.push("week "+data.data[i].week);
+          this.lecturesweekscore.push(data.data[i].score);
+        }
+        console.log(this.lecturesweek);
+          this.lecturescore2 = data.data2[0];
           this.lecturecm = data.data3;
         this.toupdatecanvas();
         
@@ -96,16 +117,12 @@ export class RatingPage {
     this.lineChart = new Chart(this.lineCanvas.nativeElement, {
       type: 'line',
       data: {
-        labels: ['Week1', 'Week2', 'Week3', 'Week4', 'Week5', 'Week6'],
+        labels: this.lecturesweek,
         datasets: [{
-            label: '# of Votes: ' + this.numofvot,
-            data: [2.9, 4.9, 4.1, 2.1, 4, 3.1],
-            backgroundColor: [
-                  'rgba(54, 162, 235, 0.2)'
-              ],
-            borderColor: [
-                  'rgba(54, 162, 235, 1)'
-              ],
+            label: 'week average score',
+            data: this.lecturesweekscore,
+            backgroundColor: 'rgba(114, 245, 0, 0.2)',
+            borderColor:'rgba(18, 173, 42, 1)',
             borderWidth: 1
           }]
       },
@@ -113,8 +130,7 @@ export class RatingPage {
         scales: {
           yAxes: [{
               ticks: {
-                  beginAtZero: true,
-                  max : 5
+                  beginAtZero: false
               }
           }]
       },
@@ -130,17 +146,15 @@ export class RatingPage {
       data: {
         labels: ['Clear', 'Understand', 'Schedule', 'Material', 'Helpful'],
         datasets: [{
-            label: '# of Votes: ' + this.numofvot,
-            data: [2.9, 4.9, 4.1, 2.1, 4],
-            backgroundColor: [
-                  'rgba(54, 162, 235, 0.2)'
-              ],
-            borderColor: [
-                  'rgba(54, 162, 235, 1)'
-              ],
-            pointBackgroundColor: 'rgba(54, 162, 235, 0.2)',
-            pointStyle: 'circle',
+            label: this.lecturescore2.votenum +' average score',
+            data: [this.lecturescore2.q1score, this.lecturescore2.q2score, this.lecturescore2.q3score, this.lecturescore2.q4score, this.lecturescore2.q5score],
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            scaleSteps: 5,
+            scaleStepWidth: 1,
+            scaleStartValue: 1,
             borderWidth: 1
+            
           }]
       },
       options: {
@@ -149,14 +163,9 @@ export class RatingPage {
             display: true,
             ticks: {
               // changes here
-              beginAtZero: true,
               max : 5
           }
         },
-        title: {
-          display: true,
-          text: 'Lecturer attribute tendency'
-        }
       }
     });
   }
@@ -178,6 +187,18 @@ export class RatingPage {
       console.log('Async operation has ended');
       refresher.complete();
     }, 2000);
+  }
+
+  buttongroup(q_num, selection){
+    var results=[];
+    for (var i=1; i<=5; i++){
+      if(i == selection){
+        results.push([q_num+'='+i,"select",i]);
+      }else{
+        results.push([q_num+'='+i,"noselect",i]);
+      }
+    }
+    return results;
   }
 
 }
