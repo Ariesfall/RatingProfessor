@@ -40,6 +40,8 @@
     </ion-list>
   
   <h5>Get your feedback here</h5>
+  <!--{{submitbtn == 'Submit' ? 'hidden' : 'button'}}
+  <button type="hidden" ion-button color="danger" outline full disabled>You have feedback this week</button>-->
   <ion-list>
       <ion-item>
       <p>Q1: The lecturer give a clear explanations.</p>
@@ -79,10 +81,11 @@
       <ion-item>
       <p>(Optional) Could you give some advice or drop down your ask here</p>
       <textarea placeholder="Enter a comment"  [(ngModel)]="text"></textarea>
-      </ion-item>
-
-      <button ion-button color="light" round (click)=submitratelecture()>Submit</button>
+      <br />
+      <button ion-button color="light" round (click)=submitratelecture()>{{submitbtn}}</button>
       <button ion-button clear round (click)="q1=q2=q3=q4=q5=text=null">reset</button>
+      </ion-item>
+      <ion-note>*If you resubmit, the new feedback well cover older one this week</ion-note>
   </ion-list>
 
 </ion-content>

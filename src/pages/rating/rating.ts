@@ -27,6 +27,7 @@ export class RatingPage {
   pname:string;
   cname: string;
   school: string;
+  submitbtn: string = "Submit";
 
   lecturesweek:any;
   lecturesweekscore:any;
@@ -34,14 +35,12 @@ export class RatingPage {
   lecturecm:any;
   lectures:any;
 
-  numofvot:any;
-
   q1:number;
-  q2:any;
-  q3:any;
-  q4:any;
-  q5:any;
-  text:string;
+  q2:number;
+  q3:number;
+  q4:number;
+  q5:number;
+  text:string=null;
 
   constructor(public toastCtrl: ToastController, platform: Platform, public navCtrl: NavController, public navParams: NavParams, public http: Http, private auth: AuthService) {
     this.ccode = this.navParams.get('ccode');
@@ -93,17 +92,26 @@ export class RatingPage {
   }
 
   loaddataing(){
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode='+this.ccode+'&pid='+this.pid).map(res => res.json()).subscribe(
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode='+this.ccode+'&pid='+this.pid+'&aid='+this.userid).map(res => res.json()).subscribe(
       data => {
         this.lecturesweek=[];
         this.lecturesweekscore=[];
+        if(data.errcode=='re002'){
+          this.q1 = data.data4[0].q1;
+          this.q2 = data.data4[0].q2;
+          this.q3 = data.data4[0].q2;
+          this.q4 = data.data4[0].q3;
+          this.q5 = data.data4[0].q4;
+          this.text = data.data4[0].text;
+          this.submitbtn = 'Resubmit';
+        }
         for(var i in data.data){
           this.lecturesweek.push("week "+data.data[i].week);
           this.lecturesweekscore.push(data.data[i].score);
         }
         console.log(this.lecturesweek);
-          this.lecturescore2 = data.data2[0];
-          this.lecturecm = data.data3;
+        this.lecturescore2 = data.data2[0];
+        this.lecturecm = data.data3;
         this.toupdatecanvas();
         
       },

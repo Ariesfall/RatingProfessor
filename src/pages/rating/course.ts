@@ -92,7 +92,8 @@ export class CoursePage {
   }
 
   submitratecourse(){
-    if(this.ratingcourse ==null || this.ratingexam ==null || this.ratingknow==null || this.ratinglearn){
+    console.log(this.ratingcourse,this.ratingexam, this.ratingknow, this.ratinglearn);
+    if(this.ratingcourse == null || this.ratingexam == null || this.ratingknow== null || this.ratinglearn== null){
       this.showToast('middle', 'Please finish all questions');
     }else{
       var link  = 'http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?ccode='+this.ccode+'&crate='+this.ratingcourse+'&lrate='+this.ratinglearn+'&erate='+this.ratingexam+'&krate='+this.ratingknow+'&aid='+this.userid;
