@@ -8,7 +8,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Course</ion-title>
+    <ion-title><ion-icon name="md-school"></ion-icon> Course</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -18,6 +18,11 @@
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
+
+  
+  <ion-card *ngIf="!subscribe">
+    <button ion-button full color="light" (click)="sub()">Subscribe</button>
+  </ion-card>
 
   <ion-card>
   <ion-card-header *ngFor="let a_acourse of acourse">
@@ -39,13 +44,15 @@
       <ion-list>
       <ion-item *ngFor="let a_lecture of lectures">
           <button ion-item (click)="tolecturepage(a_lecture.pid)">
-              <ion-icon name="person"></ion-icon>
+              <ion-icon large name="ios-person"></ion-icon>  
               {{a_lecture.pname}}
-                <!--<ion-icon name='stats' item-end small (click)="toratelecturepage(a_lecture.pid)"></ion-icon>-->            
+                <!--<ion-icon name='stats' item-end small (click)="toratelecturepage(a_lecture.pid)"></ion-icon>-->     
+              <ion-icon item-end name="ios-arrow-forward"></ion-icon>       
           </button>
           <button ion-item (click)="toratingpage(a_lecture.pid, a_lecture.pname)">
+              <ion-icon small name="stats"></ion-icon>  
               Score:  {{a_lecture.pscore==null ? 'No Rate' : a_lecture.pscore}}
-              <ion-icon item-end small name="stats"></ion-icon>
+              <ion-icon item-end name="ios-arrow-forward"></ion-icon>
           </button>
       </ion-item>
       
@@ -91,11 +98,12 @@
   </ion-card>-->
 
   <ion-card>
-    <ion-card-header>Get your rate</ion-card-header>
+    <ion-card-header>Give Rating</ion-card-header>
     <ion-card-content>
-        
-        <p>Please take your rate from 1 (strongly disaggree) to 5 (strongly aggree).</p>
-        <p>Learning diffculty: The aim of the course is easy to understand</p>
+        <ion-item (click)="wantgetrate()">Click to rating<ion-icon item-end name="{{getrate ? 'ios-arrow-up':'ios-arrow-down'}}"></ion-icon></ion-item>
+        <div *ngIf="getrate">
+        <ion-note>1 Strongly Disaggree; 2 Disaggree; 3 Neutral; 4 Aggree; 5 Strongly Aggree</ion-note>
+        <p>Easy to learn and understand</p>
         <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="ratinglearn">
             <a (click)="ratinglearn=item[1]" class="{{item[0]}}" *ngFor="let item of buttongroup(ratinglearn);">{{item[1]}}</a>
         </div>
@@ -105,24 +113,30 @@
             <ion-icon range-right  name="happy"></ion-icon>
         </ion-range>-->
 
-        <p>Exam diffculty: The pass of the course are easy to fulfilled</p>
+        <p>Easy to pass exam</p>
         <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="ratingexam">
             <a (click)="ratingexam=item[1]" class="{{item[0]}}" *ngFor="let item of buttongroup(ratingexam);">{{item[1]}}</a>
         </div>
         <br>
 
-        <p>Course contents: The course contents are relevant and useful</p>
+        <p>Relevant and useful course contents </p>
         <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="ratingknow">
             <a (click)="ratingknow=item[1]" class="{{item[0]}}" *ngFor="let item of buttongroup(ratingknow);">{{item[1]}}</a>
         </div>
         <br>
 
-        <p>Overall, you are satisfied with the course</p>
+        <p>Overall, satisfied with the course</p>
         <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="ratingcourse">
             <a (click)="ratingcourse=item[1]" class="{{item[0]}}" *ngFor="let item of buttongroup(ratingcourse);">{{item[1]}}</a>
         </div>
         <br>
+        
+        <p>
+          <ion-checkbox [(ngModel)]="anonymous"></ion-checkbox> I want rating anonymous
+        </p>
+        
         <button ion-button color="light" round (click)="submitratecourse()">Submit</button>
+        </div>
     </ion-card-content>
   </ion-card>
   
@@ -131,11 +145,23 @@
     <ion-card-content>
       <ion-list>
         <ion-item *ngFor="let a_comment of comments">
+            <p><b><u>{{a_comment.username == '' ? "Anonymous" : a_comment.username}}</u>: </b></p>
             <p>{{a_comment.cm}}</p>
             <ion-note item-end>{{a_comment.date}}<br>#{{a_comment.comid}}</ion-note>
+            <ion-col col-1 item-end>
+                <ion-icon name="md-arrow-round-up" color="secondary" small></ion-icon><br><!--<p class="smallnumberp">32</p>-->
+                <ion-icon name="md-arrow-round-down" small></ion-icon>
+            </ion-col>
         </ion-item>
+        <button ion-button full color="light" (click)="showmorecomment()">More Comment</button>
       </ion-list>
+      <br>
       <textarea placeholder="Enter a comment"  [(ngModel)]="commentcourse"></textarea>
+
+      <p>
+      <ion-checkbox [(ngModel)]="anonymous"></ion-checkbox> I want comment anonymous
+      </p>
+
       <button ion-button color="light" round (click)="submitratecomment()">Comment</button>
       <button ion-button clear round (click)="commentcourse=null">reset</button>
     </ion-card-content>    

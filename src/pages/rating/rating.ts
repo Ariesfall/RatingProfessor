@@ -14,14 +14,18 @@ import 'rxjs/add/operator/map';
 export class RatingPage {
   //@ViewChild('barCanvas') barCanvas;
   @ViewChild('radarCanvas') radarCanvas;
-  @ViewChild('lineCanvas') lineCanvas;
+  //@ViewChild('lineCanvas') lineCanvas;
   //barChart2: any;
   radarChart: any;
   lineChart: any;
   isAndroid: boolean = false;
 
   userid = '';
-  
+  username = '';
+  useryear;
+  getfeedback:boolean=false;
+  anonymous:boolean=false;
+
   ccode:string;
   pid:string;
   pname:string;
@@ -41,6 +45,7 @@ export class RatingPage {
   q4:number;
   q5:number;
   text:string=null;
+  limit:number = 5;
 
   constructor(public toastCtrl: ToastController, platform: Platform, public navCtrl: NavController, public navParams: NavParams, public http: Http, private auth: AuthService) {
     this.ccode = this.navParams.get('ccode');
@@ -50,15 +55,21 @@ export class RatingPage {
     this.school = this.navParams.get('cschool');
     let info = this.auth.getUserInfo();
     this.userid = info['userid'];
+    this.username = info['username'];
+    this.useryear = info['year'];
     this.isAndroid = platform.is('android');
     console.log(this.ccode,this.pid,this.userid);
   }
 
   submitratelecture(){
+    var nousername=this.username;
+    if(this.anonymous){
+      nousername = nousername.replace(nousername.substring(1,nousername.length-1), "*".repeat(nousername.length-2));
+    }
     if(this.q1==null || this.q2==null || this.q3==null || this.q4==null || this.q5==null){
       this.showToast('middle', 'Please finish all questions');
     }else{
-      var link  = 'http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode='+this.ccode+'&pid='+this.pid+'&q1='+this.q1+'&q2='+this.q2+'&q3='+this.q3+'&q4='+this.q4+'&q5='+this.q5+'&text='+this.text+'&aid='+this.userid;
+      var link  = 'http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode='+this.ccode+'&pid='+this.pid+'&q1='+this.q1+'&q2='+this.q2+'&q3='+this.q3+'&q4='+this.q4+'&q5='+this.q5+'&text='+this.text+'&aid='+this.userid+'&username='+nousername+'&useryear='+this.useryear;
       console.log(link);
       this.http.get(link).map(res => res.json()).subscribe(
         data => {
@@ -68,6 +79,7 @@ export class RatingPage {
           }else{
             this.showToast('middle', 'Submit Successfull'); 
             this.q1 = this.q2 = this.q3= this.q4 = this.q5 = this.text = null;
+            this.getfeedback=false;
             this.loaddataing();
           }
          },
@@ -92,7 +104,7 @@ export class RatingPage {
   }
 
   loaddataing(){
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode='+this.ccode+'&pid='+this.pid+'&aid='+this.userid).map(res => res.json()).subscribe(
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode='+this.ccode+'&pid='+this.pid+'&aid='+this.userid+'&limit='+this.limit).map(res => res.json()).subscribe(
       data => {
         this.lecturesweek=[];
         this.lecturesweekscore=[];
@@ -122,7 +134,7 @@ export class RatingPage {
   
 
   toupdatecanvas() {
-    this.lineChart = new Chart(this.lineCanvas.nativeElement, {
+   /* this.lineChart = new Chart(this.lineCanvas.nativeElement, {
       type: 'line',
       data: {
         labels: this.lecturesweek,
@@ -141,13 +153,13 @@ export class RatingPage {
                   beginAtZero: false
               }
           }]
-      },
+        },
         title: {
           display: true,
           text: 'Lecture Score per Week'
         }
       }
-    });
+    });*/
 
     this.radarChart = new Chart(this.radarCanvas.nativeElement, {
       type: 'radar',
@@ -174,8 +186,30 @@ export class RatingPage {
               max : 5
           }
         },
+        title: {
+          display: true,
+          text: 'The lecturer behave of '+this.ccode +' in 5 standards'
+        }
       }
     });
+  }
+
+  wantgetfeedback(){
+    if(this.getfeedback){
+      this.getfeedback=false;
+    }else{
+      this.getfeedback=true;
+    }
+  }
+
+  showmorefeedback(){
+    if(this.lecturecm.length<this.limit){
+      this.showToast('middle','No more feedback');
+    }else{
+      this.limit+=10;
+      this.loaddataing();
+    }
+    
   }
 
   showToast(position: string, Msg: string) {

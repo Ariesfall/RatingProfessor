@@ -15,12 +15,14 @@ import 'rxjs/add/operator/map';
 export class User{
   userid: string;
   email: string;
+  username: string;
   school:string;
   year:number;
   accesslv:string;
-  constructor(userid: string, email: string, school:string, year:number, accesslv:string) {
+  constructor(userid: string, email: string, username:string, school:string, year:number, accesslv:string) {
     this.userid = userid;
     this.email = email;
+    this.username = username;
     this.school = school;
     this.year = year;
     this.accesslv = accesslv;
@@ -43,8 +45,8 @@ export class AuthService {
        return Observable.create(observer => {
          var access;
          // At this point make a request to your backend to make a real check!
-         credentials.password = Md5.hashStr(credentials.password+credentials.email).toString();
-         this.auth = this.url+"login.php/.json?username="+credentials.email+"&password="+credentials.password;
+         var hashpassword = Md5.hashStr(credentials.password+credentials.email).toString();
+         this.auth = this.url+"login.php/.json?username="+credentials.email+"&password="+hashpassword;
          console.log(this.auth);
          this.http.get(this.auth).map(res => res.json()).subscribe(
           data => {
@@ -58,7 +60,7 @@ export class AuthService {
               console.log("Login access OK!");
               console.log(this.posts.aid);
               access=true;
-              this.currentUser = new User(this.posts.aid, credentials.email, this.posts.school, this.posts.year, this.posts.accesslv);
+              this.currentUser = new User(this.posts.aid, credentials.email, this.posts.username, this.posts.school, this.posts.year, this.posts.accesslv);
             }
             observer.next(access);
             observer.complete();
@@ -78,10 +80,10 @@ export class AuthService {
        return Observable.throw("Please insert credentials");
      } else {
        return Observable.create(observer => {
-          credentials.password = Md5.hashStr(credentials.password+credentials.email).toString();
+          var hashpassword = Md5.hashStr(credentials.password+credentials.email).toString();
           var access;
          // At this point store the credentials to your backend!
-          this.auth = this.url+"register.php/.json?username="+credentials.email+"&password="+credentials.password+"&school="+credentials.school+"&year="+credentials.year;
+          this.auth = this.url+"register.php/.json?email="+credentials.email+"&password="+hashpassword+"&username="+credentials.username+"&school="+credentials.school+"&year="+credentials.year;
           console.log(this.auth);
           this.http.get(this.auth).map(res => res.json()).subscribe(
             data => {

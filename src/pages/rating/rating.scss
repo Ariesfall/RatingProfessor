@@ -18,8 +18,11 @@ page-rating {
         border: 0px solid black;
     }
     .col div:not(:last-child) {
-        border-bottom: 1px solid black; /* Prevent double borders */
+        border-bottom: 1px solid gray; /* Prevent double borders */
+    }
 
+    .colunder div:last-child{
+        border-bottom: 1px solid gray; /* Prevent double borders */
     }
 
     .rangelable {
@@ -56,6 +59,7 @@ page-rating {
     .btn-group button:not(:last-child) {
         border-right: none; /* Prevent double borders */
     }
+
     
     /* Clear floats (clearfix hack) */
     .btn-group:after {
@@ -121,6 +125,10 @@ page-rating {
 
     ion-item {
         white-space : normal;
+    }
+    .smallnumberp{
+        font-size: 2px;
+        color: #707070;
     }
 
 }

@@ -7,7 +7,7 @@
 
 <ion-header>
   <ion-navbar>
-    <ion-title>Lecture</ion-title>
+    <ion-title><ion-icon name="ios-person"></ion-icon> Lecture</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -34,13 +34,21 @@
   </ion-card>
 
   <ion-card >
+    <ion-card-content>
+      <div><canvas #radarCanvas height="200"></canvas></div>
+      <br>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card >
     <ion-card-header>Teaching Course</ion-card-header>
     <ion-card-content>
       <ion-list>
       <button ion-item *ngFor="let a_course of coursedata" (click)="tocoursepage(a_course.ccode)" >
         <p>{{a_course.ccode}}</p>
-        <p>Course Rate: {{a_course.crate==null ? 'No Rate' : a_course.crate}}</p>
-        <p>Lecturer Rate: {{a_course.lscore==null ? 'No Rate' : a_course.lscore}}</p>
+        <p>Course rate: {{a_course.crate==null ? 'No Rate' : a_course.crate}}</p>
+        <ion-icon item-end name="ios-arrow-forward"></ion-icon>
+        <p>Lecturer rate: {{a_course.avgscore==null ? 'No Rate' : a_course.avgscore}}</p>
       </button>
       </ion-list>
     </ion-card-content>

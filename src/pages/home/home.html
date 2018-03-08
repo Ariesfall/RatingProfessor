@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Rating Professor</ion-title>
+    <ion-title><ion-icon name="md-home"></ion-icon> Rating Study</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -21,7 +21,7 @@
       </ion-item>
   </ion-list>-->
   <h2>Hello</h2>
-  <h3>Welcome user, {{email}}!</h3>
+  <h3>Welcome user, {{username}}!</h3>
 
   <h4>Course List</h4>
   <ion-card *ngFor="let a_course of courses">
@@ -33,9 +33,9 @@
     </ion-card-content>
     <ion-row no-padding>
       <ion-col text-center>
-        <button ion-button clear small color="danger" icon-start (click)="enroll(a_course.ccode)">
+        <button ion-button clear small color="danger" icon-start (click)="sub(a_course.ccode)">
           <ion-icon name="{{subscribe ? 'heart' : 'heart-outline'}}"></ion-icon>
-          Subscribe
+          {{subscribe ? 'Unsubscribe' : 'Subscribe'}}
         </button>
       </ion-col>
       <ion-col text-right>

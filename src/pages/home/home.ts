@@ -17,6 +17,7 @@ export class HomePage{
   //public items : any = [];
   userid = '';
   email = '';
+  username ='';
   courses: any;
   subscribe:boolean=false;
 
@@ -24,6 +25,7 @@ export class HomePage{
     let info = this.auth.getUserInfo();
     this.userid = info['userid'];
     this.email = info['email'];
+    this.username = info['username'];
     
 
     /*this.courseRef.on('value', courseList => {//db
@@ -87,7 +89,7 @@ export class HomePage{
     });
   }
 
-  enroll(ccode){
+  sub(ccode){
     let alert = this.alertCtrl.create({
       title: 'Subscribe '+ccode,
       inputs: [

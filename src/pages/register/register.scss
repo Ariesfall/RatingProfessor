@@ -10,7 +10,13 @@ page-register {
    
       ion-row {
          align-items: center;
-         text-align: center;
+         text-align: left;
+       }
+
+      ion-note{
+        font-size: 0.8em;
+        color: white;
+        text-align: left;
        }
    
        ion-item {

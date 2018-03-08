@@ -1,4 +1,4 @@
-<!--
+  <!--
   Generated template for the RatingPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
@@ -7,85 +7,109 @@
 
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Lecturer Rating</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-  <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-  <div>
-    <h4>{{ccode}}</h4>
-    <h5>{{cname}}</h5>
-    <h5 (click)="tolecturepage(pid)">{{pname}}</h5>
-    <p>University: {{school}}</p>
-  </div>
-
-  <h5>Current Rate: {{lecturerate}}</h5>
-  <div class='col'>
-    <div><canvas #lineCanvas ></canvas></div>
-    <div><canvas #radarCanvas height="200"></canvas></div>
-  </div>
-
-  <h5>Feedback</h5>
-  <ion-list>
-      <ion-item *ngFor="let a_comment of lecturecm">
-          <p>{{a_comment.feedback}}</p>
-          <ion-note item-end>{{a_comment.date}}<br>#{{a_comment.pcomid}}</ion-note>
-      </ion-item>
-    </ion-list>
+    <ion-navbar>
+      <ion-title><ion-icon name="md-school"></ion-icon> Lecturer Rating</ion-title>
+    </ion-navbar>
   
-  <h5>Get your feedback here</h5>
-  <!--{{submitbtn == 'Submit' ? 'hidden' : 'button'}}
-  <button type="hidden" ion-button color="danger" outline full disabled>You have feedback this week</button>-->
-  <ion-list>
-      <ion-item>
-      <p>Q1: The lecturer give a clear explanations.</p>
-      <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q1">
-          <a (click)="q1=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q1', q1);">{{item[2]}}</a>
+  </ion-header>
+  
+  
+  <ion-content padding>
+<ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <div>
+      <h4>{{ccode}}</h4>
+      <h5>{{cname}}</h5>
+      <h5 (click)="tolecturepage(pid)"><ion-icon large name="ios-person"></ion-icon> {{ pname }} <ion-icon name="ios-arrow-forward" small></ion-icon></h5>
+      <p>University: {{school}}</p>
+    </div>
+  
+    <h5>Current Rate: {{lecturerate}}</h5>
+    <div class='col'>
+      <!--<div><canvas #lineCanvas ></canvas></div>-->
+      <div><canvas #radarCanvas height="200"></canvas></div>
+    </div>
+    <br>
+    <ion-list>
+    <h5>Give feedback </h5>
+    <ion-item (click)="wantgetfeedback()">Click to feedback this week<ion-icon item-end name="{{getfeedback ? 'ios-arrow-up':'ios-arrow-down'}}"></ion-icon></ion-item>
+    <!--{{submitbtn == 'Submit' ? 'hidden' : 'button'}}
+    <button type="hidden" ion-button color="danger" outline full disabled>You have feedback this week</button>-->
+    <div *ngIf="getfeedback">
+        <ion-note>1 Strongly Disaggree; 2 Disaggree; 3 Neutral; 4 Aggree; 5 Strongly Aggree</ion-note>
+        <div>
+          <p>Give clear explanations</p>
+          <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q1">
+              <a (click)="q1=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q1', q1);">{{item[2]}}</a>
+          </div>
+          <br>
+        </div>
+  
+  
+        <div>
+        <p>Get Clearly understand</p>
+        <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q2">
+            <a (click)="q2=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q2', q2);">{{item[2]}}</a>
+        </div>
+        <br>
       </div>
-      </ion-item>
-
-      <ion-item>
-      <p>Q2: You can clearly understand the lecture this week.</p>
-      <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q2">
-          <a (click)="q2=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q2', q2);">{{item[2]}}</a>
+  
+      <div>
+        <p>Course progress go suitability.</p>
+        <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q3">
+            <a (click)="q3=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q3', q3);">{{item[2]}}</a>
+        </div>
+        <br>
       </div>
-      </ion-item>
-
-      <ion-item>
-      <p>Q3: The course schedule is suitable this week.</p>
-      <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q3">
-          <a (click)="q3=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q3', q3);">{{item[2]}}</a>
+  
+      <div>
+        <p>Study matirial(PPT,PDF,etc.) helpful</p>
+        <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q4">
+            <a (click)="q4=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q4', q4);">{{item[2]}}</a>
+        </div>
+        <br>
       </div>
-      </ion-item>
-
-      <ion-item>
-      <p>Q4: The study matirial(PPT,PDF,etc.) is helpful for your study.</p>
-      <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q4">
-          <a (click)="q4=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q4', q4);">{{item[2]}}</a>
+  
+      <div>
+        <p>Assignments/projects/tests feedback clarify something</p>
+        <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q5">
+            <a (click)="q5=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q5', q5);">{{item[2]}}</a>
+        </div>
+        <br>
       </div>
-      </ion-item>
-
-      <ion-item>
-      <p>Q5: (Optional) The feedback on your assignments/projects/tests could help you clarify things you did not understand.</p>
-      <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q5">
-          <a (click)="q5=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q5', q5);">{{item[2]}}</a>
+  
+      <div>
+        <p>(Optional) Could you give some advice or drop down your ask here</p>
+        <textarea placeholder="Enter a comment"  [(ngModel)]="text"></textarea>
+        <br />
+        
+        <p>
+            <ion-checkbox [(ngModel)]="anonymous"></ion-checkbox> I want comment anonymous
+            </p>
+            
+        <button ion-button color="light" round (click)=submitratelecture()>{{submitbtn}}</button>
+        <button ion-button clear round (click)="q1=q2=q3=q4=q5=text=null">reset</button>
       </div>
-      </ion-item>
-
-      <ion-item>
-      <p>(Optional) Could you give some advice or drop down your ask here</p>
-      <textarea placeholder="Enter a comment"  [(ngModel)]="text"></textarea>
-      <br />
-      <button ion-button color="light" round (click)=submitratelecture()>{{submitbtn}}</button>
-      <button ion-button clear round (click)="q1=q2=q3=q4=q5=text=null">reset</button>
-      </ion-item>
-      <ion-note>*If you resubmit, the new feedback well cover older one this week</ion-note>
+        <ion-note>*If you resubmit, the new feedback well cover older one this week</ion-note>
+    </div>
   </ion-list>
-
-</ion-content>
+  
+    <h5>Feedback</h5>
+    <ion-list>
+        <ion-item *ngFor="let a_comment of lecturecm">
+            <p><b><u>{{a_comment.username == '' ? "Anonymous" : a_comment.username}}</u>: </b></p>
+            <p>{{a_comment.feedback}}</p>
+            <ion-note item-end>{{a_comment.date}}<br>#{{a_comment.pcomid}}</ion-note>
+            <ion-col col-1 item-end>
+                <ion-icon name="md-arrow-round-up" small></ion-icon><br><!--<p class="smallnumberp">-11</p>-->
+                <ion-icon name="md-arrow-round-down" color="danger" small></ion-icon>
+            </ion-col>
+        </ion-item>
+        <button ion-button color="light" full (click)="showmorefeedback()">More Feedback</button>
+      </ion-list>
+    
+    
+  
+  </ion-content>
+  

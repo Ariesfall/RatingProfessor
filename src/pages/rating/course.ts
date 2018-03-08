@@ -19,12 +19,16 @@ export class CoursePage {
   acourse:any;
   ccode:any;
   lectures:any;
+  subscribe:boolean=false;
+
+  getrate:boolean=false;
+  anonymous:boolean=false;
 
   ratingcourse:number;
   ratinglearn:number;
   ratingexam:number;
   ratingknow:number;
-
+  limit:number = 5;
 
   courserate:any;
   learningrate:number = 0;
@@ -32,6 +36,10 @@ export class CoursePage {
   knowlagerate:number = 0;
   numofvotes;
   userid = '';
+  username = '';
+  useryear;
+
+  
 
   comments:any;
   commentcourse: String;
@@ -51,8 +59,11 @@ export class CoursePage {
     this.ccode = this.navParams.get('ccode');
     let info = this.auth.getUserInfo();
     this.userid = info['userid'];
+    this.username = info['username'];
+    this.useryear = info['year'];
     this.isAndroid = platform.is('android');
     console.log(this.ccode);
+    
     //get lectures
   }
 
@@ -106,6 +117,7 @@ export class CoursePage {
         }else{
           this.showToast('middle', 'Submit Successfull'); 
           this.ratingcourse = this.ratingexam = this.ratingknow= this.ratinglearn = null;
+          this.getrate=false;
           this.loadrating();
         }
        },
@@ -117,8 +129,12 @@ export class CoursePage {
   }
  
   submitratecomment(){
-    var link  = 'http://ratingstudy.ddns.net/ratingstudy/comment.php/.json?ccode='+this.ccode+'&cm='+this.commentcourse+'&aid='+this.userid;
-    //console.log(link);
+    var nousername=this.username;
+    if(this.anonymous){
+      nousername = nousername.replace(nousername.substring(1,nousername.length-1), "*".repeat(nousername.length-2));
+    }
+    var link  = 'http://ratingstudy.ddns.net/ratingstudy/comment.php/.json?ccode='+this.ccode+'&cm='+this.commentcourse+'&aid='+this.userid+'&username='+nousername+'&useryear='+this.useryear;
+    console.log(link);
     this.http.get(link).map(res => res.json()).subscribe(
       data => {
         if (data.success==false){
@@ -215,7 +231,7 @@ export class CoursePage {
   }
   
   loadcomment(){
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/comment.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/comment.php/.json?ccode='+this.ccode+'&limit='+this.limit).map(res => res.json()).subscribe(
       data => {
           this.comments = data.data;
       },
@@ -236,6 +252,29 @@ export class CoursePage {
     return results;
   }
 
+  sub(){
+    this.subscribe=true;
+    this.showToast('middle', 'Subscribe Successfull'); 
+  }
+
+  wantgetrate(){
+    if(this.getrate){
+      this.getrate=false;
+    }else{
+      this.getrate=true;
+    }
+  }
+
+  showmorecomment(){
+    if(this.comments.length<this.limit){
+      this.showToast('middle','No more comment');
+    }else{
+      this.limit+=10;
+      this.loadcomment();
+    }
+    
+  }
+
   showToast(position: string, Msg: string) {
     let toast = this.toastCtrl.create({
       message: Msg,
@@ -245,6 +284,7 @@ export class CoursePage {
 
     toast.present(toast);
   }
+
 
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
@@ -306,7 +346,7 @@ export class CourseRatingPage {
 
     toast.present(toast);
   }*/
-
+  
 
   dismiss() {
     this.viewCtrl.dismiss();

@@ -28,7 +28,7 @@ export class RegisterPage {
         this.createSuccess = true;
         this.showPopup("Success", "Account created.");
       } else {
-        this.showPopup("Error", "Your email has been created.");
+        this.showPopup("Error", "Email or username is used.");
       }
     },
       error => {
