@@ -37,10 +37,14 @@ export class LoginPage {
   public login() {
     this.showLoading()
     this.auth.login(this.registerCredentials).subscribe(allowed => {
-      if (allowed) {
+      if (allowed==0) {
         this.nav.setRoot(TabsPage);
-      } else {
+      } else if(allowed==1){
         this.showError("Email or password incorrect");
+      } else if(allowed==99){
+        this.showError("Account not verified, please check your email!");
+      } else {
+        this.showError("Access not accept");
       }
     },
       error => {
@@ -65,7 +69,8 @@ export class LoginPage {
       buttons: ['OK']
     });
     
-    alert.present(prompt);
+    alert.present();
+    //alert.present(prompt);
   }
 
   

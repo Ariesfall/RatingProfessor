@@ -64,7 +64,8 @@ export class RatingPage {
   submitratelecture(){
     var nousername=this.username;
     if(this.anonymous){
-      nousername = nousername.replace(nousername.substring(1,nousername.length-1), "*".repeat(nousername.length-2));
+      //nousername = nousername.replace(nousername.substring(1,nousername.length-1), "*".repeat(nousername.length-2));
+      nousername = "Anonymous_" +  nousername.substring(0,1) + nousername.substring(nousername.length-1,nousername.length)
     }
     if(this.q1==null || this.q2==null || this.q3==null || this.q4==null || this.q5==null){
       this.showToast('middle', 'Please finish all questions');
@@ -225,6 +226,7 @@ export class RatingPage {
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
     //this.ionViewDidLoad();
+    this.loaddataing();
     setTimeout(() => {
       console.log('Async operation has ended');
       refresher.complete();

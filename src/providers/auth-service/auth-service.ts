@@ -54,20 +54,29 @@ export class AuthService {
             this.posts = data.data[0];
             if(this.posts==null){
                 console.log("Uncorrect email or password");
-                access=false;
-            }
-            else{
+                access=2;
+            }else if(data.access==99){
+                console.log("Account not verified");
+                access=99;
+            }else if(data.access==3){
+              console.log("Account has been block");
+              access=3;
+            }else if(data.access==2 || data.access==0){
               console.log("Login access OK!");
               console.log(this.posts.aid);
-              access=true;
+              access=0;
               this.currentUser = new User(this.posts.aid, credentials.email, this.posts.username, this.posts.school, this.posts.year, this.posts.accesslv);
+            }else {
+              console.log("Not access right!");
+              console.log(this.posts.aid);
+              access=1;
             }
             observer.next(access);
             observer.complete();
           },
           err => {
               console.log("Oops!login error");
-              access=false;
+              access=999;
               observer.next(access);
               observer.complete();
           });

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController,NavParams, AlertController } from 'ionic-angular';
+import { NavController,NavParams, ToastController, AlertController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map'; 
@@ -21,12 +21,19 @@ export class HomePage{
   courses: any;
   subscribe:boolean=false;
 
-  constructor(public navCtrl: NavController, public http: Http, private alertCtrl: AlertController, private nav: NavController, private auth: AuthService) {
-    let info = this.auth.getUserInfo();
-    this.userid = info['userid'];
-    this.email = info['email'];
-    this.username = info['username'];
-    
+  constructor(
+    public navCtrl: NavController, 
+    public http: Http, 
+    public toastCtrl: ToastController, 
+    private alertCtrl: AlertController, 
+    private nav: NavController, 
+    private auth: AuthService) {
+
+      let info = this.auth.getUserInfo();
+      this.userid = info['userid'];
+      this.email = info['email'];
+      this.username = info['username'];
+      
 
     /*this.courseRef.on('value', courseList => {//db
       let countries = [];
@@ -90,40 +97,43 @@ export class HomePage{
   }
 
   sub(ccode){
-    let alert = this.alertCtrl.create({
-      title: 'Subscribe '+ccode,
-      inputs: [
-        {
-          name: 'Lecturer',
-          placeholder: 'Lecturer name'
-        },
-        {
-          name: 'exp date',
-          placeholder: '',
-          type: 'date'
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Subscribe',
-          handler: data => {
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?ccode='+ccode+'&aid='+this.userid).map(res => res.json()).subscribe(
+      data => {
+          if(data.success){
+            this.showToast('middle', 'Subscribe '+ccode+' Successfull!'); 
             this.subscribe=true;
+          } else{
+            this.showToast('middle', 'Subscribe '+ccode+' Fail!'); 
           }
-        }
-      ]
-    });
-    alert.present();
+      },
+      err => {
+          console.log("Oops! Get comment.php error");
+      });
+  }
+  
+  Unsub(ccode){
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?ccode='+ccode+'&aid='+this.userid).map(res => res.json()).subscribe(
+      data => {
+          if(data.success){
+            this.showToast('middle', 'Unsubscribe '+ccode+' Successfull!'); 
+            this.subscribe=true;
+          } else{
+            this.showToast('middle', 'Unsubscribe '+ccode+' Fail!'); 
+          }
+      },
+      err => {
+          console.log("Oops! Get comment.php error");
+      });
   }
 
-  deenroll(ccode){
-    this.subscribe=false;
+  showToast(position: string, Msg: string) {
+    let toast = this.toastCtrl.create({
+      message: Msg,
+      duration: 1000,
+      position: position
+    });
+
+    toast.present(toast);
   }
 
   doRefresh(refresher) {
@@ -134,5 +144,6 @@ export class HomePage{
       refresher.complete();
     }, 2000);
   }
+
 
 }

@@ -147,7 +147,7 @@
         <ion-item *ngFor="let a_comment of comments">
             <p><b><u>{{a_comment.username == '' ? "Anonymous" : a_comment.username}}</u>: </b></p>
             <p>{{a_comment.cm}}</p>
-            <ion-note item-end>{{a_comment.date}}<br>#{{a_comment.comid}}</ion-note>
+            <ion-note item-end>{{a_comment.date}}<br>#{{a_comment.comid}}<br><a (click)="deletecomment(a_comment.comid)" *ngIf="a_comment.aid==userid">Delete</a></ion-note>
             <ion-col col-1 item-end>
                 <ion-icon name="md-arrow-round-up" color="secondary" small></ion-icon><br><!--<p class="smallnumberp">32</p>-->
                 <ion-icon name="md-arrow-round-down" small></ion-icon>

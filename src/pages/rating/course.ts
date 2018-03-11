@@ -75,31 +75,7 @@ export class CoursePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CoursePage');
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
-      data => {
-          this.acourse = data.data;
-
-          this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
-          data => {
-            if(data.success==false){
-              this.lectures = [{pname:'No Presistance'}];
-            }else{
-              this.lectures = data.data;
-            }
-              
-          },
-          err => {
-              console.log("Oops! Get lecture.php error");
-          });
-
-          this.loadrating();
-
-      },
-      err => {
-          console.log("Oops! Get course.php error");
-      });
-      this.loadcomment();
-      
+      this.loadcouring();      
   }
 
   submitratecourse(){
@@ -131,7 +107,8 @@ export class CoursePage {
   submitratecomment(){
     var nousername=this.username;
     if(this.anonymous){
-      nousername = nousername.replace(nousername.substring(1,nousername.length-1), "*".repeat(nousername.length-2));
+      //nousername = nousername.replace(nousername.substring(1,nousername.length-1), "*".repeat(nousername.length-2));
+      nousername = "Anonymous_" +  nousername.substring(0,1) + nousername.substring(nousername.length-1,nousername.length)
     }
     var link  = 'http://ratingstudy.ddns.net/ratingstudy/comment.php/.json?ccode='+this.ccode+'&cm='+this.commentcourse+'&aid='+this.userid+'&username='+nousername+'&useryear='+this.useryear;
     console.log(link);
@@ -208,6 +185,33 @@ export class CoursePage {
     });
   }
 
+  loadcouring(){
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
+      data => {
+          this.acourse = data.data;
+
+          this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
+          data => {
+            if(data.success==false){
+              this.lectures = [{pname:'No Presistance'}];
+            }else{
+              this.lectures = data.data;
+            }
+              
+          },
+          err => {
+              console.log("Oops! Get lecture.php error");
+          });
+
+          this.loadrating();
+
+      },
+      err => {
+          console.log("Oops! Get course.php error");
+      });
+      this.loadcomment();
+  }
+
   loadrating(){
     this.http.get('http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
       data => {
@@ -221,8 +225,9 @@ export class CoursePage {
         this.examrate = data.data[0].erate;
         this.knowlagerate = data.data[0].krate;
         this.numofvotes=data.data[0].votenum;
+        this.barChart=null;
         this.toupdatecanvas();
-        this.barChart.update();
+        //this.barChart.update();
         
       },
       err => {
@@ -253,8 +258,33 @@ export class CoursePage {
   }
 
   sub(){
-    this.subscribe=true;
-    this.showToast('middle', 'Subscribe Successfull'); 
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?ccode='+this.ccode+'&aid='+this.userid).map(res => res.json()).subscribe(
+      data => {
+          if(data.success){
+            this.showToast('middle', 'Subscribe '+this.ccode+' Successfull!'); 
+            this.subscribe=true;
+          } else{
+            this.showToast('middle', 'Subscribe '+this.ccode+' Fail!'); 
+          }
+      },
+      err => {
+          console.log("Oops! Get comment.php error");
+      });
+  }
+
+  deletecomment(comid){
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/comment.php/.json?comid='+comid+'&aid='+this.userid).map(res => res.json()).subscribe(
+      data => {
+          if(data.success){
+            this.showToast('middle', 'Delete comment #'+comid+' Successfull!'); 
+            this.loadcomment();
+          } else{
+            this.showToast('middle', 'Delete comment #'+comid+' Fail!'); 
+          }
+      },
+      err => {
+          console.log("Oops! Get comment.php error");
+      });
   }
 
   wantgetrate(){
@@ -289,6 +319,8 @@ export class CoursePage {
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
     //this.ionViewDidLoad();
+    this.loadcouring();
+    this.loadcomment();
     setTimeout(() => {
       console.log('Async operation has ended');
       refresher.complete();
