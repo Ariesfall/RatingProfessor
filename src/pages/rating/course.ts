@@ -19,7 +19,7 @@ export class CoursePage {
   acourse:any;
   ccode:any;
   lectures:any;
-  subscribe:boolean=false;
+  subscribe:boolean=true;
 
   getrate:boolean=false;
   anonymous:boolean=false;
@@ -126,7 +126,6 @@ export class CoursePage {
       err => {
         console.log("Oops! submit comment.php error");
       });
-
   }
 
   tolecturepage(pid){
@@ -186,10 +185,10 @@ export class CoursePage {
   }
 
   loadcouring(){
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?ccode='+this.ccode+'&aid='+this.userid).map(res => res.json()).subscribe(
       data => {
           this.acourse = data.data;
-
+          this.subscribe = this.acourse[0].sub;
           this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
           data => {
             if(data.success==false){
@@ -258,7 +257,7 @@ export class CoursePage {
   }
 
   sub(){
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?ccode='+this.ccode+'&aid='+this.userid).map(res => res.json()).subscribe(
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?ccode='+this.ccode+'&aid='+this.userid+'&sub=1').map(res => res.json()).subscribe(
       data => {
           if(data.success){
             this.showToast('middle', 'Subscribe '+this.ccode+' Successfull!'); 

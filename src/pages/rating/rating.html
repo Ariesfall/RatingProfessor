@@ -33,7 +33,7 @@
     <br>
     <ion-list>
     <h5>Give feedback </h5>
-    <ion-item (click)="wantgetfeedback()">Click to feedback this week<ion-icon item-end name="{{getfeedback ? 'ios-arrow-up':'ios-arrow-down'}}"></ion-icon></ion-item>
+    <ion-item (click)="wantgetfeedback()">Click to feedback on week {{week_num}}<ion-icon item-end name="{{getfeedback ? 'ios-arrow-up':'ios-arrow-down'}}"></ion-icon></ion-item>
     <!--{{submitbtn == 'Submit' ? 'hidden' : 'button'}}
     <button type="hidden" ion-button color="danger" outline full disabled>You have feedback this week</button>-->
     <div *ngIf="getfeedback">

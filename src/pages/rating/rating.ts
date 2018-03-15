@@ -31,6 +31,7 @@ export class RatingPage {
   pname:string;
   cname: string;
   school: string;
+  week_num:any;
   submitbtn: string = "Submit";
 
   lecturesweek:any;
@@ -70,7 +71,9 @@ export class RatingPage {
     if(this.q1==null || this.q2==null || this.q3==null || this.q4==null || this.q5==null){
       this.showToast('middle', 'Please finish all questions');
     }else{
-      var link  = 'http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode='+this.ccode+'&pid='+this.pid+'&q1='+this.q1+'&q2='+this.q2+'&q3='+this.q3+'&q4='+this.q4+'&q5='+this.q5+'&text='+this.text+'&aid='+this.userid+'&username='+nousername+'&useryear='+this.useryear;
+      var link  = 'http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode='+this.ccode
+      +'&pid='+this.pid+'&q1='+this.q1+'&q2='+this.q2+'&q3='+this.q3+'&q4='+this.q4+'&q5='+this.q5+'&text='+this.text
+      +'&aid='+this.userid+'&username='+nousername+'&useryear='+this.useryear+'&week='+this.week_num;
       console.log(link);
       this.http.get(link).map(res => res.json()).subscribe(
         data => {
@@ -82,6 +85,7 @@ export class RatingPage {
             this.q1 = this.q2 = this.q3= this.q4 = this.q5 = this.text = null;
             this.getfeedback=false;
             this.loaddataing();
+            this.loadfeedback();
           }
          },
         err => {
@@ -102,13 +106,15 @@ export class RatingPage {
     console.log('ionViewDidLoad RatingPage');
     //get lectures
     this.loaddataing();
+    this.loadfeedback();
   }
 
   loaddataing(){
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode='+this.ccode+'&pid='+this.pid+'&aid='+this.userid+'&limit='+this.limit).map(res => res.json()).subscribe(
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode='+this.ccode+'&pid='+this.pid+'&aid='+this.userid+'&school='+this.school).map(res => res.json()).subscribe(
       data => {
         this.lecturesweek=[];
         this.lecturesweekscore=[];
+        this.week_num=data.week;
         if(data.errcode=='re002'){
           this.q1 = data.data4[0].q1;
           this.q2 = data.data4[0].q2;
@@ -124,7 +130,6 @@ export class RatingPage {
         }
         console.log(this.lecturesweek);
         this.lecturescore2 = data.data2[0];
-        this.lecturecm = data.data3;
         this.toupdatecanvas();
         
       },
@@ -132,7 +137,16 @@ export class RatingPage {
         console.log("Oops! Get lecture.php error");
       });
   }
-  
+
+  loadfeedback(){
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode='+this.ccode+'&pid='+this.pid+'&limit='+this.limit).map(res => res.json()).subscribe(
+      data => {
+        this.lecturecm = data.data;
+      },
+      err => {
+        console.log("Oops! Get lecture.php error");
+      });
+  }
 
   toupdatecanvas() {
    /* this.lineChart = new Chart(this.lineCanvas.nativeElement, {
@@ -208,7 +222,7 @@ export class RatingPage {
       this.showToast('middle','No more feedback');
     }else{
       this.limit+=10;
-      this.loaddataing();
+      this.loadfeedback();
     }
     
   }
@@ -227,6 +241,7 @@ export class RatingPage {
     console.log('Begin async operation', refresher);
     //this.ionViewDidLoad();
     this.loaddataing();
+    this.loadfeedback();
     setTimeout(() => {
       console.log('Async operation has ended');
       refresher.complete();

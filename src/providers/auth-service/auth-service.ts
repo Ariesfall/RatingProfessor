@@ -54,7 +54,7 @@ export class AuthService {
             this.posts = data.data[0];
             if(this.posts==null){
                 console.log("Uncorrect email or password");
-                access=2;
+                access=1;
             }else if(data.access==99){
                 console.log("Account not verified");
                 access=99;

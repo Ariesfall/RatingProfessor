@@ -73,6 +73,50 @@ export class LoginPage {
     //alert.present(prompt);
   }
 
+  forgetpwsendemail() {
+    let prompt = this.alertCtrl.create({
+      title: 'Forget Password',
+      message: "Enter your email address, we will send an email to you",
+      inputs: [
+        {
+          name: 'email',
+          placeholder: 'Email'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Send',
+          handler: data => {
+            console.log('Send clicked');
+            this.forgetpw(data.email);
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
+
+  forgetpw(email){
+    this.showLoading();
+    console.log("fpw, send email to "+email);
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/register.php/.json?email='+email+'&resetpassword=1').map(res => res.json()).subscribe(
+      data => {
+        if(data.success){
+          this.showError("The email has been sent"); 
+        }else{
+          this.showError("The email not found");
+        }
+      },
+      err => {
+        console.log("Oops! Get lecture.php error");
+      });
+  }
   
   
   /*constructor(public navCtrl: NavController, public navParams: NavParams) {

@@ -19,7 +19,7 @@ export class HomePage{
   email = '';
   username ='';
   courses: any;
-  subscribe:boolean=false;
+  subscribe: any;
 
   constructor(
     public navCtrl: NavController, 
@@ -81,9 +81,10 @@ export class HomePage{
   }
 
   togetcourse(){
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?limit=1').map(res => res.json()).subscribe(
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?limit=1&aid='+this.userid).map(res => res.json()).subscribe(
       data => {
           this.courses = data.data;
+          this.subscribe = data.subdata;
       },
       err => {
           console.log("Oops!get course error");
@@ -96,29 +97,15 @@ export class HomePage{
     });
   }
 
-  sub(ccode){
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?ccode='+ccode+'&aid='+this.userid).map(res => res.json()).subscribe(
+  sub(ccode, msg){
+    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?ccode='+ccode+'&aid='+this.userid+'&sub=1').map(res => res.json()).subscribe(
       data => {
           if(data.success){
-            this.showToast('middle', 'Subscribe '+ccode+' Successfull!'); 
-            this.subscribe=true;
+            this.showToast('middle', msg+' '+ccode+' Successfull!'); 
+            this.togetcourse();
+            //this.subscribe=true;
           } else{
-            this.showToast('middle', 'Subscribe '+ccode+' Fail!'); 
-          }
-      },
-      err => {
-          console.log("Oops! Get comment.php error");
-      });
-  }
-  
-  Unsub(ccode){
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?ccode='+ccode+'&aid='+this.userid).map(res => res.json()).subscribe(
-      data => {
-          if(data.success){
-            this.showToast('middle', 'Unsubscribe '+ccode+' Successfull!'); 
-            this.subscribe=true;
-          } else{
-            this.showToast('middle', 'Unsubscribe '+ccode+' Fail!'); 
+            this.showToast('middle', msg+' '+ccode+' Fail!'); 
           }
       },
       err => {
@@ -134,6 +121,17 @@ export class HomePage{
     });
 
     toast.present(toast);
+  }
+
+  showError(text) {
+    let alert = this.alertCtrl.create({
+      title: 'Fail',
+      subTitle: text,
+      buttons: ['OK']
+    });
+    
+    alert.present();
+    //alert.present(prompt);
   }
 
   doRefresh(refresher) {

@@ -23,6 +23,32 @@
   <h2>Hello</h2>
   <h3>Welcome user, {{username}}!</h3>
 
+  <div *ngIf="subscribe != ''">
+    <h4>Subscribed</h4>
+    <ion-card *ngFor="let a_sub of subscribe">
+      <ion-card-header>
+        {{a_sub.ccode}}
+      </ion-card-header>
+      <ion-card-content>
+        {{a_sub.cname}}   
+      </ion-card-content>
+      <ion-row no-padding>
+        <ion-col text-center>
+          <button ion-button clear small color="danger" icon-start (click)="sub(a_sub.ccode, 'Unsubscribe')">
+            <ion-icon name="{{a_sub.sub ? 'heart' : 'heart-outline'}}"></ion-icon>
+            {{a_sub.sub ? 'Unsubscribe' : 'Subscribe'}}
+          </button>
+        </ion-col>
+        <ion-col text-right>
+          <button ion-button clear small color="danger" (click)="tocoursepage(a_sub.ccode)" icon-start>
+            <ion-icon name='stats'></ion-icon>            
+            Rate
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </div>
+
   <h4>Course List</h4>
   <ion-card *ngFor="let a_course of courses">
     <ion-card-header>
@@ -33,9 +59,9 @@
     </ion-card-content>
     <ion-row no-padding>
       <ion-col text-center>
-        <button ion-button clear small color="danger" icon-start (click)="sub(a_course.ccode)">
-          <ion-icon name="{{subscribe ? 'heart' : 'heart-outline'}}"></ion-icon>
-          {{subscribe ? 'Unsubscribe' : 'Subscribe'}}
+        <button ion-button clear small color="danger" icon-start (click)="sub(a_course.ccode, 'Subscribe')">
+          <ion-icon name="{{a_course.sub ? 'heart' : 'heart-outline'}}"></ion-icon>
+          {{a_course.sub ? 'Unsubscribe' : 'Subscribe'}}
         </button>
       </ion-col>
       <ion-col text-right>
