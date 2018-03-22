@@ -11,7 +11,7 @@
   </ion-header>
    
   <ion-content class="login-content" padding>
-    <div class="login-box">
+    <div>
       
       <form (ngSubmit)="register()" #registerForm="ngForm">
         <ion-row>
@@ -21,16 +21,16 @@
               <ion-item>
                 <ion-input type="text" placeholder="Email" name="email" clearInput="true" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [(ngModel)]="registerCredentials.email" required  title="Use your school email"></ion-input>
               </ion-item>
-
+              <ion-note>*Use your school email</ion-note><br><br>
               
               <ion-item>
                 <ion-input type="text" placeholder="Username" name="username" clearInput="true" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{4,16}$" [(ngModel)]="registerCredentials.username" required  title="*4-16 characters, only characters and number"></ion-input>
               </ion-item>
-              
+              <ion-note>*4-16 characters, begain with letter and number in username</ion-note><br><br>
               <ion-item>
                 <ion-input type="password" placeholder="Password" name="password" clearInput="true" pattern="^(?=.*[a-z])(?=.*[0-9]).{8,32}$" [(ngModel)]="registerCredentials.password"   required title="8-32 characters at least one letter and one number"></ion-input>
               </ion-item>
-
+              <ion-note>*8-32 characters at least 1 letter and 1 number in password</ion-note><br><br>
               <ion-item>
                   <ion-label>University</ion-label>
                   <ion-select [(ngModel)]="registerCredentials.school" interface="action-sheet" name="shool" required>
@@ -47,9 +47,9 @@
                     <ion-option value="4">Year 4</ion-option>
                   </ion-select>
               </ion-item>
-              <ion-note>*Use your school email</ion-note><br>
-              <ion-note>*4-16 characters, begain with letter and number in username</ion-note><br>
-              <ion-note>*8-32 characters at least 1 letter and 1 number in password</ion-note><br>
+              
+              
+              
             </ion-list>
             
           </ion-col>

@@ -76,7 +76,7 @@ export class LoginPage {
   forgetpwsendemail() {
     let prompt = this.alertCtrl.create({
       title: 'Forget Password',
-      message: "Enter your email address, we will send an email to you",
+      message: "Enter your email address, the reset link will send",
       inputs: [
         {
           name: 'email',
