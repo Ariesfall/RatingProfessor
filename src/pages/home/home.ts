@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController,NavParams, ToastController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map'; 
 import { CoursePage } from '../../pages/rating/course';
+import { Network } from '@ionic-native/network';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-home',
@@ -26,14 +28,18 @@ export class HomePage{
     public http: Http, 
     public toastCtrl: ToastController, 
     private alertCtrl: AlertController, 
-    private nav: NavController, 
+    private nav: NavController,
+    private network: Network, 
+    private storage: Storage,
     private auth: AuthService) {
 
       let info = this.auth.getUserInfo();
-      this.userid = info['userid'];
-      this.email = info['email'];
-      this.username = info['username'];
-      
+      //this.userid = info['userid'];
+      //this.email = info['email'];
+      //this.username = info['username'];
+      storage.get('userid').then((data) => {this.userid = data;});
+      storage.get('email').then((data) => {this.email = data;});
+      storage.get('username').then((data) => {this.username = data;});
 
     /*this.courseRef.on('value', courseList => {//db
       let countries = [];
@@ -142,6 +148,8 @@ export class HomePage{
       refresher.complete();
     }, 2000);
   }
+
+  
 
 
 }

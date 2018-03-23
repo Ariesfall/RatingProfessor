@@ -27,6 +27,8 @@
         <ion-row>
           <ion-col class="signup-col">
             <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">Login</button>
+            <br>
+            <!--<button ion-button class="submit-btn2" type="button" full (click)="createAccount()">Create New Account</button>-->
             <button ion-button class="register-btn" type="button" block clear (click)="createAccount()">Create New Account</button>
             <button ion-button class="register-btn" type="button" block clear (click)="forgetpwsendemail()">Forget Password</button>
           </ion-col>

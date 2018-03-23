@@ -37,62 +37,67 @@
     <!--{{submitbtn == 'Submit' ? 'hidden' : 'button'}}
     <button type="hidden" ion-button color="danger" outline full disabled>You have feedback this week</button>-->
     <div *ngIf="getfeedback">
-        <ion-note>1 Strongly Disaggree; 2 Disaggree; 3 Neutral; 4 Aggree; 5 Strongly Aggree</ion-note>
-        <div>
-          <p>Give clear explanations</p>
-          <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q1">
-              <a (click)="q1=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q1', q1);">{{item[2]}}</a>
+        <ion-card>
+          <ion-card-content>
+          <ion-note>1 Strongly Disaggree; 2 Disaggree; 3 Neutral; 4 Aggree; 5 Strongly Aggree</ion-note>
+          <div>
+            <p>Give clear explanations</p>
+            <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q1">
+                <a (click)="q1=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q1', q1);">{{item[2]}}</a>
+            </div>
+            <br>
+          </div>
+    
+    
+          <div>
+          <p>Get Clearly understand</p>
+          <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q2">
+              <a (click)="q2=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q2', q2);">{{item[2]}}</a>
           </div>
           <br>
         </div>
-  
-  
+    
         <div>
-        <p>Get Clearly understand</p>
-        <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q2">
-            <a (click)="q2=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q2', q2);">{{item[2]}}</a>
+          <p>Course progress go suitability.</p>
+          <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q3">
+              <a (click)="q3=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q3', q3);">{{item[2]}}</a>
+          </div>
+          <br>
         </div>
-        <br>
+    
+        <div>
+          <p>Study matirial(PPT,PDF,etc.) helpful</p>
+          <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q4">
+              <a (click)="q4=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q4', q4);">{{item[2]}}</a>
+          </div>
+          <br>
+        </div>
+    
+        <div>
+          <p>Assignments/projects/tests feedback clarify something</p>
+          <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q5">
+              <a (click)="q5=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q5', q5);">{{item[2]}}</a>
+          </div>
+          <br>
+        </div>
+    
+        <div>
+          <p>(Optional) Could you give some advice or drop down your ask here</p>
+          <textarea placeholder="Enter a comment"  [(ngModel)]="text"></textarea>
+          <br />
+          
+          <p>
+              <ion-checkbox [(ngModel)]="anonymous"></ion-checkbox> I want comment anonymous
+              </p>
+              
+          <button ion-button color="light" round (click)=submitratelecture()>{{submitbtn}}</button>
+          <button ion-button clear round (click)="q1=q2=q3=q4=q5=text=null">reset</button>
+        </div>
+          <ion-note>*If you resubmit, the new feedback well cover older one this week</ion-note>
+        </ion-card-content>
+        </ion-card>
       </div>
   
-      <div>
-        <p>Course progress go suitability.</p>
-        <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q3">
-            <a (click)="q3=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q3', q3);">{{item[2]}}</a>
-        </div>
-        <br>
-      </div>
-  
-      <div>
-        <p>Study matirial(PPT,PDF,etc.) helpful</p>
-        <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q4">
-            <a (click)="q4=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q4', q4);">{{item[2]}}</a>
-        </div>
-        <br>
-      </div>
-  
-      <div>
-        <p>Assignments/projects/tests feedback clarify something</p>
-        <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q5">
-            <a (click)="q5=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q5', q5);">{{item[2]}}</a>
-        </div>
-        <br>
-      </div>
-  
-      <div>
-        <p>(Optional) Could you give some advice or drop down your ask here</p>
-        <textarea placeholder="Enter a comment"  [(ngModel)]="text"></textarea>
-        <br />
-        
-        <p>
-            <ion-checkbox [(ngModel)]="anonymous"></ion-checkbox> I want comment anonymous
-            </p>
-            
-        <button ion-button color="light" round (click)=submitratelecture()>{{submitbtn}}</button>
-        <button ion-button clear round (click)="q1=q2=q3=q4=q5=text=null">reset</button>
-      </div>
-        <ion-note>*If you resubmit, the new feedback well cover older one this week</ion-note>
-    </div>
   </ion-list>
   
     <h5>Feedback</h5>

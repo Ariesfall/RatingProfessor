@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading, ToastController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { RegisterPage } from '../../pages/register/register';
 import { TabsPage } from '../../pages/tabs/tabs';
+import { Network } from '@ionic-native/network';
+import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 
 /**
@@ -22,8 +24,23 @@ export class LoginPage {
   loading: Loading;
   registerCredentials = { email: '', password: '' };
 
-  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController, public http: Http) {
-
+  constructor(
+    private nav: NavController, 
+    private auth: AuthService, 
+    private alertCtrl: AlertController, 
+    private loadingCtrl: LoadingController, 
+    private network: Network,
+    private toast: ToastController, 
+    private storage: Storage,
+    public http: Http) {
+      
+      storage.get('loginstatus').then((data) => {
+        console.log('Login status is ', data);
+        if(data){
+          this.nav.setRoot(TabsPage);
+        }
+      });
+    
    }
   
   ionViewDidLoad(){
@@ -35,34 +52,40 @@ export class LoginPage {
    }
 
   public login() {
-    this.showLoading()
+    /*if(!this.isConnected()){
+      this.showLoading('Wating connect to network...');
+    }else{*/
+    this.showLoading('Please wait...')
     this.auth.login(this.registerCredentials).subscribe(allowed => {
       if (allowed==0) {
+        this.storage.set('rootPage', 'TabsPage');
+        this.loading.dismiss();
         this.nav.setRoot(TabsPage);
       } else if(allowed==1){
-        this.showError("Email or password incorrect");
+        this.showError("Error","Email or password incorrect");
       } else if(allowed==99){
-        this.showError("Account not verified, please check your email!");
+        this.showError("Error","Account not verified, please check your email!");
       } else {
-        this.showError("Access not accept");
+        this.showError("Error","Access not accept");
       }
     },
       error => {
-        this.showError(error);
+        this.showError("Error",error);
       });
+  //}
   }
 
-  showLoading() {
+  showLoading(msgss:string) {
     this.loading = this.loadingCtrl.create({
-      content: 'Please wait...',
-      dismissOnPageChange: true
+      content: msgss,
+      dismissOnPageChange: false
     });
     this.loading.present();
   }
 
-  showError(text) {
+  showError(title, text) {
     this.loading.dismiss();
- 
+    if(title == null){title = 'Error'}
     let alert = this.alertCtrl.create({
       title: 'Fail',
       subTitle: text,
@@ -103,21 +126,64 @@ export class LoginPage {
   }
 
   forgetpw(email){
-    this.showLoading();
+    this.showLoading('Please wating...');
     console.log("fpw, send email to "+email);
     this.http.get('http://ratingstudy.ddns.net/ratingstudy/register.php/.json?email='+email+'&resetpassword=1').map(res => res.json()).subscribe(
       data => {
         if(data.success){
-          this.showError("The email has been sent"); 
+          this.showError("Success","Email has sent to <"+email+">"); 
         }else{
-          this.showError("The email not found");
+          this.showError("Error","Email <"+email+"> not found");
         }
       },
       err => {
         console.log("Oops! Get lecture.php error");
       });
   }
-  
+
+  ionViewDidEnter() {
+    var loadmsg = 0;
+
+    /*if(!this.isConnected()&&loadmsg==0){
+      loadmsg = 1;
+      this.showLoading('Wating connect to network...');
+    }*/
+
+    this.network.onConnect().subscribe(data => {
+      if(loadmsg==1){
+        this.loading.dismiss();
+        loadmsg = 0;
+      }
+      
+      console.log(data)
+      this.displayNetworkUpdate(data.type);
+    }, error => console.error(error));
+   
+    this.network.onDisconnect().subscribe(data => {
+      console.log(data)
+      this.displayNetworkUpdate(data.type);
+      if(loadmsg==0){
+        loadmsg = 1;
+        this.showLoading('Wating connect to network...');
+      }
+      
+    }, error => console.error(error));
+    
+   }
+
+  displayNetworkUpdate(connectionState: string){
+    let networkType = this.network.type;
+    this.toast.create({
+      message: `You are now ${connectionState} via ${networkType}`,
+      duration: 3000
+    }).present();
+  }
+
+  isConnected(): boolean {
+    let conntype = this.network.type;
+    console.log(conntype)
+    return conntype && conntype !== 'unknown' && conntype !== 'none';
+  }
   
   /*constructor(public navCtrl: NavController, public navParams: NavParams) {
   }

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Md5 } from 'ts-md5/dist/md5'
+import { Network } from '@ionic-native/network';
+import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 
 
@@ -19,13 +21,28 @@ export class User{
   school:string;
   year:number;
   accesslv:string;
-  constructor(userid: string, email: string, username:string, school:string, year:number, accesslv:string) {
+  constructor(
+    userid: string, 
+    email: string, 
+    username:string, 
+    school:string, 
+    year:number, 
+    accesslv:string,
+    private storage: Storage
+  ) {
     this.userid = userid;
     this.email = email;
     this.username = username;
     this.school = school;
     this.year = year;
     this.accesslv = accesslv;
+    storage.set('loginstatus', true);
+    storage.set('userid', userid);
+    storage.set('email', email);
+    storage.set('username', username);
+    storage.set('school', school);
+    storage.set('year', year);
+    storage.set('accesslv', accesslv);
   }
 }
 
@@ -37,7 +54,10 @@ export class AuthService {
   posts: any;
   auth: string;
   
-  constructor(public http: Http){}
+  constructor(
+    private storage: Storage,
+    public http: Http
+  ){}
    public login(credentials) {
      if (credentials.email === null || credentials.password === null) {
        return Observable.throw("Please insert credentials");
@@ -65,7 +85,7 @@ export class AuthService {
               console.log("Login access OK!");
               console.log(this.posts.aid);
               access=0;
-              this.currentUser = new User(this.posts.aid, credentials.email, this.posts.username, this.posts.school, this.posts.year, this.posts.accesslv);
+              this.currentUser = new User(this.posts.aid, credentials.email, this.posts.username, this.posts.school, this.posts.year, this.posts.accesslv, this.storage);
             }else {
               console.log("Not access right!");
               console.log(this.posts.aid);
@@ -123,6 +143,13 @@ export class AuthService {
    public logout() {
      return Observable.create(observer => {
        this.currentUser = null;
+       this.storage.set('loginstatus', false);
+       this.storage.set('userid', '');
+       this.storage.set('email', '');
+       this.storage.set('username', '');
+       this.storage.set('school', '');
+       this.storage.set('year', '');
+       this.storage.set('accesslv', '');
        observer.next(true);
        observer.complete();
      });

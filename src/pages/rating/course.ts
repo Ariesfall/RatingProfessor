@@ -5,6 +5,7 @@ import { Http } from '@angular/http';
 import { Chart } from 'chart.js';
 import { LecturePage } from '../../pages/rating/lecture';
 import { RatingPage } from '../../pages/rating/rating';
+import { Storage } from '@ionic/storage';
 
 import 'rxjs/add/operator/map'; 
 
@@ -54,13 +55,18 @@ export class CoursePage {
     public navCtrl: NavController, 
     public navParams: NavParams, 
     public http: Http, 
+    private storage: Storage,
     private auth: AuthService
   ) {
     this.ccode = this.navParams.get('ccode');
     let info = this.auth.getUserInfo();
-    this.userid = info['userid'];
-    this.username = info['username'];
-    this.useryear = info['year'];
+    //this.userid = info['userid'];
+    //this.username = info['username'];
+    //this.useryear = info['year'];
+    storage.get('userid').then((data) => {this.userid = data;});
+    storage.get('year').then((data) => {this.useryear = data;});
+    storage.get('username').then((data) => {this.username = data;});
+
     this.isAndroid = platform.is('android');
     console.log(this.ccode);
     

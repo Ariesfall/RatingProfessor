@@ -4,6 +4,7 @@ import { ToastController, Platform, IonicPage, NavController, NavParams } from '
 import { Http } from '@angular/http';
 import { Chart } from 'chart.js';
 import { LecturePage } from '../../pages/rating/lecture';
+import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map'; 
 
 @Component({
@@ -48,16 +49,28 @@ export class RatingPage {
   text:string=null;
   limit:number = 5;
 
-  constructor(public toastCtrl: ToastController, platform: Platform, public navCtrl: NavController, public navParams: NavParams, public http: Http, private auth: AuthService) {
+  constructor(
+    public toastCtrl: ToastController, 
+    platform: Platform, 
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public http: Http, 
+    private storage: Storage,
+    private auth: AuthService) {
     this.ccode = this.navParams.get('ccode');
     this.pid = this.navParams.get('pid');
     this.pname = this.navParams.get('pname');
     this.cname = this.navParams.get('cname');
     this.school = this.navParams.get('cschool');
     let info = this.auth.getUserInfo();
-    this.userid = info['userid'];
+    /*this.userid = info['userid'];
     this.username = info['username'];
-    this.useryear = info['year'];
+    this.useryear = info['year'];*/
+
+    storage.get('userid').then((data) => {this.userid = data;});
+    storage.get('year').then((data) => {this.useryear = data;});
+    storage.get('username').then((data) => {this.username = data;});
+
     this.isAndroid = platform.is('android');
     console.log(this.ccode,this.pid,this.userid);
   }

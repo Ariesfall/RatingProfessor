@@ -26,7 +26,7 @@ export class RegisterPage {
     this.auth.register(this.registerCredentials).subscribe(success => {
       if (success) {
         this.createSuccess = true;
-        this.showPopup("Success", "Account created, please check your email to active your account");
+        this.showPopup("Success", "Account created, please check your email to active account");
       } else {
         this.showPopup("Error", "Email or username is used.");
       }

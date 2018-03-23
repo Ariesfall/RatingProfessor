@@ -21,7 +21,7 @@
 
   
   <ion-card *ngIf="!subscribe">
-    <button ion-button full color="light" (click)="sub()">Subscribe</button>
+    <button ion-button full clear (click)="sub()">Subscribe</button>
   </ion-card>
 
   <ion-card>
@@ -47,12 +47,12 @@
               <ion-icon large name="ios-person"></ion-icon>  
               {{a_lecture.pname}}
                 <!--<ion-icon name='stats' item-end small (click)="toratelecturepage(a_lecture.pid)"></ion-icon>-->     
-              <ion-icon item-end name="ios-arrow-forward"></ion-icon>       
+              <ion-icon item-end name="ios-arrow-forward" *ngIf="isAndroid"></ion-icon>       
           </button>
           <button ion-item (click)="toratingpage(a_lecture.pid, a_lecture.pname)">
               <ion-icon small name="stats"></ion-icon>  
               Score:  {{a_lecture.pscore==null ? 'No Rate' : a_lecture.pscore}}
-              <ion-icon item-end name="ios-arrow-forward"></ion-icon>
+              <ion-icon item-end name="ios-arrow-forward" *ngIf="isAndroid"></ion-icon>
           </button>
       </ion-item>
       
