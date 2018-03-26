@@ -16,7 +16,7 @@ import 'rxjs/add/operator/map';
 export class CoursePage {
   @ViewChild('barCanvas') barCanvas;
   barChart: any;
-
+  time:number = 0;
   acourse:any;
   ccode:any;
   lectures:any;
@@ -81,7 +81,11 @@ export class CoursePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CoursePage');
-      this.loadcouring();      
+    this.storage.get('userid').then((data) => {
+      this.userid = data;
+      this.loadcouring();  
+    });
+          
   }
 
   submitratecourse(){
@@ -155,7 +159,13 @@ export class CoursePage {
   
   
   toupdatecanvas() {
-    this.barChart = new Chart(this.barCanvas.nativeElement, {
+    console.log("times "+this.time  );
+    /*if(this.time!=0){
+      this.barCanvas.nativeElement.reset();
+      console.log("barChart reset");
+    }*/
+    
+    this.barChart =new Chart(this.barCanvas.nativeElement, {
       type: 'bar',
       data: {
           labels: ["Overall","Learning", "Exam", "Content"],
@@ -188,6 +198,7 @@ export class CoursePage {
           }
       }
     });
+    this.time += 1;
   }
 
   loadcouring(){

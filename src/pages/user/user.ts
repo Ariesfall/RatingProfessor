@@ -3,7 +3,7 @@ import { App, ModalController, Platform, NavParams, ViewController, NavControlle
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { Http } from '@angular/http';
 import { LoginPage } from '../../pages/login/login';
-import { AccountPage } from '../../pages/account/account';
+import { AccountPage, PasswordPage } from '../../pages/account/account';
 import { Storage } from '@ionic/storage';
 
 import 'rxjs/add/operator/map';
@@ -89,7 +89,7 @@ export class UserPage {
     alert.present();
   }
   chpw(){
-
+    this.navCtrl.push(PasswordPage,{ });
   }
 
   personal(){

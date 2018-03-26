@@ -83,7 +83,11 @@ export class HomePage{
   }
 
   ionViewDidLoad(){
-    this.togetcourse();
+    this.storage.get('userid').then((data) => {
+      this.userid = data;
+      this.togetcourse();
+    });
+    
   }
 
   togetcourse(){

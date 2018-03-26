@@ -118,8 +118,12 @@ export class RatingPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad RatingPage');
     //get lectures
-    this.loaddataing();
-    this.loadfeedback();
+    this.storage.get('userid').then((data) => {
+      this.userid = data;
+      this.loaddataing();
+      this.loadfeedback();
+    });
+    
   }
 
   loaddataing(){
@@ -188,7 +192,7 @@ export class RatingPage {
         }
       }
     });*/
-
+    
     this.radarChart = new Chart(this.radarCanvas.nativeElement, {
       type: 'radar',
       data: {
@@ -209,9 +213,12 @@ export class RatingPage {
         scale: {
             // Hides the scale
             display: true,
+            responsive: false,
+            maintainAspectRatio: true,
             ticks: {
               // changes here
-              max : 5
+              max : 5,
+              min : 1,
           }
         },
         title: {
@@ -220,6 +227,8 @@ export class RatingPage {
         }
       }
     });
+
+    
   }
 
   wantgetfeedback(){

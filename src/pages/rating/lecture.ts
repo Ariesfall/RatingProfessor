@@ -107,6 +107,7 @@ export class LecturePage {
              display: true,
              ticks: {
                // changes here
+               min : 1,
                max : 5
            }
          },

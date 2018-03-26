@@ -13,8 +13,7 @@
   
   </ion-header>
   
-  
-  <ion-content padding>
+<ion-content padding>
 <ion-refresher (ionRefresh)="doRefresh($event)">
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
@@ -28,12 +27,12 @@
     <h5>Current Rate: {{lecturerate}}</h5>
     <div class='col'>
       <!--<div><canvas #lineCanvas ></canvas></div>-->
-      <div><canvas #radarCanvas height="200"></canvas></div>
+      <div><canvas #radarCanvas height="220"></canvas></div>
     </div>
     <br>
-    <ion-list>
     <h5>Give feedback </h5>
-    <ion-item (click)="wantgetfeedback()">Click to feedback on week {{week_num}}<ion-icon item-end name="{{getfeedback ? 'ios-arrow-up':'ios-arrow-down'}}"></ion-icon></ion-item>
+
+    <ion-item no-lines (click)="wantgetfeedback()">Click to feedback on week {{week_num}}<ion-icon item-end name="{{getfeedback ? 'ios-arrow-up':'ios-arrow-down'}}"></ion-icon></ion-item>
     <!--{{submitbtn == 'Submit' ? 'hidden' : 'button'}}
     <button type="hidden" ion-button color="danger" outline full disabled>You have feedback this week</button>-->
     <div *ngIf="getfeedback">
@@ -98,8 +97,6 @@
         </ion-card>
       </div>
   
-  </ion-list>
-  
     <h5>Feedback</h5>
     <ion-list>
         <ion-item *ngFor="let a_comment of lecturecm">
@@ -113,8 +110,5 @@
         </ion-item>
         <button ion-button color="light" full (click)="showmorefeedback()">More Feedback</button>
       </ion-list>
-    
-    
-  
   </ion-content>
   

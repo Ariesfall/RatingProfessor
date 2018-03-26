@@ -9,6 +9,13 @@ import { CoursePage } from '../../pages/rating/course';
 })
 export class SearchPage {
   items: string[];
+  searchtype = "basic";
+  //adsearch = {ccode : '', 'school':'', title:'', lname:''};
+  adsearch_school;
+  adsearch_ccode;
+  adsearch_title;
+  adsearch_lname;
+  adsearchbar = 1;
   coursecodes: string[];
   professors;
 
@@ -53,6 +60,14 @@ export class SearchPage {
     this.navCtrl.push(CoursePage,{
       ccode : ccode
     });
+  }
+
+  tosearch(){
+    this.adsearchbar = 0;
+  }
+  
+  searchbar(){
+    this.adsearchbar = 1;
   }
 
 }

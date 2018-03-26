@@ -7,12 +7,72 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>account</ion-title>
+    <ion-title>Personal</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+  <form (ngSubmit)="submitpersonal()" #registerForm="ngForm">
+  <ion-list>
+    <ion-list-header>
+      Information
+    </ion-list-header>
+    <ion-item>Username: {{dbdata.username}}</ion-item>
+    <ion-item>Email: {{dbdata.email}}</ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-item ion-col *ngIf="editmode == 0">School: {{dbdata.school}}</ion-item>
+        <ion-item ion-col *ngIf="editmode == 1">
+            <ion-label floating>School</ion-label>
+            <ion-select [(ngModel)]="newdata.school" interface="popover" name="school">
+              <ion-option value="OUHK">OUHK</ion-option>
+              <ion-option value="HKU">HKU</ion-option>
+              <ion-option value="CUHK">CUHK</ion-option>
+              <ion-option value="PolyU">PolyU</ion-option>
+              <ion-option value="CityU">CityU</ion-option>
+              <ion-option value="HKCC">HKCC</ion-option>
+            </ion-select>
+          </ion-item>
+        <ion-item ion-col *ngIf="editmode == 0">Year: {{dbdata.year}}</ion-item>
+        <ion-item ion-col *ngIf="editmode == 1">
+            <ion-label>Year</ion-label>
+            <ion-select [(ngModel)]="newdata.year" interface="popover" name="year">
+              <ion-option value="1">1</ion-option>
+              <ion-option value="2">2</ion-option>
+              <ion-option value="3">3</ion-option>
+              <ion-option value="4">4</ion-option>
+            </ion-select>
+          </ion-item>
+      </ion-row>
+    </ion-grid>
+    <ion-grid>
+      <ion-row>
+        <ion-item ion-col *ngIf="editmode == 0">Major: {{dbdata.major}}</ion-item>
+        <ion-item ion-col *ngIf="editmode == 1">
+            <ion-label floating>Major</ion-label>
+            <ion-input type="text" [(ngModel)]="newdata.major" name="major"></ion-input>
+        </ion-item>
+        <ion-item ion-col *ngIf="editmode == 0">Collage {{dbdata.collage}}</ion-item> 
+        <ion-item ion-col *ngIf="editmode == 1">
+            <ion-label floating>Collage</ion-label>
+            <ion-input type="text" [(ngModel)]="newdata.collage" name="collage"></ion-input>
+        </ion-item>
+      </ion-row>
+    </ion-grid>
+    <ion-item>Type: {{dbdata.type}}</ion-item>
+  </ion-list>
 
+  <ion-grid padding>
+    <ion-row>
+          
+          <button ion-col ion-button class="submit-btn" full type="button" (click)="editpersonal(1)" *ngIf="editmode == 0">Edit</button>
+          <button ion-col ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid" *ngIf="editmode == 1" >Submit</button>
+          <button ion-col ion-button class="submit-btn" full type="button" (click)="editpersonal(0)" *ngIf="editmode == 1">Cancel</button>
+          <ion-col></ion-col>
+          <ion-col *ngIf="editmode == 0"></ion-col>
+    </ion-row>
+  </ion-grid>
+</form>
 </ion-content>

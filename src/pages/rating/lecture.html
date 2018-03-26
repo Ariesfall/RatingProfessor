@@ -11,7 +11,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
@@ -35,7 +35,7 @@
 
   <ion-card >
     <ion-card-content>
-      <div><canvas #radarCanvas height="200"></canvas></div>
+      <div><canvas #radarCanvas height="250"></canvas></div>
       <br>
     </ion-card-content>
   </ion-card>
