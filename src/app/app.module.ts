@@ -11,7 +11,7 @@ import { UserPage } from '../pages/user/user';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { AccountPage } from '../pages/account/account';
-import { PasswordPage } from '../pages/account/account';
+import { PasswordPage } from '../pages/account/password';
 import { RegisterPage } from '../pages/register/register';
 import { LoginPage } from '../pages/login/login';
 import { RatingPage } from '../pages/rating/rating';

@@ -3,7 +3,8 @@ import { App, ModalController, Platform, NavParams, ViewController, NavControlle
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { Http } from '@angular/http';
 import { LoginPage } from '../../pages/login/login';
-import { AccountPage, PasswordPage } from '../../pages/account/account';
+import { AccountPage } from '../../pages/account/account';
+import { PasswordPage } from '../../pages/account/password';
 import { Storage } from '@ionic/storage';
 
 import 'rxjs/add/operator/map';
