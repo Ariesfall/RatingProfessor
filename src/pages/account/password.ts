@@ -39,16 +39,17 @@ import { Md5 } from 'ts-md5/dist/md5'
       if(this.inputpassword.newpw == this.inputpassword.cfpw){
         var oldpw = Md5.hashStr(this.inputpassword.oldpw+this.email).toString();
         var newpw = Md5.hashStr(this.inputpassword.newpw+this.email).toString();
-        var auth = this.url+"account.php/.json?username="+this.username+"&aid="+this.userid+"&oldpw="+oldpw+"&newpw="+newpw;
+        var auth = this.url+"account.php/.json?email="+this.email+"&aid="+this.userid+"&oldpw="+oldpw+"&newpw="+newpw;
+        console.log(auth);
         this.http.get(auth).map(res => res.json()).subscribe(
           data => {
             console.log(data);
-            if (data.access == 300){
-              this.showPopup("Success", "Your password has been changed");
-            }else if(data.access == 200){
+            if (data.access == 200){
+              this.showPopup("Success", "Your password changed");
+            }else if(data.access == 300){
               this.showPopup("Error", "You password incorrect");
             }else{
-              this.showPopup("Error", "Please try again");
+              this.showPopup("Error", "Please check your password");
             }
           },
           err => {

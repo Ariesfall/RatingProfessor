@@ -35,16 +35,19 @@ export class AccountPage {
     private storage: Storage
   ) {
     storage.get('username').then((data) => {this.username = data;});
+    storage.get('email').then((data) => {this.email = data;});
     storage.get('userid').then((data) => {
       this.userid = data;
       this.loadpersional();
     });
-    storage.get('email').then((data) => {this.email = data;});
+    storage.get('major').then((data) => {this.dbdata.major = data;});
+    storage.get('collage').then((data) => {this.dbdata.collage = data;});
+    
     
   }
 
   public loadpersional(){
-    var auth = this.url+"account.php/.json?username="+this.username+"&aid="+this.userid;
+    var auth = this.url+"account.php/.json?email="+this.email+"&aid="+this.userid+"&get=1";
     this.http.get(auth).map(res => res.json()).subscribe(
       data => {
         console.log(data);
@@ -63,7 +66,7 @@ export class AccountPage {
         }else{
           this.dbdata.type = 'Warmming';
         }
-
+        
         this.storage.set('email', this.dbdata.email);
         this.storage.set('username', this.dbdata.username);
         this.storage.set('school', this.dbdata.school);
@@ -81,12 +84,57 @@ export class AccountPage {
   }
 
   submitpersonal(){
+    var dosql=1;
     this.editmode = 0;
+    this.storage.set('major', this.newdata.major);
+    this.storage.set('collage', this.newdata.collage);
+    /*if(this.newdata.username != this.dbdata.username && this.newdata.year != this.dbdata.year){
+      var auth = this.url+"account.php/.json?edit=2&email="+this.email+"&aid="+this.userid+"&year="+this.newdata.year+"&username="+this.newdata.username;
+    }else if(this.newdata.username != this.dbdata.username){
+      var auth = this.url+"account.php/.json?edit=1&email="+this.email+"&aid="+this.userid+"&username="+this.newdata.username;
+    }else if(this.newdata.year != this.dbdata.year){
+      var auth = this.url+"account.php/.json?edit=0&email="+this.email+"&aid="+this.userid+"&year="+this.newdata.year;
+    }else{
+      dosql = 0;
+    }*/
+    var auth = this.url+"account.php/.json?edit=0&email="+this.email+"&aid="+this.userid+"&year="+this.newdata.year+"&username="+this.newdata.username;
+    if(dosql==1){
+      console.log(auth);
+      this.http.get(auth).map(res => res.json()).subscribe(
+        data => {
+          console.log(data);
+          if (data.access == 200){
+            this.showPopup("Success", "Information changed");
+            this.loadpersional();
+          }else{
+            this.showPopup("Error", "Username has been use");
+          }
+        },
+        err => {
+            console.log("Oops! Get account.php error");
+        });
+    }
     console.log("edit mode off");
+    
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AccountPage');
+  }
+
+  showPopup(title, text) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: text,
+      buttons: [
+        {
+          text: 'OK',
+          handler: data => {
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
 }

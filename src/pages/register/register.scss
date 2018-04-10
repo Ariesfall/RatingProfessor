@@ -1,9 +1,9 @@
 page-register {
     .login-content {
-      background: #5380ac;
+      background: #ffffff;
    
       .login-box {
-        background: #5380ac;
+        background: #ffffff;;
         padding: 20px 20px 0px 20px;
         margin-top: 30px;
       }
@@ -15,11 +15,16 @@ page-register {
 
       ion-note{
         font-size: 0.8em;
-        color: white;
+        color: black ;
         text-align: left;
        }
+       
+       ion-item{
+        background:#ffffff;
+        border: 1px solid #ffffff;
+       }
    
-       ion-item {
+      /* ion-item {
            border-radius: 30px !important;
            padding-left: 30px !important;
            font-size: 0.9em;
@@ -27,21 +32,22 @@ page-register {
            border: 1px solid #ffffff;
            border-bottom: 0px !important;
            box-shadow: none !important;
-       }
+       }*/
    
        .signup-col {
          margin: 0px 16px 0px 16px;
          padding-bottom: 20px;
        }
-   
+       
+       
        .item-inner {
-         border-bottom-color: #ffffff !important;
-         box-shadow: none !important;
+         border-bottom-color: #ffffff ;
+         //box-shadow: none !important;
        }
    
        .submit-btn {
          background: #99ccff;
-         border-radius: 30px !important;
+         border-radius: 30px ;
          border: 1px solid #ffffff;
        }
     }

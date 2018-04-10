@@ -38,7 +38,7 @@
   </ion-card-content>
   </ion-card>
 
-  <ion-card>
+  <ion-card *ngIf="lectures != ''">
     <ion-card-header>Lecturer</ion-card-header>
     <ion-card-content>
       <ion-list>
@@ -49,7 +49,7 @@
                 <!--<ion-icon name='stats' item-end small (click)="toratelecturepage(a_lecture.pid)"></ion-icon>-->     
               <ion-icon item-end name="ios-arrow-forward" *ngIf="isAndroid"></ion-icon>       
           </button>
-          <button ion-item (click)="toratingpage(a_lecture.pid, a_lecture.pname)">
+          <button ion-item (click)="toratingpage(a_lecture.pid, a_lecture.pname)" >
               <ion-icon small name="stats"></ion-icon>  
               Score:  {{a_lecture.pscore==null ? 'No Rate' : a_lecture.pscore}}
               <ion-icon item-end name="ios-arrow-forward" *ngIf="isAndroid"></ion-icon>
@@ -102,7 +102,7 @@
     <ion-card-content>
         <ion-item (click)="wantgetrate()">Click to rating<ion-icon item-end name="{{getrate ? 'ios-arrow-up':'ios-arrow-down'}}"></ion-icon></ion-item>
         <div *ngIf="getrate">
-        <ion-note>1 Strongly Disaggree; 2 Disaggree; 3 Neutral; 4 Aggree; 5 Strongly Aggree</ion-note>
+        <ion-note>1 Strongly Disagree; 2 Disagree; 3 Neutral; 4 agree; 5 Strongly agree</ion-note>
         <p>Easy to learn and understand</p>
         <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="ratinglearn">
             <a (click)="ratinglearn=item[1]" class="{{item[0]}}" *ngFor="let item of buttongroup(ratinglearn);">{{item[1]}}</a>
@@ -148,10 +148,10 @@
             <p><b><u>{{a_comment.username == '' ? "Anonymous" : a_comment.username}}</u>: </b></p>
             <p>{{a_comment.cm}}</p>
             <ion-note item-end>{{a_comment.date}}<br>#{{a_comment.comid}}<br><a (click)="deletecomment(a_comment.comid)" *ngIf="a_comment.aid==userid">Delete</a></ion-note>
-            <ion-col col-1 item-end>
-                <ion-icon name="md-arrow-round-up" color="secondary" small></ion-icon><br><!--<p class="smallnumberp">32</p>-->
+            <!--<ion-col col-1 item-end>
+                <ion-icon name="md-arrow-round-up" color="secondary" small></ion-icon><br><!--<p class="smallnumberp">32</p>
                 <ion-icon name="md-arrow-round-down" small></ion-icon>
-            </ion-col>
+            </ion-col>-->
         </ion-item>
         <button ion-button full color="light" (click)="showmorecomment()">More Comment</button>
       </ion-list>

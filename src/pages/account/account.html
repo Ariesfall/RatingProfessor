@@ -19,25 +19,19 @@
     <ion-list-header>
       Information
     </ion-list-header>
-    <ion-item>Username: {{dbdata.username}}</ion-item>
+    <ion-item *ngIf="editmode == 0">Username: {{dbdata.username}}</ion-item>
+    <ion-item *ngIf="editmode == 1">
+        <ion-label floating>Username</ion-label>
+        <ion-input type="text"  pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{4,16}$" [(ngModel)]="newdata.username" name="username"></ion-input>
+    </ion-item>
     <ion-item>Email: {{dbdata.email}}</ion-item>
     <ion-grid>
       <ion-row>
-        <ion-item ion-col *ngIf="editmode == 0">School: {{dbdata.school}}</ion-item>
-        <ion-item ion-col *ngIf="editmode == 1">
-            <ion-label floating>School</ion-label>
-            <ion-select [(ngModel)]="newdata.school" interface="popover" name="school">
-              <ion-option value="OUHK">OUHK</ion-option>
-              <ion-option value="HKU">HKU</ion-option>
-              <ion-option value="CUHK">CUHK</ion-option>
-              <ion-option value="PolyU">PolyU</ion-option>
-              <ion-option value="CityU">CityU</ion-option>
-              <ion-option value="HKCC">HKCC</ion-option>
-            </ion-select>
-          </ion-item>
+        <ion-item ion-col>School: {{dbdata.school}}</ion-item>
+        
         <ion-item ion-col *ngIf="editmode == 0">Year: {{dbdata.year}}</ion-item>
         <ion-item ion-col *ngIf="editmode == 1">
-            <ion-label>Year</ion-label>
+            <ion-label floating>Year</ion-label>
             <ion-select [(ngModel)]="newdata.year" interface="popover" name="year">
               <ion-option value="1">1</ion-option>
               <ion-option value="2">2</ion-option>
@@ -68,7 +62,7 @@
     <ion-row>
           
           <button ion-col ion-button class="submit-btn" full type="button" (click)="editpersonal(1)" *ngIf="editmode == 0">Edit</button>
-          <button ion-col ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid" *ngIf="editmode == 1" >Submit</button>
+          <button ion-col ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid" *ngIf="editmode == 1" (click)="submitpersonal()">Submit</button>
           <button ion-col ion-button class="submit-btn" full type="button" (click)="editpersonal(0)" *ngIf="editmode == 1">Cancel</button>
           <ion-col></ion-col>
           <ion-col *ngIf="editmode == 0"></ion-col>

@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { AuthService } from '../../providers/auth-service/auth-service';
-import { ToastController, Platform, IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ToastController, Platform, IonicPage, NavController, NavParams, PopoverController} from 'ionic-angular';
 import { Http } from '@angular/http';
 import { Chart } from 'chart.js';
 import { LecturePage } from '../../pages/rating/lecture';
@@ -55,6 +55,7 @@ export class RatingPage {
     public navCtrl: NavController, 
     public navParams: NavParams, 
     public http: Http, 
+    public popoverCtrl: PopoverController,
     private storage: Storage,
     private auth: AuthService) {
     this.ccode = this.navParams.get('ccode');

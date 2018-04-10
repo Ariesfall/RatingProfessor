@@ -38,7 +38,7 @@
     <div *ngIf="getfeedback">
         <ion-card>
           <ion-card-content>
-          <ion-note>1 Strongly Disaggree; 2 Disaggree; 3 Neutral; 4 Aggree; 5 Strongly Aggree</ion-note>
+          <ion-note>1 Strongly Disagree; 2 Disagree; 3 Neutral; 4 agree; 5 Strongly agree</ion-note>
           <div>
             <p>Give clear explanations</p>
             <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q1">
@@ -103,10 +103,10 @@
             <p><b><u>{{a_comment.username == '' ? "Anonymous" : a_comment.username}}</u>: </b></p>
             <p>{{a_comment.feedback}}</p>
             <ion-note item-end>{{a_comment.date}}<br>#{{a_comment.pcomid}}</ion-note>
-            <ion-col col-1 item-end>
-                <ion-icon name="md-arrow-round-up" small></ion-icon><br><!--<p class="smallnumberp">-11</p>-->
+            <!--<ion-col col-1 item-end>
+                <ion-icon name="md-arrow-round-up" small></ion-icon><br><!--<p class="smallnumberp">-11</p>
                 <ion-icon name="md-arrow-round-down" color="danger" small></ion-icon>
-            </ion-col>
+            </ion-col>-->
         </ion-item>
         <button ion-button color="light" full (click)="showmorefeedback()">More Feedback</button>
       </ion-list>

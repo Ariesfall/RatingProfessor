@@ -87,7 +87,7 @@ export class LoginPage {
     this.loading.dismiss();
     if(title == null){title = 'Error'}
     let alert = this.alertCtrl.create({
-      title: 'Fail',
+      title: title,
       subTitle: text,
       buttons: ['OK']
     });

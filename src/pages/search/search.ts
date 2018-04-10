@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { CoursePage } from '../../pages/rating/course';
 
@@ -19,7 +19,11 @@ export class SearchPage {
   coursecodes: string[];
   professors;
 
-  constructor(public http: Http, public navCtrl: NavController) {
+  constructor(
+    public http: Http, 
+    private alertCtrl: AlertController, 
+    public navCtrl: NavController
+  ) {
     this.coursecodes=[];
     this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json').map(res => res.json()).subscribe(
       data => {
@@ -64,10 +68,22 @@ export class SearchPage {
 
   tosearch(){
     this.adsearchbar = 0;
+    this.showError("Sorry", "The function will comming soon!");
   }
   
   searchbar(){
     this.adsearchbar = 1;
   }
 
+  showError(title, text) {
+    if(title == null){title = 'Error'}
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: text,
+      buttons: ['OK']
+    });
+    
+    alert.present();
+    //alert.present(prompt);
+  }
 }

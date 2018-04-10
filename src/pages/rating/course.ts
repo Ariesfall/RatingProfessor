@@ -208,8 +208,9 @@ export class CoursePage {
           this.subscribe = this.acourse[0].sub;
           this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
           data => {
-            if(data.success==false){
-              this.lectures = [{pname:'No Presistance'}];
+            if(data.data[0]=="null"){
+              //this.lectures.pid = 
+              this.lectures = [{'pid': 0, 'pname':'No Presistance'}];
             }else{
               this.lectures = data.data;
             }

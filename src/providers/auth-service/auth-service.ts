@@ -43,6 +43,8 @@ export class User{
     storage.set('school', school);
     storage.set('year', year);
     storage.set('accesslv', accesslv);
+    storage.set('major', '');
+    storage.set('collage', '');
   }
 }
 
@@ -150,6 +152,8 @@ export class AuthService {
        this.storage.set('school', '');
        this.storage.set('year', '');
        this.storage.set('accesslv', '');
+       this.storage.set('major', '');
+       this.storage.set('collage', '');
        observer.next(true);
        observer.complete();
      });
