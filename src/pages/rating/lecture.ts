@@ -118,6 +118,12 @@ export class LecturePage {
        }
      });
    }
+   
+   mailto(mail) {
+    setTimeout(()=>{
+       window.open('mailto:'+mail+'?body=Content from RatingStudy');
+    },500);
+  }
 
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);

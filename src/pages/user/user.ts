@@ -77,7 +77,7 @@ export class UserPage {
     var platver = JSON.stringify(this.platform.versions());
     var lang = this.platform.lang();
     setTimeout(()=>{
-       window.open('mailto:panduola1995@gmail.com?subject=Feedback - RatingSystem&body=AppsVersion: '+this.version+'; Platform: '+platform+'; PlatfVersion: '+platver+'; Language: '+lang+' ');
+       window.open('mailto:panduola1995@gmail.com?subject=Feedback - RatingStudy&body=AppsVersion: '+this.version+'; Platform: '+platform+'; PlatfVersion: '+platver+'; Language: '+lang+' ');
     },500);
   }
 

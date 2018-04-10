@@ -20,16 +20,15 @@
     <ion-card-header>Lecturer Information</ion-card-header>
     <ion-card-content *ngFor="let a_lecture of lecturedata">
       <H4>{{a_lecture.pname}}</H4>
-      <p>Associate Professor</p>
-      <p>PhD, MSc, BSc Hons</p>
-      <p>Email: {{a_lecture.email}} </p>
+      <p>{{a_lecture.title}}</p>
+      <p>{{a_lecture.position}}</p>
+      <p>{{a_lecture.edu_bg}}</p>
+      <p>Email: <a href="mailto:a_lecture.email">{{a_lecture.email}} </a></p>
       <p>University: {{a_lecture.school}} </p>
-      <p>Phone: (+852) 2768 0000</p>
+      <p>Phone: (+852) {{a_lecture.phone}}</p>
       <br>
       Description:
-      <p>{{a_lecture.pdesp}}
-      Oliver received his BA, MSc and PhD from York University, University of Toronto and Loughborough University respectively. He worked for IBM and a few other large companies in Canada for 12 years before pursuing a teaching career in Hong Kong. His research interests include requirements engineering, software development processes and education. He enjoys music, sports, travelling and the nature.
-      </p>
+      <p>{{a_lecture.pdesp}}</p>
     </ion-card-content>
   </ion-card>
 

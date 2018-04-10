@@ -146,7 +146,7 @@ export class CoursePage {
   }
 
   toratingpage(pid, pname){
-    console.log("tolecturepage pid "+pid);
+    console.log("toratingpage pid "+pid);
     this.navCtrl.push(RatingPage,{
       pid : pid,
       pname : pname,
