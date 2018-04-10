@@ -53,36 +53,6 @@ export class LecturePage {
       });
   }
 
-  /*loadrating(){
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
-      data => {
-        if(data.data[0].crate==0 || !data.data[0].crate || data.data[0].crate==null){
-          this.courserate = 'No rate';
-        }else{
-          this.courserate = data.data[0].crate;
-        }
-        
-        this.learningrate = data.data[0].lrate;
-        this.examrate = data.data[0].erate;
-        this.knowlagerate = data.data[0].krate;
-        this.toupdatecanvas();
-        
-      },
-      err => {
-        console.log("Oops! Get ratecourse.php error");
-      });
-  }
-
-  loadcomment(){
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/comment.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
-      data => {
-          this.comments = data.data;
-      },
-      err => {
-          console.log("Oops! Get commit.php error");
-      });
-  }*/
-
   toupdatecanvas() {
  
      this.radarChart = new Chart(this.radarCanvas.nativeElement, {
@@ -119,11 +89,11 @@ export class LecturePage {
      });
    }
    
-   mailto(mail) {
+  /* mailto(mail) {
     setTimeout(()=>{
-       window.open('mailto:'+mail+'?body=Content from RatingStudy');
+       window.open('mailto:'+mail+'?body=Contect from RatingStudy');
     },500);
-  }
+  }*/
 
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);

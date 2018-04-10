@@ -73,12 +73,6 @@ export class CoursePage {
     //get lectures
   }
 
-  /*openModal() {
-
-    let modal = this.modalCtrl.create(CourseRatingPage,{ccode:"'+this.ccode+'"});
-    modal.present();
-  }*/
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad CoursePage');
     this.storage.get('userid').then((data) => {
@@ -367,35 +361,6 @@ export class CourseRatingPage {
     this.ccode = this.params.get('ccode');
     //this.character = this.params.get('charNum');
   }
-
-  /*submitratecourse(){
-    var link  = 'http://ratingstudy.ddns.net/ratingstudy/ratecourse.php/.json?ccode='+this.ccode+'&crate='+this.ratingcourse+'&lrate='+this.ratinglearn+'&erate='+this.ratingexam+'&krate='+this.ratingknow+'&aid='+this.userid;
-    //console.log(link);
-    this.http.get(link).map(res => res.json()).subscribe(
-      data => {
-        if (data.success==false){
-          this.showToast('middle', 'Rate fail, please try again ');
-        }else{
-          this.showToast('middle', 'Rate Successfull'); 
-          this.ratingcourse = this.ratingexam = this.ratingknow= this.ratinglearn = 4;
-          
-        }
-       },
-      err => {
-        console.log("Oops! submit ratecourse.php error");
-      });
-  }
-
-  showToast(position: string, Msg: string) {
-    let toast = this.toastCtrl.create({
-      message: Msg,
-      duration: 1000,
-      position: position
-    });
-
-    toast.present(toast);
-  }*/
-  
 
   dismiss() {
     this.viewCtrl.dismiss();
