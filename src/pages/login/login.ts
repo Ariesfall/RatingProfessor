@@ -145,10 +145,10 @@ export class LoginPage {
     var loadmsg = 0;
 
     //not work in website but work in moblie
-    /*if(!this.isConnected()&&loadmsg==0){
+    if(!this.isConnected()&&loadmsg==0){
       loadmsg = 1;
       this.showLoading('Wating connect to network...');
-    }*/
+    }
 
     this.network.onConnect().subscribe(data => {
       if(loadmsg==1){
