@@ -20,12 +20,37 @@
         <h3> Code: <strong>{{ course.professor }}</strong> </h3>
       </ion-item>
   </ion-list>-->
-  
+
   <!--<ion-card>
       <ion-card-content>
         <h2>Hello, Welcome user, {{username}}!</h2>
       </ion-card-content>
   </ion-card>-->
+  <div *ngIf="studentlist != ''">
+    <h4 padding>Registered</h4>
+    <ion-card *ngFor="let a_reg of studentlist">
+      <ion-card-header>
+        {{a_reg.ccode}}
+      </ion-card-header>
+      <ion-card-content>
+        {{a_reg.cname}}
+      </ion-card-content>
+      <ion-row no-padding>
+        <ion-col text-center>
+          <button ion-button clear small color="danger" icon-start (click)="sub(a_reg.ccode, 'Unsubscribe')">
+            <ion-icon name="{{a_reg.sub ? 'heart' : 'heart-outline'}}"></ion-icon>
+            {{a_reg.sub ? 'Unsubscribe' : 'Subscribe'}}
+          </button>
+        </ion-col>
+        <ion-col text-right>
+          <button ion-button clear small color="danger" (click)="tocoursepage(a_reg.ccode)" icon-start>
+            <ion-icon name='stats'></ion-icon>
+            Rate
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </div>
 
   <div *ngIf="subscribe != ''">
     <h4 padding>Subscribed</h4>
@@ -34,7 +59,7 @@
         {{a_sub.ccode}}
       </ion-card-header>
       <ion-card-content>
-        {{a_sub.cname}}   
+        {{a_sub.cname}}
       </ion-card-content>
       <ion-row no-padding>
         <ion-col text-center>
@@ -45,7 +70,7 @@
         </ion-col>
         <ion-col text-right>
           <button ion-button clear small color="danger" (click)="tocoursepage(a_sub.ccode)" icon-start>
-            <ion-icon name='stats'></ion-icon>            
+            <ion-icon name='stats'></ion-icon>
             Rate
           </button>
         </ion-col>
@@ -60,10 +85,10 @@
       {{a_course.ccode}}
     </ion-card-header>
     <ion-card-content>
-      {{a_course.cname}}   
+      {{a_course.cname}}
     </ion-card-content>
     <ion-row no-padding>
-      <ion-col text-center>
+      <ion-col text-center >
         <button ion-button clear small color="danger" icon-start (click)="sub(a_course.ccode, 'Subscribe')">
           <ion-icon name="{{a_course.sub ? 'heart' : 'heart-outline'}}"></ion-icon>
           {{a_course.sub ? 'Unsubscribe' : 'Subscribe'}}
@@ -71,7 +96,7 @@
       </ion-col>
       <ion-col text-right>
         <button ion-button clear small color="danger" (click)="tocoursepage(a_course.ccode)" icon-start>
-          <ion-icon name='stats'></ion-icon>            
+          <ion-icon name='stats'></ion-icon>
           Rate
         </button>
       </ion-col>
@@ -79,5 +104,5 @@
   </ion-card>
   </div>
 
-  
+
 </ion-content>

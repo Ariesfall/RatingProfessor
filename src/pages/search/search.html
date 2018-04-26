@@ -7,10 +7,10 @@
   <ion-toolbar no-border-top>
       <ion-segment [(ngModel)]="searchtype">
           <ion-segment-button value="basic">
-            Basic
+            Course
           </ion-segment-button>
           <ion-segment-button value="advanced">
-            Advanced
+            Lecturer
           </ion-segment-button>
         </ion-segment>
   </ion-toolbar>
@@ -28,25 +28,26 @@
     </div>
 
     <div *ngSwitchCase="'advanced'">
-      <button ion-button full color="light" (click)="searchbar()" *ngIf="adsearchbar==0">More Search</button>
+      <ion-searchbar (ionInput)="getItems2($event)"></ion-searchbar>
+
+      <ion-item-group>
+      <ion-item-divider color="light">OUHK</ion-item-divider>
+        <button ion-item *ngFor="let lecture of lectures" (click)='tolecturepage(lecture.pid)'>{{ lecture.name }}</button>
+      </ion-item-group>
+      <!--<button ion-button full color="light" (click)="searchbar()" *ngIf="adsearchbar==0">More Search</button>
       <div *ngIf="adsearchbar==1">
       <ion-list>
       <ion-grid>
-      <ion-row>  
+      <ion-row>
           <ion-item ion-col>
             <ion-label floating>Course code</ion-label>
-            <ion-input type="text" (ionInput)="getItems($adsearch_ccode)"></ion-input>
+            <ion-input type="text" [(ngModel)]="getItems($adsearch_ccode)"></ion-input>
           </ion-item>
-        
+
           <ion-item ion-col>
             <ion-label floating>School</ion-label>
             <ion-select [(ngModel)]="$adsearch_school" interface="popover" name="school">
               <ion-option value="OUHK">OUHK</ion-option>
-              <ion-option value="HKU">HKU</ion-option>
-              <ion-option value="CUHK">CUHK</ion-option>
-              <ion-option value="PolyU">PolyU</ion-option>
-              <ion-option value="CityU">CityU</ion-option>
-              <ion-option value="HKCC">HKCC</ion-option>
             </ion-select>
           </ion-item>
       </ion-row>
@@ -54,19 +55,19 @@
 
           <ion-item>
             <ion-label floating>Course title</ion-label>
-            <ion-input type="text" (ionInput)="getItems($adsearch_title)"></ion-input>
+            <ion-input type="text" [(ngModel)]="getItems($adsearch_title)"></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label floating>Lecturer</ion-label>
-            <ion-input type="text" (ionInput)="getItems($adsearch_lname)"></ion-input>
+            <ion-input type="text" [(ngModel)]="getItems($adsearch_lname)"></ion-input>
           </ion-item>
     </ion-list>
-        
+
     <div padding>
       <button ion-button block (click)="tosearch()">Search</button>
     </div>
+    </div>-->
     </div>
   </div>
-</div>
 </ion-content>

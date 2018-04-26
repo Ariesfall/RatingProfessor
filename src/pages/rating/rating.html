@@ -10,34 +10,44 @@
     <ion-navbar>
       <ion-title><ion-icon name="md-school"></ion-icon> Lecturer Rating</ion-title>
     </ion-navbar>
-  
+
   </ion-header>
-  
-<ion-content padding>
+
+<ion-content>
 <ion-refresher (ionRefresh)="doRefresh($event)">
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-    <div>
-      <h4>{{ccode}}</h4>
-      <h5>{{cname}}</h5>
+
+    <ion-card>
+      <ion-card-content>
+      <h2>{{ccode}}</h2>
+      <h3>{{cname}}</h3>
+      <br>
       <h5 (click)="tolecturepage(pid)"><ion-icon large name="ios-person"></ion-icon> {{ pname }} <ion-icon name="ios-arrow-forward" small></ion-icon></h5>
       <p>University: {{school}}</p>
-    </div>
-  
-    <h5>Current Rate: {{lecturerate}}</h5>
-    <div class='col'>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <h5>Current Rate: {{lecturerate}}</h5>
+      </ion-card-header>
+      <ion-card-content>
+        <div class='col'>
       <!--<div><canvas #lineCanvas ></canvas></div>-->
-      <div><canvas #radarCanvas height="220"></canvas></div>
-    </div>
+        <div><canvas #radarCanvas height="220"></canvas></div>
+      </div>
+      </ion-card-content>
+    </ion-card>
     <br>
-    <h5>Give feedback </h5>
-
-    <ion-item no-lines (click)="wantgetfeedback()">Click to feedback on week {{week_num}}<ion-icon item-end name="{{getfeedback ? 'ios-arrow-up':'ios-arrow-down'}}"></ion-icon></ion-item>
+    <ion-card>
+        <ion-card-header>
+        <h5>Give feedback </h5>
+        </ion-card-header>
+        <ion-card-content>
+        <ion-item no-lines (click)="wantgetfeedback()">Click to feedback on week {{week_num}}<ion-icon item-end name="{{getfeedback ? 'ios-arrow-up':'ios-arrow-down'}}"></ion-icon></ion-item>
     <!--{{submitbtn == 'Submit' ? 'hidden' : 'button'}}
     <button type="hidden" ion-button color="danger" outline full disabled>You have feedback this week</button>-->
-    <div *ngIf="getfeedback">
-        <ion-card>
-          <ion-card-content>
+        <div *ngIf="getfeedback">
           <ion-note>1 Strongly Disagree; 2 Disagree; 3 Neutral; 4 agree; 5 Strongly agree</ion-note>
           <div>
             <p>Give clear explanations</p>
@@ -46,69 +56,90 @@
             </div>
             <br>
           </div>
-    
-    
+
+
+            <div>
+            <p>Get Clearly understand</p>
+            <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q2">
+                <a (click)="q2=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q2', q2);">{{item[2]}}</a>
+            </div>
+            <br>
+            </div>
+
           <div>
-          <p>Get Clearly understand</p>
-          <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q2">
-              <a (click)="q2=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q2', q2);">{{item[2]}}</a>
+            <p>Course progress go suitability.</p>
+            <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q3">
+                <a (click)="q3=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q3', q3);">{{item[2]}}</a>
+            </div>
+            <br>
           </div>
-          <br>
-        </div>
-    
-        <div>
-          <p>Course progress go suitability.</p>
-          <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q3">
-              <a (click)="q3=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q3', q3);">{{item[2]}}</a>
+
+          <div>
+            <p>Study matirial(PPT,PDF,etc.) helpful</p>
+            <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q4">
+                <a (click)="q4=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q4', q4);">{{item[2]}}</a>
+            </div>
+            <br>
           </div>
-          <br>
-        </div>
-    
-        <div>
-          <p>Study matirial(PPT,PDF,etc.) helpful</p>
-          <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q4">
-              <a (click)="q4=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q4', q4);">{{item[2]}}</a>
+
+          <div>
+            <p>Assignments/projects/tests feedback clarify something</p>
+            <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q5">
+                <a (click)="q5=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q5', q5);">{{item[2]}}</a>
+            </div>
+            <br>
           </div>
-          <br>
-        </div>
-    
-        <div>
-          <p>Assignments/projects/tests feedback clarify something</p>
-          <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q5">
-              <a (click)="q5=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q5', q5);">{{item[2]}}</a>
+
+          <div>
+            <p>(Optional) Could you give some advice or drop down your ask here</p>
+            <textarea placeholder="Enter a comment"  [(ngModel)]="text"></textarea>
+            <br />
+
+            <p>
+                <ion-checkbox [(ngModel)]="anonymous"></ion-checkbox> I want comment anonymous
+                </p>
+
+            <button ion-button color="light" round (click)=submitratelecture()>{{submitbtn}}</button>
+            <button ion-button clear round (click)="q1=q2=q3=q4=q5=text=null">reset</button>
           </div>
-          <br>
+            <ion-note>*If you resubmit, the new feedback well cover older one this week</ion-note>
         </div>
-    
-        <div>
-          <p>(Optional) Could you give some advice or drop down your ask here</p>
-          <textarea placeholder="Enter a comment"  [(ngModel)]="text"></textarea>
-          <br />
-          
-          <p>
-              <ion-checkbox [(ngModel)]="anonymous"></ion-checkbox> I want comment anonymous
-              </p>
-              
-          <button ion-button color="light" round (click)=submitratelecture()>{{submitbtn}}</button>
-          <button ion-button clear round (click)="q1=q2=q3=q4=q5=text=null">reset</button>
-        </div>
-          <ion-note>*If you resubmit, the new feedback well cover older one this week</ion-note>
         </ion-card-content>
         </ion-card>
-      </div>
-  
-    <h5>Feedback</h5>
-    <ion-list>
-        <ion-item *ngFor="let a_comment of lecturecm">
-            <p><b><u>{{a_comment.username == '' ? "Anonymous" : a_comment.username}}</u>: </b></p>
-            <p>{{a_comment.feedback}}</p>
-            <ion-note item-end>{{a_comment.date}}<br>#{{a_comment.pcomid}}</ion-note>
-            <!--<ion-col col-1 item-end>
-                <ion-icon name="md-arrow-round-up" small></ion-icon><br><!--<p class="smallnumberp">-11</p>
-                <ion-icon name="md-arrow-round-down" color="danger" small></ion-icon>
-            </ion-col>-->
-        </ion-item>
-        <button ion-button color="light" full (click)="showmorefeedback()">More Feedback</button>
-      </ion-list>
+
+
+    <ion-card>
+      <ion-card-header>
+      <h5>Feedback</h5>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+        <ion-grid no-padding>
+          <div *ngFor="let a_comment of lecturecm">
+          <ion-row  *ngIf="a_comment.feedback!='' &&  a_comment.feedback!='null'">
+            <ion-col col-9>
+              <p><b><u>{{a_comment.username == '' ? "Anonymous" : a_comment.username}}</u>: </b></p>
+              <p>{{a_comment.feedback}}</p>
+              <br>
+            </ion-col>
+            <ion-col col-3>
+                <div class="textright">
+                <ion-note>
+                  {{a_comment.date}}<br>
+                  #{{a_comment.pcomid}}<br>
+                </ion-note>
+              </div>
+            </ion-col>
+              <!--<ion-col col-1 item-end>
+                  <ion-icon name="md-arrow-round-up" small></ion-icon><br><!--<p class="smallnumberp">-11</p>
+                  <ion-icon name="md-arrow-round-down" color="danger" small></ion-icon>
+              </ion-col>-->
+          </ion-row>
+          </div>
+          </ion-grid>
+          <button ion-button color="light" full (click)="showmorefeedback()">More Feedback</button>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
   </ion-content>
-  

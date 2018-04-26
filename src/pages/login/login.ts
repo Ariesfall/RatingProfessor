@@ -20,29 +20,29 @@ import 'rxjs/add/operator/map';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  
+
   loading: Loading;
   registerCredentials = { email: '', password: '' };
 
   constructor(
-    private nav: NavController, 
-    private auth: AuthService, 
-    private alertCtrl: AlertController, 
-    private loadingCtrl: LoadingController, 
+    private nav: NavController,
+    private auth: AuthService,
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController,
     private network: Network,
-    private toast: ToastController, 
+    private toast: ToastController,
     private storage: Storage,
     public http: Http) {
-      
+
       storage.get('loginstatus').then((data) => {
         console.log('Login status is ', data);
         if(data){
           this.nav.setRoot(TabsPage);
         }
       });
-    
+
    }
-  
+
   ionViewDidLoad(){
 
   }
@@ -91,7 +91,7 @@ export class LoginPage {
       subTitle: text,
       buttons: ['OK']
     });
-    
+
     alert.present();
     //alert.present(prompt);
   }
@@ -131,7 +131,7 @@ export class LoginPage {
     this.http.get('http://ratingstudy.ddns.net/ratingstudy/register.php/.json?email='+email+'&resetpassword=1').map(res => res.json()).subscribe(
       data => {
         if(data.success){
-          this.showError("Success","Email has sent to <"+email+">"); 
+          this.showError("Success","Email has sent to <"+email+">");
         }else{
           this.showError("Error","Email <"+email+"> not found");
         }
@@ -147,29 +147,30 @@ export class LoginPage {
     //not work in website but work in moblie
     if(!this.isConnected()&&loadmsg==0){
       loadmsg = 1;
-      this.showLoading('Wating connect to network...');
+      this.presentToast('Wating connect to network...');
     }
 
     this.network.onConnect().subscribe(data => {
       if(loadmsg==1){
-        this.loading.dismiss();
+        //this.toast.dismiss();
         loadmsg = 0;
       }
-      
+
       console.log(data)
       this.displayNetworkUpdate(data.type);
     }, error => console.error(error));
-   
+
     this.network.onDisconnect().subscribe(data => {
       console.log(data)
       this.displayNetworkUpdate(data.type);
       if(loadmsg==0){
         loadmsg = 1;
-        this.showLoading('Wating connect to network...');
+        //this.showLoading('Wating connect to network...');
+        this.presentToast('Wating connect to network...');
       }
-      
+
     }, error => console.error(error));
-    
+
    }
 
   displayNetworkUpdate(connectionState: string){
@@ -185,12 +186,20 @@ export class LoginPage {
     console.log(conntype)
     return conntype && conntype !== 'unknown' && conntype !== 'none';
   }
-  
-  /*constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
 
-  /*ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
-  }*/
+  presentToast(msg) {
+    let toast = this.toast.create({
+      message: " !!! "+msg,
+      duration: 8000,
+      showCloseButton: true,
+      closeButtonText: 'Ok'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
+  }
 
 }

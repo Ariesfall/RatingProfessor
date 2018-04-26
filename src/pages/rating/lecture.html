@@ -45,13 +45,11 @@
       <ion-list>
       <button ion-item *ngFor="let a_course of coursedata" (click)="tocoursepage(a_course.ccode)" >
         <p>{{a_course.ccode}}</p>
-        <p>Course rate: {{a_course.crate==null ? 'No Rate' : a_course.crate}}</p>
-        <ion-icon item-end name="ios-arrow-forward"></ion-icon>
         <p>Lecturer rate: {{a_course.avgscore==null ? 'No Rate' : a_course.avgscore}}</p>
       </button>
       </ion-list>
     </ion-card-content>
   </ion-card>
 
-  
+
 </ion-content>

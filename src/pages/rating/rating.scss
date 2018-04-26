@@ -1,18 +1,18 @@
 page-rating {
     .ios, .md {
- 
+
         page-home {
-     
+
             .scroll-content {
                 background-color: map-get($colors, light);
             }
-     
+
             ion-card-header {
                 font-weight: bold;
             }
-     
+
         }
-     
+
     }
     .col div{
         border: 0px solid black;
@@ -38,7 +38,7 @@ page-rating {
         margin-top: 14px;
         text-align: right;
       }
-    
+
     .btn-group button {
         background-color: rgb(241, 241, 241); /* Green background */
         border: 1px solid gray; /* Green border */
@@ -60,14 +60,14 @@ page-rating {
         border-right: none; /* Prevent double borders */
     }
 
-    
+
     /* Clear floats (clearfix hack) */
     .btn-group:after {
         content: "";
         clear: both;
         display: table;
     }
-    
+
     /* Add a background color on hover */
     /*.btn-group button:hover {
         background-color: #137de0;
@@ -111,7 +111,7 @@ page-rating {
     .btn-group .noselect{
         color: black;
     }
-    
+
     textarea {
         width: 100%;
         height: 150px;
@@ -129,6 +129,12 @@ page-rating {
     .smallnumberp{
         font-size: 2px;
         color: #707070;
+    }
+
+    .textright{
+      border: 0px;
+      border-bottom: 0px;
+      text-align: right;
     }
 
 }

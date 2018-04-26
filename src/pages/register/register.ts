@@ -16,13 +16,17 @@ import { Http } from '@angular/http';
 export class RegisterPage {
 
   createSuccess = false;
-  registerCredentials = { email: '', password: '',school:'',year:'' };
- 
-  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, public http: Http) { 
-    
+  registerCredentials = { email: '', password: '',school:'',year:'',email_end:'' };
+
+  constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, public http: Http) {
+
   }
- 
+
   public register() {
+    if(this.registerCredentials.school=='OUHK'){
+      this.registerCredentials.email = this.registerCredentials.email + '@live.ouhk.edu.hk';
+      console.log('this.registerCredentials.email');
+    }
     this.auth.register(this.registerCredentials).subscribe(success => {
       if (success) {
         this.createSuccess = true;
@@ -35,7 +39,8 @@ export class RegisterPage {
         this.showPopup("Error", error);
       });
   }
- 
+
+
   showPopup(title, text) {
     let alert = this.alertCtrl.create({
       title: title,

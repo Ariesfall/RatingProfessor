@@ -1,41 +1,36 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      <ion-icon name="md-notifications"></ion-icon> 
-      Notification
+      <ion-icon name="md-notifications"></ion-icon>
+      Ranking
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-list>
-    <ion-list-header>2018-04-10</ion-list-header>
-    <button ion-item (click)="itemSelected(post)">
-      Notification function will comming soon!
-      <ion-icon name="ios-mail-open-outline" item-end></ion-icon>
+    <ion-list-header><h2>Top 5 Courses</h2></ion-list-header>
+    <button ion-item (click)="tocoursepage(a_course.ccode)" *ngFor="let a_course of courseranking;let i = index">
+      <h2>{{a_course.ccode}}</h2>
+      <h3>{{a_course.cname}}</h3>
+      <ion-icon name="md-star" *ngFor="let number of coursestar[i].star" color="danger"></ion-icon>
+      <ion-icon>{{a_course.cavg}}</ion-icon>
+      <p>{{a_course.cschool}}</p>
     </button>
   </ion-list>
 
   <ion-list>
-    <ion-list-header>2018-02-07</ion-list-header>
-    <button ion-item (click)="itemSelected(post)">
-      You have a new alart!
-      <ion-icon name="ios-mail-outline" item-end></ion-icon>
-    </button>
-    <button ion-item (click)="itemSelected(post)">
-      Please get a feedback to your lecturer.
-      <ion-icon name="ios-mail-open-outline" item-end></ion-icon>
-    </button>
-      <!--<button ion-item *ngFor="let a_post of posts" (click)="itemSelected(post)">
-        {{ a_post.email }}
-      </button>-->
-    
-  </ion-list>
-  <ion-list>
-    <ion-list-header>2018-02-06</ion-list-header>
-    <button ion-item (click)="itemSelected(post)">
-      Welcome to use our apps.
-      <ion-icon name="ios-mail-open-outline" item-end></ion-icon>
+    <ion-list-header><h2>Top 5 Lecturer</h2></ion-list-header>
+    <button ion-item (click)="tolecturepage(a_lecture.pid)" *ngFor="let a_lecture of lectureranking;let j = index">
+      <h2>{{a_lecture.pname}}</h2>
+      <ion-icon name="md-star" *ngFor="let number of lecturestar[j].star" color="danger"></ion-icon> <ion-icon>{{a_lecture.pavg}}</ion-icon>
+      <p>{{a_lecture.school}}</p>
     </button>
   </ion-list>
+
+
 </ion-content>

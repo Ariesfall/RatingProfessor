@@ -19,7 +19,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  
+
   <ion-card *ngIf="!subscribe">
     <button ion-button full clear (click)="sub()">Subscribe</button>
   </ion-card>
@@ -42,53 +42,64 @@
     <ion-card-header>Lecturer</ion-card-header>
     <ion-card-content>
       <ion-list>
-      <ion-item *ngFor="let a_lecture of lectures">
-          <button ion-item (click)="tolecturepage(a_lecture.pid)">
-              <ion-icon large name="ios-person"></ion-icon>  
-              {{a_lecture.pname}}
-                <!--<ion-icon name='stats' item-end small (click)="toratelecturepage(a_lecture.pid)"></ion-icon>-->     
-              <ion-icon item-end name="ios-arrow-forward" *ngIf="isAndroid"></ion-icon>       
-          </button>
-          <button ion-item (click)="toratingpage(a_lecture.pid, a_lecture.pname)" >
-              <ion-icon small name="stats"></ion-icon>  
-              Score:  {{a_lecture.pscore==null ? 'No Rate' : a_lecture.pscore}}
-              <ion-icon item-end name="ios-arrow-forward" *ngIf="isAndroid"></ion-icon>
-          </button>
-      </ion-item>
-      
+        <button ion-item (click)="toratingpage(a_lecture.pid, a_lecture.pname)" *ngFor="let a_lecture of lectures">
+            <ion-icon large name="ios-person"></ion-icon>
+            {{a_lecture.pname}}
+            <ion-icon item-end name="ios-arrow-forward" *ngIf="isAndroid"></ion-icon>
+        </button>
     </ion-list>
     </ion-card-content>
   </ion-card>
 
   <ion-card>
     <ion-card-header>
-      Rate
-      <ion-segment [(ngModel)]="defultrate">
-        <ion-segment-button value="open_rate" (click)="loadrating()">
-          Open
+      <h2>Rate</h2>
+      <!--<ion-segment [(ngModel)]="defultrate">
+        <ion-segment-button value="past_rate" (click)="loadrating()">
+          {{nowyear}}
         </ion-segment-button>
-        <ion-segment-button value="current_rate">
-          Current Student
+        <ion-segment-button value="current_rate" (click)="loadchart2()">
+          {{nowyear-1}}
         </ion-segment-button>
-      </ion-segment>
+      </ion-segment>-->
     </ion-card-header>
 
     <ion-card-content>
-    <div [ngSwitch]="defultrate">
-    <div *ngSwitchCase="'open_rate'">
-      Current Rate: {{courserate}}
+
+        <canvas #barCanvas></canvas>
+        <br>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <p>Rate of {{nowyear}}: {{courserate}}</p>
+              <ion-note>{{numofvotes}} user responding</ion-note>
+            </ion-col>
+            <ion-col>
+              <p>Rate of {{nowyear-1}}: {{pastrate.crate}}</p>
+              <ion-note>{{pastvotenum}} user responding</ion-note>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+
+
+        <ion-note>* For Learning, Exam and Content, 5 mark is easy to achieve, 1 mark is difficult.</ion-note>
+    <!--<div [ngSwitch]="defultrate">
+    <div *ngSwitchCase="'past_rate'">
+      Rate of {{nowyear}}: {{courserate}}
       <canvas #barCanvas></canvas>
-      <!--<button ion-button (click)="loadrating()">reload</button>-->
       <ion-note>* For Learning, Exam and Content, 5 mark is easy to achieve, 1 mark is difficult.</ion-note>
     </div>
 
     <div *ngSwitchCase="'current_rate'">
-      Nothing!
+        Rate of {{nowyear-1}}: {{pastrate.crate}}
+        <canvas #bar2></canvas>
+
     </div>
-    </div>
+    </div>-->
   </ion-card-content>
   </ion-card>
-  
+
   <!--<ion-card>
     <ion-list>
       <a ion-item (click)="openModal()">
@@ -130,29 +141,41 @@
             <a (click)="ratingcourse=item[1]" class="{{item[0]}}" *ngFor="let item of buttongroup(ratingcourse);">{{item[1]}}</a>
         </div>
         <br>
-        
-        <p>
-          <ion-checkbox [(ngModel)]="anonymous"></ion-checkbox> I want rating anonymous
-        </p>
-        
-        <button ion-button color="light" round (click)="submitratecourse()">Submit</button>
+        <ion-note *ngIf="resubmitdate != null">Last submit date: {{resubmitdate}}</ion-note>
+        <br>
+        <button ion-button color="light" round (click)="submitratecourse()">{{resubmitdate == null ? 'Submit' : 'Resubmit'}}</button>
         </div>
     </ion-card-content>
   </ion-card>
-  
+
   <ion-card>
     <ion-card-header>Comment</ion-card-header>
     <ion-card-content>
       <ion-list>
-        <ion-item *ngFor="let a_comment of comments">
-            <p><b><u>{{a_comment.username == '' ? "Anonymous" : a_comment.username}}</u>: </b></p>
-            <p>{{a_comment.cm}}</p>
-            <ion-note item-end>{{a_comment.date}}<br>#{{a_comment.comid}}<br><a (click)="deletecomment(a_comment.comid)" *ngIf="a_comment.aid==userid">Delete</a></ion-note>
+        <ion-grid no-padding>
+          <ion-row *ngFor="let a_comment of comments"  >
+          <ion-col col-9 (click)="openModal(a_comment)">
+          <p><b><u>{{a_comment.username == '' ? "Anonymous" : a_comment.username}}</u>: </b></p>
+          <p>{{shortcomment(a_comment.cm)}}</p>
+          <br>
+          </ion-col>
+          <ion-col col-3>
+            <div class="textright">
+            <ion-note>
+              {{a_comment.rank}} Push<br>
+              {{a_comment.date}}<br>
+              #{{a_comment.comid}}<br>
+              <a (click)="deletecomment(a_comment.comid)" *ngIf="a_comment.aid==userid">Delete</a>
+              <br><br>
+            </ion-note>
+            </div>
+          </ion-col>
             <!--<ion-col col-1 item-end>
                 <ion-icon name="md-arrow-round-up" color="secondary" small></ion-icon><br><!--<p class="smallnumberp">32</p>
                 <ion-icon name="md-arrow-round-down" small></ion-icon>
             </ion-col>-->
-        </ion-item>
+        </ion-row>
+        </ion-grid>
         <button ion-button full color="light" (click)="showmorecomment()">More Comment</button>
       </ion-list>
       <br>
@@ -164,9 +187,6 @@
 
       <button ion-button color="light" round (click)="submitratecomment()">Comment</button>
       <button ion-button clear round (click)="commentcourse=null">reset</button>
-    </ion-card-content>    
+    </ion-card-content>
   </ion-card>
-  
-  
-  
 </ion-content>

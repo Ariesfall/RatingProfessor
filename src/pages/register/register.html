@@ -9,22 +9,42 @@
       <ion-title>Register</ion-title>
     </ion-navbar>
   </ion-header>
-   
+
   <ion-content class="login-content" padding>
     <div>
-      
+
       <form (ngSubmit)="register()" #registerForm="ngForm">
         <ion-row>
           <ion-col>
             <ion-list inset>
-              
               <ion-item>
-                <ion-input type="text" placeholder="Email" name="email" clearInput="true" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [(ngModel)]="registerCredentials.email" required  title="Use your school email"></ion-input>
+                <ion-label floating>University</ion-label>
+                <ion-select [(ngModel)]="registerCredentials.school" interface="popover" name="shool" required>
+                  <ion-option value="OUHK">OUHK</ion-option>
+                </ion-select>
               </ion-item>
+              <ion-note>*Select your University first</ion-note><br><br>
+
+              <div [ngSwitch]="registerCredentials.school">
+                <div *ngSwitchCase="'OUHK'">
+                <ion-grid>
+                  <ion-row>
+                  <ion-item ion-col>
+                  <ion-input type="text" placeholder="Email" name="email" pattern="^[a-z0-9]{8}$" [(ngModel)]="registerCredentials.email" required  title="Use your school email"></ion-input>
+                  </ion-item>
+                  <ion-col>@live.ouhk.edu.hk</ion-col>
+                  </ion-row>
+                </ion-grid>
+                </div>
+
+                <ion-item *ngSwitchCase="''">
+                <ion-input type="text" placeholder="Email" name="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [(ngModel)]="registerCredentials.email" required  title="Use your school email"></ion-input>
+                </ion-item>
+              </div>
               <ion-note>*Use your school email</ion-note><br><br>
-              
+
               <ion-item>
-                <ion-input type="text" placeholder="Username" name="username" clearInput="true" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{4,16}$" [(ngModel)]="registerCredentials.username" required  title="*4-16 characters, only characters and number"></ion-input>
+                <ion-input type="text" placeholder="Username" name="username" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{4,16}$" [(ngModel)]="registerCredentials.username" required  title="*4-16 characters, only characters and number"></ion-input>
               </ion-item>
               <ion-note>*4-16 characters, begain with letter and number in username</ion-note><br><br>
 
@@ -32,17 +52,10 @@
                 <ion-input type="password" placeholder="Password" name="password" clearInput="true" pattern="^(?=.*[a-z])(?=.*[0-9]).{8,32}$" [(ngModel)]="registerCredentials.password"   required title="8-32 characters at least one letter and one number"></ion-input>
               </ion-item>
               <ion-note>*8-32 characters at least 1 letter and 1 number in password</ion-note>
-              
-              <ion-item>
-                  <ion-label floating>University</ion-label>
-                  <ion-select [(ngModel)]="registerCredentials.school" interface="action-sheet" name="shool" required>
-                    <ion-option value="OUHK">OUHK</ion-option>
-                  </ion-select>
-              </ion-item>
 
               <ion-item>
                   <ion-label floating>Year</ion-label>
-                  <ion-select [(ngModel)]="registerCredentials.year" interface="action-sheet" name="year" required>
+                  <ion-select [(ngModel)]="registerCredentials.year" interface="popover" name="year" required>
                     <ion-option value="1">Year 1</ion-option>
                     <ion-option value="2">Year 2</ion-option>
                     <ion-option value="3">Year 3</ion-option>
@@ -53,13 +66,13 @@
             </ion-list>
           </ion-col>
         </ion-row>
-        
+
         <ion-row>
           <ion-col class="signup-col">
             <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">Register</button>
           </ion-col>
         </ion-row>
-        
+
       </form>
     </div>
   </ion-content>
