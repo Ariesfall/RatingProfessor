@@ -100,14 +100,6 @@
   </ion-card-content>
   </ion-card>
 
-  <!--<ion-card>
-    <ion-list>
-      <a ion-item (click)="openModal()">
-        Get Your Rate
-      </a>
-    </ion-list>
-  </ion-card>-->
-
   <ion-card>
     <ion-card-header>Give Rating</ion-card-header>
     <ion-card-content>
@@ -119,10 +111,6 @@
             <a (click)="ratinglearn=item[1]" class="{{item[0]}}" *ngFor="let item of buttongroup(ratinglearn);">{{item[1]}}</a>
         </div>
         <br>
-        <!--<ion-range min="1" max="5" step="1" pin="true" snaps="true" color="{{ratinglearn>3 ? 'secondary' : 'danger'}}" [(ngModel)]="ratinglearn">
-            <ion-icon range-left  name="sad"></ion-icon>
-            <ion-icon range-right  name="happy"></ion-icon>
-        </ion-range>-->
 
         <p>Easy to pass exam</p>
         <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="ratingexam">
@@ -162,7 +150,7 @@
           <ion-col col-3>
             <div class="textright">
             <ion-note>
-              {{a_comment.rank}} Push<br>
+              <p style="color:green;">{{a_comment.rank}} Push</p>
               {{a_comment.date}}<br>
               #{{a_comment.comid}}<br>
               <a (click)="deletecomment(a_comment.comid)" *ngIf="a_comment.aid==userid">Delete</a>
@@ -170,10 +158,6 @@
             </ion-note>
             </div>
           </ion-col>
-            <!--<ion-col col-1 item-end>
-                <ion-icon name="md-arrow-round-up" color="secondary" small></ion-icon><br><!--<p class="smallnumberp">32</p>
-                <ion-icon name="md-arrow-round-down" small></ion-icon>
-            </ion-col>-->
         </ion-row>
         </ion-grid>
         <button ion-button full color="light" (click)="showmorecomment()">More Comment</button>

@@ -18,15 +18,15 @@ export class UserPage {
   username = '';
   email = '';
   userid ='';
-  version = 'test0.01';
-  
+  version = 'ratingstudy_0.0.4';
+
   constructor(
-    public app:App, 
-    public navCtrl: NavController, 
-    public http: Http, 
-    public platform: Platform, 
-    private nav: NavController, 
-    private alertCtrl: AlertController, 
+    public app:App,
+    public navCtrl: NavController,
+    public http: Http,
+    public platform: Platform,
+    private nav: NavController,
+    private alertCtrl: AlertController,
     private auth: AuthService,
     private storage: Storage
   ) {

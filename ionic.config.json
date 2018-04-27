@@ -1,6 +1,6 @@
 {
-  "name": "RatingProfessor",
-  "app_id": "",
+  "name": "RatingStudy",
+  "app_id": "8601d6dd",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

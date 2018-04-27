@@ -190,7 +190,7 @@ export class LoginPage {
   presentToast(msg) {
     let toast = this.toast.create({
       message: " !!! "+msg,
-      duration: 8000,
+      //duration: 8000,
       showCloseButton: true,
       closeButtonText: 'Ok'
     });

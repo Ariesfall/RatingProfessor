@@ -406,7 +406,7 @@ export class CoursePage {
   </ion-header>
   <ion-content padding>
       <h2>{{msg.username}}</h2>
-      <p>{{msg.rank}} People Push</p>
+      <p style="color:green;">{{msg.rank}} People Push</p>
       <ion-note>{{msg.date}}<br>#{{msg.comid}}<br></ion-note>
       <p>{{msg.cm}}</p>
       <button ion-button color="light" color="secondary" (click)="pushcomment(msg.comid)">Push</button>

@@ -21,6 +21,7 @@
                 <ion-label floating>University</ion-label>
                 <ion-select [(ngModel)]="registerCredentials.school" interface="popover" name="shool" required>
                   <ion-option value="OUHK">OUHK</ion-option>
+                  <ion-option value="Other">Other</ion-option>
                 </ion-select>
               </ion-item>
               <ion-note>*Select your University first</ion-note><br><br>
@@ -38,6 +39,10 @@
                 </div>
 
                 <ion-item *ngSwitchCase="''">
+                <ion-input type="text" placeholder="Email" name="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [(ngModel)]="registerCredentials.email" required  title="Use your school email"></ion-input>
+                </ion-item>
+
+                <ion-item *ngSwitchCase="'Other'">
                 <ion-input type="text" placeholder="Email" name="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [(ngModel)]="registerCredentials.email" required  title="Use your school email"></ion-input>
                 </ion-item>
               </div>
