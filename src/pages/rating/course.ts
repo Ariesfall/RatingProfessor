@@ -176,33 +176,39 @@ export class CoursePage {
               label: this.nowyear,
               data: [this.courserate, this.learningrate, this.examrate, this.knowlagerate],
               backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
+                  //'rgba(255, 99, 132, 0.2)',
                   'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)'
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.2)'
+                  //'rgba(255, 206, 86, 0.2)',
+                  //'rgba(75, 192, 192, 0.2)'
 
               ],
               borderColor: [
-                  'rgba(255,99,132,1)',
+                  //'rgba(255,99,132,1)',
                   'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)'
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(54, 162, 235, 1)'
+                  //'rgba(255, 206, 86, 1)',
+                  //'rgba(75, 192, 192, 1)'
               ],
               borderWidth: 1
           },{
             label: this.nowyear-1,
             data: this.pastratedata,
             backgroundColor: [
-              'rgba(54, 162, 235, 0.8)',
-              'rgba(255, 206, 86, 0.8)',
-              'rgba(75, 192, 192, 0.8)',
-              'rgba(255,99,132,0.8)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(75, 192, 192, 0.2)'
             ],
             borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(54, 162, 235, 1)'
+              'rgba(75, 192, 192, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(75, 192, 192, 1)'
             ],
             borderWidth: 1
         }]
@@ -225,11 +231,14 @@ export class CoursePage {
       data => {
           this.acourse = data.data;
           this.subscribe = this.acourse[0].sub;
-          this.ratingcourse = data.data2[0].crate;
-          this.ratinglearn = data.data2[0].lrate;
-          this.ratingexam = data.data2[0].erate;
-          this.ratingknow = data.data2[0].krate;
-          this.resubmitdate = data.data2[0].date;
+          if(data.data2[0]!=null){
+            this.ratingcourse = data.data2[0].crate;
+            this.ratinglearn = data.data2[0].lrate;
+            this.ratingexam = data.data2[0].erate;
+            this.ratingknow = data.data2[0].krate;
+            this.resubmitdate = data.data2[0].date;
+          }
+
 
           this.http.get('http://ratingstudy.ddns.net/ratingstudy/lecture.php/.json?ccode='+this.ccode).map(res => res.json()).subscribe(
           data => {

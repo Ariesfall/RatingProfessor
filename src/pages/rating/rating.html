@@ -29,7 +29,7 @@
     </ion-card>
     <ion-card>
       <ion-card-header>
-        <h5>Current Rate: {{lecturerate}}</h5>
+        Lecturer Rate: Lecture
       </ion-card-header>
       <ion-card-content>
         <div class='col'>
@@ -38,15 +38,13 @@
       </div>
       </ion-card-content>
     </ion-card>
-    <br>
+
     <ion-card>
-        <ion-card-header>
-        <h5>Give feedback </h5>
-        </ion-card-header>
-        <ion-card-content>
+      <ion-card-header>
+        Give feedback
+      </ion-card-header>
+      <ion-card-content>
         <ion-item no-lines (click)="wantgetfeedback()">Click to feedback on week {{week_num}}<ion-icon item-end name="{{getfeedback ? 'ios-arrow-up':'ios-arrow-down'}}"></ion-icon></ion-item>
-    <!--{{submitbtn == 'Submit' ? 'hidden' : 'button'}}
-    <button type="hidden" ion-button color="danger" outline full disabled>You have feedback this week</button>-->
         <div *ngIf="getfeedback">
           <ion-note>1 Strongly Disagree; 2 Disagree; 3 Neutral; 4 agree; 5 Strongly agree</ion-note>
           <div>
@@ -58,13 +56,13 @@
           </div>
 
 
-            <div>
+          <div>
             <p>Get Clearly understand</p>
             <div radio-group class="btn-group" style="width:100%" pedding [(ngModel)]="q2">
                 <a (click)="q2=item[2]" class="{{item[1]}}" *ngFor="let item of buttongroup('q2', q2);">{{item[2]}}</a>
             </div>
             <br>
-            </div>
+          </div>
 
           <div>
             <p>Course progress go suitability.</p>
@@ -104,13 +102,12 @@
           </div>
             <ion-note>*If you resubmit, the new feedback well cover older one this week</ion-note>
         </div>
-        </ion-card-content>
-        </ion-card>
-
+      </ion-card-content>
+      </ion-card>
 
     <ion-card>
       <ion-card-header>
-      <h5>Feedback</h5>
+      Feedback
       </ion-card-header>
       <ion-card-content>
         <ion-list>
