@@ -32,12 +32,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card >
-    <ion-card-content>
-      <div><canvas #radarCanvas height="250"></canvas></div>
-      <br>
-    </ion-card-content>
-  </ion-card>
+
 
   <ion-card >
     <ion-card-header>Teaching Course</ion-card-header>
@@ -48,6 +43,14 @@
         <p>Lecturer rate: {{a_course.avgscore==null ? 'No Rate' : a_course.avgscore}}</p>
       </button>
       </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card >
+    <ion-card-header>Overall Rating</ion-card-header>
+    <ion-card-content>
+      <div><canvas #radarCanvas height="250"></canvas></div>
+      <br>
     </ion-card-content>
   </ion-card>
 

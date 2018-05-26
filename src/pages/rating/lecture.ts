@@ -5,7 +5,7 @@ import { Http } from '@angular/http';
 import { Chart } from 'chart.js';
 import { CoursePage } from '../../pages/rating/course';
 
-import 'rxjs/add/operator/map'; 
+import 'rxjs/add/operator/map';
 
 
 @Component({
@@ -15,10 +15,10 @@ import 'rxjs/add/operator/map';
 export class LecturePage {
   @ViewChild('radarCanvas') radarCanvas;
   radarChart: any;
-  
+
   userid = '';
   pid: String;
-  
+
   lecturedata: any;
   coursedata:any;
   lecturescore2:any;
@@ -54,7 +54,7 @@ export class LecturePage {
   }
 
   toupdatecanvas() {
- 
+
      this.radarChart = new Chart(this.radarCanvas.nativeElement, {
        type: 'radar',
        data: {
@@ -68,7 +68,7 @@ export class LecturePage {
              scaleStepWidth: 1,
              scaleStartValue: 1,
              borderWidth: 1
-             
+
            }]
        },
        options: {
@@ -83,12 +83,12 @@ export class LecturePage {
          },
          title: {
            display: true,
-           text: 'The overal behave of lecturer in 5 standards'
+           text: 'The overall behaver of lecturer in 5 standards'
          }
        }
      });
    }
-   
+
   /* mailto(mail) {
     setTimeout(()=>{
        window.open('mailto:'+mail+'?body=Contect from RatingStudy');

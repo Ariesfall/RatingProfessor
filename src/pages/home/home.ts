@@ -53,7 +53,8 @@ export class HomePage{
   }
 
   togetcourse(){
-    this.http.get('http://ratingstudy.ddns.net/ratingstudy/course.php/.json?limit=1&aid='+this.userid).map(res => res.json()).subscribe(
+    var url = "http://ratingstudy.ddns.net/ratingstudy/course.php/.json?";
+    this.http.get(url+'limit=1&aid='+this.userid).map(res => res.json()).subscribe(
       data => {
           this.courses = data.data;
           this.subscribe = data.subdata;
